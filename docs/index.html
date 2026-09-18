@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="EduCast turns a lesson brief into animation, illustration, narration, and interactive practice with the EduHarness pipeline.">
+  <meta name="theme-color" content="#f8f7f3">
+  <title>EduCast — Bring learning to life</title>
+  <link rel="icon" href="assets/brand.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/app.css?v=20260910-cast-trail">
+  <link rel="stylesheet" href="assets/pointer-trail.css?v=20260910">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="appbar">
+    <a class="product" href="#top" aria-label="EduCast home">
+      <img class="product-mark" src="assets/brand.svg" width="34" height="34" alt="">
+      <span class="product-name">EduCast<span class="brand-dot">.</span></span>
+    </a>
+    <nav class="top-nav" aria-label="Page sections">
+      <a href="#demo"><span class="nav-desktop">Explore lessons</span><span class="nav-mobile">Lessons</span></a>
+      <a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>
+      
+    </nav>
+    <div class="appbar-actions">
+      
+      
+      <a id="new-build" href="new-lesson.html" class="button primary">New lesson ↗</a>
+    </div>
+  </header>
+
+  <main class="site-shell" id="main">
+    <section class="hero-section" id="top">
+      <div class="hero-copy">
+        <span class="hero-kicker"><i></i> FROM A LITTLE CURIOSITY TO A LOT OF POSSIBILITY</span>
+        <h1>Build lessons<br>that come<br><em>to life.</em><span class="title-spark" aria-hidden="true">✳</span></h1>
+        <p class="hero-lede">Some ideas need more than words. Turn your teaching brief into a story students can watch, explore, and make their own.</p>
+        <div class="hero-actions">
+          <a class="button primary large" href="#demo"><span class="play-icon" aria-hidden="true">&#9654;</span> Explore the lessons</a>
+          <a id="hero-new-build" href="new-lesson.html" class="text-button">Make something new ↗</a>
+        </div>
+        <div class="hero-proof"><span class="proof-mark" aria-hidden="true">↗</span><p>One brief. Four creative tools. <br><strong>A whole new way to understand.</strong></p></div>
+      </div>
+      <div class="hero-art">
+        <div class="floating-note"><span aria-hidden="true">✦</span> Learning by doing, built in.</div>
+        <div class="experiment-card">
+          <div class="experiment-topline"><span><i class="live-dot"></i> THE INTERACTIVE CLASSROOM</span><span class="mini-label">01 / PHYSICS</span></div>
+          <div class="experiment-heading"><h2>A little distance. <br>A bigger difference.</h2><span class="experiment-icon" aria-hidden="true">↔</span></div>
+          <p class="experiment-description">Move the weight. Find the balance.</p>
+          <svg class="lever-drawing" viewBox="0 0 540 265" role="img" aria-labelledby="lever-title lever-desc">
+            <title id="lever-title">An interactive lever</title><desc id="lever-desc">A 20 newton weight at 1.5 metres on the left. Adjust the distance of a 10 newton weight on the right to balance their turning effects.</desc>
+            <defs><pattern id="dot-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#dcded4"/></pattern></defs>
+            <rect width="540" height="265" fill="url(#dot-grid)"/>
+            <ellipse cx="270" cy="221" rx="83" ry="8" fill="#e7e7df"/>
+            <path d="M270 146 L239 211 Q270 220 301 211 Z" fill="#dddfd2" stroke="#bcc2b3" stroke-width="1.5"/>
+            <path d="M80 220H460" stroke="#cfd2c6" stroke-width="1.5"/>
+            <g id="lever-beam" transform="rotate(-9.75 270 146)">
+              <rect x="35" y="141" width="470" height="11" rx="5.5" fill="#424f46"/>
+              <path d="M90 141v11 M150 141v11 M210 141v11 M330 141v11 M390 141v11 M450 141v11" stroke="#849286" stroke-width="1.5"/>
+              <g transform="translate(180 141)"><rect x="-32" y="-65" width="64" height="63" rx="9" fill="#c2d8e0" stroke="#97b6c4"/><path d="M-9-65v-9h18v9" fill="none" stroke="#799fac" stroke-width="3"/><text x="0" y="-28" text-anchor="middle" fill="#33596b" font-size="18" font-weight="700">20 N</text></g>
+              <g id="lever-weight" transform="translate(360 141)"><rect x="-28" y="-48" width="56" height="46" rx="8" fill="#edbea5" stroke="#d99775"/><path d="M-8-48v-8h16v8" fill="none" stroke="#c98664" stroke-width="3"/><text x="0" y="-19" text-anchor="middle" fill="#824528" font-size="17" font-weight="700">10 N</text></g>
+              <path d="M180 167v6h90v-6" fill="none" stroke="#8b9588"/><text x="225" y="192" text-anchor="middle" font-size="13" fill="#717a6e">1.5 m</text>
+              <path id="lever-distance-line" d="M270 167v6h90v-6" fill="none" stroke="#bd7958"/><text id="lever-distance-label" x="315" y="192" text-anchor="middle" font-size="13" fill="#a55b38">1.5 m</text>
+            </g>
+            <circle cx="270" cy="146" r="7" fill="#f8f7f3" stroke="#424f46" stroke-width="3"/>
+            <text x="270" y="251" text-anchor="middle" fill="#818779" font-size="10" letter-spacing="2">THE TURNING EFFECT OF A FORCE</text>
+          </svg>
+          <div class="experiment-controls">
+            <div class="range-heading"><label for="lever-distance">Distance from the pivot</label><output id="distance-output" for="lever-distance">1.5 m</output></div>
+            <input id="lever-distance" type="range" min="1" max="3.5" step="0.1" value="1.5" aria-describedby="balance-feedback">
+            <div class="range-scale"><span>1 m</span><span>3.5 m</span></div>
+            <div class="balance-feedback" id="balance-feedback" role="status"><span class="balance-symbol" aria-hidden="true">↔</span><span id="balance-message">Can you make both turning effects equal?</span><button class="reset-experiment" id="reset-experiment" type="button" title="Reset experiment" aria-label="Reset lever experiment">↺</button></div>
+          </div>
+        </div>
+        <div class="hero-art-caption"><span>LESS WATCHING. MORE WONDERING.</span><span class="hand-arrow" aria-hidden="true">↖</span> Try it yourself</div>
+      </div>
+    </section>
+
+    <div class="capability-band" aria-label="Four ways to bring a lesson to life">
+      <span class="band-label">A FULL CREATIVE TOOLKIT</span>
+      <span><i class="cap-icon motion-icon" aria-hidden="true">▥</i> Motion graphics</span>
+      <span><i class="cap-icon math-icon" aria-hidden="true">ƒ</i> Mathematical animation</span>
+      <span><i class="cap-icon art-icon" aria-hidden="true">✳</i> Visual explanations</span>
+      <span><i class="cap-icon practice-icon" aria-hidden="true">↔</i> Hands-on practice</span>
+    </div>
+
+    <section class="demo-section" id="demo">
+      <div class="section-heading">
+        <div class="section-intro"><span class="section-index">01 — MADE WITH EDUCAST</span><h2>See the classroom<br><em>differently.</em></h2></div>
+        <p class="section-aside">A concept becomes a story. <br>A story becomes an experiment. <br>Explore three lessons from start to finish.</p>
+      </div>
+      <div class="demo-gallery" id="demo-gallery" role="tablist" aria-label="Example lessons">
+        <button class="demo-card active" id="demo-tab-quadratics" type="button" role="tab" aria-selected="true" aria-controls="demo-panel" tabindex="0" data-run="quadratics" data-src="runs/quadratics/bundle/index.html?fresh=20260912fonts&amp;layout=board" data-title="Quadratic Functions: The Shape of a Parabola">
+          <span class="demo-thumbnail quadratics-thumbnail" aria-hidden="true"><img src="assets/lesson-quadratics.svg" alt=""><span class="thumbnail-number">01</span></span>
+          <span class="demo-card-body"><span class="demo-card-kicker">ALGEBRA · GRADE 9</span><strong>The Shape of a Parabola</strong><span class="demo-card-description">Change a coefficient. See a new curve.</span><span class="demo-card-meta" data-demo-meta><i>8 chapters</i><i>2:47</i><i>1 practice</i></span></span><span class="demo-card-arrow" aria-hidden="true">↗</span>
+        </button>
+        <button class="demo-card" id="demo-tab-lever" type="button" role="tab" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-run="lever_v2_backup" data-src="runs/lever_v2_backup/bundle/index.html?fresh=20260912fonts&layout=board" data-title="Torque and Lever Balance">
+          <span class="demo-thumbnail torque-thumbnail" aria-hidden="true"><img src="assets/lesson-lever.svg" alt=""><span class="thumbnail-number">02</span></span>
+          <span class="demo-card-body"><span class="demo-card-kicker">PHYSICS · GRADE 9</span><strong>Torque &amp; Lever Balance</strong><span class="demo-card-description">Small force. Big turning effect.</span><span class="demo-card-meta" data-demo-meta><i>6 chapters</i><i>2:09</i><i>2 practices</i></span></span><span class="demo-card-arrow" aria-hidden="true">↗</span>
+        </button>
+        <button class="demo-card" id="demo-tab-ohm" type="button" role="tab" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-run="ohms_law" data-src="runs/ohms_law/bundle/index.html?fresh=20260912fonts&layout=board" data-title="Ohm’s Law: Current, Voltage and Resistance">
+          <span class="demo-thumbnail ohm-thumbnail" aria-hidden="true"><img src="assets/lesson-ohm.svg" alt=""><span class="thumbnail-number">03</span></span>
+          <span class="demo-card-body"><span class="demo-card-kicker">PHYSICS · GRADE 9</span><strong>Making Sense of Ohm’s Law</strong><span class="demo-card-description">Find the connection. Follow the current.</span><span class="demo-card-meta" data-demo-meta><i>7 chapters</i><i>2:24</i><i>2 practices</i></span></span><span class="demo-card-arrow" aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <div class="demo-panel" id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-quadratics">
+        <div class="demo-player-heading"><div><span class="watch-indicator" aria-hidden="true">▶</span><span id="demo-current-title">Quadratic Functions: The Shape of a Parabola</span><span class="preview-badge">EXAMPLE LESSON</span></div><a id="demo-open" href="runs/quadratics/bundle/index.html?layout=board" target="_blank" rel="noopener">Open full player <span aria-hidden="true">↗</span></a></div>
+        <div class="demo-player-shell" aria-busy="true">
+          <div class="demo-loading" id="demo-loading" role="status"><span class="loading-ring"></span><span>Preparing your classroom…</span></div>
+          <iframe id="demo-frame" src="runs/quadratics/bundle/index.html?fresh=20260912fonts&amp;layout=board" title="Quadratic Functions: The Shape of a Parabola interactive lesson" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="demo-player-bottom"><span><i></i> Watch, jump between chapters, or pause to practice.</span><span id="demo-review-note">Example build · review details in Studio</span></div>
+      </div>
+      <div class="demo-more">
+        <a class="button primary" id="more-lessons" href="more-lessons.html">More lessons <span aria-hidden="true">↗</span></a>
+        <p>Two newer builds — <strong>Binary Numbers</strong> and <strong>Photosynthesis</strong> — are still finishing review.</p>
+      </div>
+      <div class="learning-features">
+        <article><span class="feature-number">01 / WATCH</span><h3>Make the invisible visible.</h3><p>Equations unfold, diagrams explain, and abstract ideas find their shape.</p></article>
+        <article><span class="feature-number">02 / LISTEN</span><h3>Every step has a voice.</h3><p>Narration and captions stay with the lesson, so each idea has room to land.</p></article>
+        <article><span class="feature-number">03 / TRY</span><h3>Understanding takes practice.</h3><p>Explore a simulation or answer a question, right where the concept clicks.</p></article>
+      </div>
+      <div class="classroom-cast" aria-hidden="true">
+        <img src="assets/characters/character-1.png" alt="" loading="lazy">
+        <img src="assets/characters/character-2.png" alt="" loading="lazy">
+        <img src="assets/characters/character-4.png" alt="" loading="lazy">
+        <img src="assets/characters/character-5.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+    <section class="pipeline-section" id="pipeline">
+      <div class="section-heading"><div class="section-intro"><span class="section-index">02 — THE METHOD BEHIND THE MAGIC</span><h2>From prompt<br><em>to possibility.</em></h2></div><p class="section-aside">A thoughtful lesson takes a few steps. <br>EduHarness connects them all. <br><span class="subtle-instruction">Select a stage to look inside ↓</span></p></div>
+      <div class="pipeline-visual" role="tablist" aria-label="Explore the lesson pipeline">
+        <button class="pipeline-card active" id="pipeline-tab-plan" type="button" role="tab" aria-selected="true" aria-controls="pipeline-detail" data-stage="plan"><span class="pipeline-number">01</span><span class="pipeline-tool">MAIN AGENT</span><strong>Plan the lesson</strong><span class="pipeline-card-copy">Start with a learning goal.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-prepare" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="prepare"><span class="pipeline-number">02</span><span class="pipeline-tool">SCENE EXECUTORS</span><strong>Prepare the pieces</strong><span class="pipeline-card-copy">Give each idea a medium.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-render" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="render"><span class="pipeline-number">03</span><span class="pipeline-tool">CREATIVE TOOLKIT</span><strong>Bring it to life</strong><span class="pipeline-card-copy">Compose motion and sound.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-review" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="review"><span class="pipeline-number">04</span><span class="pipeline-tool">GUARDS + REVIEWER</span><strong>Review &amp; refine</strong><span class="pipeline-card-copy">Check the things that matter.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-bundle" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="bundle"><span class="pipeline-number">05</span><span class="pipeline-tool">EDUBUNDLE</span><strong>Ready to explore</strong><span class="pipeline-card-copy">One connected experience.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+      </div>
+      <div class="pipeline-detail" id="pipeline-detail" role="tabpanel" aria-labelledby="pipeline-tab-plan" tabindex="0">
+        <div class="pipeline-detail-copy"><span class="section-kicker" id="pipeline-detail-kicker">01 / A PURPOSE FOR EVERY SCENE</span><h3 id="pipeline-detail-title">Good teaching starts<br>with a clear intention.</h3><p id="pipeline-detail-description">The planner turns your topic, audience, and learning goal into a scene-by-scene blueprint. Every scene gets a medium, narration, and a short list of ideas that must be visible.</p><div class="pipeline-tags" id="pipeline-detail-tags"><span>Learning goals</span><span>Scene planning</span><span>Shared visual style</span></div></div>
+        <div class="artifact-preview" id="pipeline-artifact"><div class="artifact-top"><span class="artifact-dot"></span> LESSON BLUEPRINT <span>Illustrative example</span></div><div class="blueprint-preview"><span class="artifact-label">LEARNING GOAL</span><h4>Explain why a longer lever<br>needs less force.</h4><div class="blueprint-row"><span>01</span><strong>Set the scene</strong><i>Motion</i></div><div class="blueprint-row"><span>02</span><strong>Build intuition</strong><i>Illustration</i></div><div class="blueprint-row"><span>03</span><strong>Show the relationship</strong><i>Animation</i></div><div class="blueprint-row"><span>04</span><strong>Let the learner try</strong><i>Practice</i></div></div></div>
+      </div>
+      <div class="repair-note"><span class="repair-icon" aria-hidden="true">↺</span><div><strong>A feedback loop, not a finish line.</strong><p>Layout checks and visual review feed targeted repairs. Saved checkpoints let a build pick up where it left off.</p></div><span class="repair-route">RENDER <i>→</i> REVIEW <i>↩</i> REFINE</span></div>
+      <div class="pipeline-cta"><div><span class="section-index">YOUR NEXT GREAT EXPLANATION</span><h3>What will you bring <em>to life?</em></h3><p>A topic, a question, a moment of curiosity. Start there.</p></div><a id="pipeline-new-build" href="new-lesson.html" class="button primary large">Create your lesson ↗</a></div>
+    </section>
+    </main>
+  <footer class="site-footer"><a class="product" href="#top"><img src="assets/brand.svg" width="28" height="28" alt=""><span class="product-name">EduCast.</span></a><span>Made for the moment an idea clicks.</span><span class="footer-engine">POWERED BY EDUHARNESS</span><a href="#pipeline">Back to the process ↗</a></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="assets/pointer-trail.js?v=20260910"></script>
+  <script src="assets/landing.js?v=20260912-bundle-refresh"></script>
+  <script src="assets/showcase.js?v=20260910"></script>
+</body>
+</html>

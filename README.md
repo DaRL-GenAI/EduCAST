@@ -30,6 +30,22 @@ The additional examples reference `runs/binary/bundle` and
 Until the corresponding bundles are copied or generated, their players will be
 unavailable. The rest of the interface and the New lesson form remain accessible.
 
+## Project site
+
+`docs/` holds a static copy of the showcase, published with GitHub Pages from the
+`main` branch. Rebuild it after changing anything under `eduharness/studio/`:
+
+```bash
+python scripts/build_pages.py
+```
+
+The script reuses `eduharness.studio.public.public_html`, so the published pages
+stay in step with the server's public mode, and rewrites the server's absolute
+`/assets/...` routes to paths relative to the project site. Because Pages serves
+files only, the New lesson form cannot reach the generation API there and the
+featured players stay unavailable until `runs/*/bundle` media is copied into
+`docs/runs/`.
+
 ## Enable lesson generation
 
 Generation additionally requires FFmpeg, a local Manim installation, a Playwright
@@ -93,6 +109,7 @@ python -m eduharness.studio --runs-dir runs --port 8080
 | `eduharness/pipeline.py`, `stage1/`, `stage2/` | Planning, preparation, rendering, review, repair |
 | `eduharness/stage3/` | EduBundle packaging and player |
 | `remotion_template/` | Motion-graphics renderer |
+| `scripts/build_pages.py` | Builds the static `docs/` project site |
 
 ![EduHarness pipeline](docs/eduharness-pipeline.svg)
 
