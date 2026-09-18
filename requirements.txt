@@ -1,0 +1,6 @@
+openai>=1.60.0
+httpx[socks]
+aiohttp>=3.10
+pydantic>=2.6.0
+python-dotenv>=1.0.0
+pillow>=10.0.0

@@ -1,0 +1,12 @@
+Topic: Binary Numbers for Beginners
+
+Learning goal: Help students understand why computers use binary and how to convert small decimals.
+
+Outline:
+1. Metaphor: light switches ON/OFF as 1/0.
+2. Place values: 8-4-2-1.
+3. Convert 13 to binary with a short Manim place-value animation.
+4. Interactive check: multiple-choice "What is 1010 in decimal?"
+5. Recap slide/motion graphic of key takeaways.
+
+Audience: first-year CS undergrads, no prior digital logic.

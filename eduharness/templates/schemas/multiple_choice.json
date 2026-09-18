@@ -1,0 +1,20 @@
+{
+  "id": "multiple_choice",
+  "title": "Multiple Choice Check",
+  "description": "Single-select quiz with lettered choices, immediate feedback, an explanation after the correct answer and a Continue button.",
+  "parameters_schema": {
+    "question": "string",
+    "choices": "string[] (2-6 distinct options)",
+    "correct_index": "integer 0-based",
+    "explanation": "string shown after the correct answer",
+    "hint": "string shown on request"
+  },
+  "defaults": {
+    "question": "What is the key idea?",
+    "choices": ["Option A", "Option B", "Option C", "Option D"],
+    "correct_index": 0,
+    "explanation": "Review the previous segment.",
+    "hint": ""
+  },
+  "success_hint": "student selects correct_index, then presses Continue"
+}

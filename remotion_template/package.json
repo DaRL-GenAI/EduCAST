@@ -1,0 +1,30 @@
+{
+  "name": "eduharness-remotion-template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "render": "remotion render",
+    "upgrade": "remotion versions"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.200",
+    "@remotion/renderer": "4.0.200",
+    "@remotion/bundler": "4.0.200",
+    "@remotion/media-utils": "4.0.200",
+    "@remotion/player": "4.0.200",
+    "@remotion/studio": "4.0.200",
+    "@remotion/studio-server": "4.0.200",
+    "@remotion/studio-shared": "4.0.200",
+    "@remotion/zod-types": "4.0.200",
+    "@remotion/media-parser": "4.0.200",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.200",
+    "zod": "3.22.3"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "typescript": "5.5.4"
+  }
+}

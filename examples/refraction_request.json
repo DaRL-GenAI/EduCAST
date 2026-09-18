@@ -1,0 +1,17 @@
+{
+  "request_id": "refraction",
+  "topic": "Refraction and Snell's Law",
+  "audience": "Grade 10 physics students; 12-minute focus; comfortable with ratios and basic trigonometry",
+  "learning_goal": "Explain why light bends when it crosses into a denser medium, read the angles off the normal rather than the surface, and use n1·sin(theta1) = n2·sin(theta2) to predict which way the ray turns.",
+  "source_text": "Light travels at different speeds in different media. The refractive index n of a medium is the ratio of the speed of light in vacuum to its speed in that medium: n = c/v. Air is about n = 1.00, water about n = 1.33, and crown glass about n = 1.52.\n\nWhen a ray crosses the boundary between two media it changes direction. Angles are always measured from the NORMAL -- the line perpendicular to the surface at the point of entry -- not from the surface itself. This is the single most common mistake students make.\n\nSnell's law relates the two angles: n1 * sin(theta1) = n2 * sin(theta2), where theta1 is the angle of incidence and theta2 the angle of refraction.\n\nThe consequence is easy to state: going from a faster medium into a slower one (air into water, n increases), the ray bends TOWARD the normal, so theta2 < theta1. Going the other way (water into air, n decreases), it bends AWAY from the normal, so theta2 > theta1. A ray that arrives along the normal (theta1 = 0) passes straight through with no bend at all.\n\nWorked example: a ray hits a water surface at 30 degrees from the normal. With n1 = 1.00 and n2 = 1.33, sin(theta2) = (1.00 * sin 30) / 1.33 = 0.5 / 1.33 = 0.376, so theta2 = 22 degrees. The ray bends toward the normal, exactly as predicted.\n\nThis is why a straw in a glass of water looks broken at the surface, and why a pool is always shallower than it looks.",
+  "preferred_theme": "studio_light",
+  "language": "en",
+  "max_review_rounds": 5,
+  "enable_remotion": true,
+  "enable_manim": true,
+  "enable_image": true,
+  "enable_narration": true,
+  "voice": "alloy",
+  "allow_unreviewed_bundle": false,
+  "parallel": 4
+}

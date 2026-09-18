@@ -1,0 +1,19 @@
+{
+  "id": "fill_blank",
+  "title": "Fill in the Blank",
+  "description": "Student types short answers. Write ___ in the prompt where each blank goes (one ___ per blank) or leave the prompt as a question. Answers are case-insensitive; separate accepted alternatives with |.",
+  "parameters_schema": {
+    "prompt": "string, optionally containing ___ placeholders",
+    "blanks": "[{label: string, answer: string with | separated alternatives}] (1-6)",
+    "hint": "string shown on request"
+  },
+  "defaults": {
+    "prompt": "Torque equals ___ times ___.",
+    "blanks": [
+      {"label": "quantity 1", "answer": "force|weight"},
+      {"label": "quantity 2", "answer": "distance|perpendicular distance|lever arm"}
+    ],
+    "hint": "Think about what makes a lever turn."
+  },
+  "success_hint": "every blank matches one of its accepted answers (case-insensitive)"
+}

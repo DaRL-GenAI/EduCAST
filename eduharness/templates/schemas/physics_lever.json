@@ -1,0 +1,32 @@
+{
+  "id": "physics_lever",
+  "title": "Lever Balance Simulator",
+  "description": "SVG lever with a fulcrum, two weights, live torque bars and a bubble level. The student adjusts weights (and distances) until clockwise and counter-clockwise torque match.",
+  "parameters_schema": {
+    "default_weight_A": "number 1-50 (N), left weight at start",
+    "default_weight_B": "number 1-50 (N), right weight at start",
+    "default_distance_A": "number (m) left arm at start, <= max_distance",
+    "default_distance_B": "number (m) right arm at start, <= max_distance",
+    "max_distance": "number (m) slider maximum for both arms",
+    "fulcrum_offset": "number -0.5..0.5, shifts the fulcrum along the beam (0 = centered)",
+    "target_balance": "boolean; true = student must balance, false = free exploration with Continue",
+    "tolerance": "number (N·m) |τ_left - τ_right| accepted as balanced",
+    "allow_distance": "boolean; expose distance sliders (false = weights only)",
+    "instruction": "string, student-facing task",
+    "hint": "string shown when the student asks for a hint"
+  },
+  "defaults": {
+    "default_weight_A": 8,
+    "default_weight_B": 12,
+    "default_distance_A": 0.6,
+    "default_distance_B": 0.6,
+    "max_distance": 1.0,
+    "fulcrum_offset": 0,
+    "target_balance": true,
+    "tolerance": 0.5,
+    "allow_distance": true,
+    "instruction": "Adjust the weights or their distances until the lever balances.",
+    "hint": "Torque = weight × distance. The heavier side needs a shorter arm."
+  },
+  "success_hint": "|weight_A × distance_A − weight_B × distance_B| ≤ tolerance (or Continue when target_balance is false)"
+}

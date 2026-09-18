@@ -1,0 +1,18 @@
+{
+  "id": "drag_sort",
+  "title": "Drag to Sort",
+  "description": "Student drags (or nudges) items into the correct sequence and presses Check; wrong positions are highlighted.",
+  "parameters_schema": {
+    "prompt": "string",
+    "items": "string[] (2-8) in a SHUFFLED starting order",
+    "correct_order": "string[] same multiset as items, in the correct order",
+    "hint": "string shown on request"
+  },
+  "defaults": {
+    "prompt": "Put the steps in the correct order.",
+    "items": ["Step C", "Step A", "Step B"],
+    "correct_order": ["Step A", "Step B", "Step C"],
+    "hint": ""
+  },
+  "success_hint": "current order equals correct_order when Check is pressed"
+}

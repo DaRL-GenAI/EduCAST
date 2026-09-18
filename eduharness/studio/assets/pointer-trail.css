@@ -1,0 +1,8 @@
+/* Original pastel number trail, isolated from the page layout. */
+.number-trail-layer { position: fixed; inset: 0; z-index: 40; overflow: hidden; pointer-events: none; }
+.number-trail { position: fixed; display: block; color: var(--trail-color); font: 700 16px/1 var(--mono-font); letter-spacing: .02em; text-shadow: 0 1px 0 rgba(255, 255, 255, .82), 0 0 8px rgba(255, 255, 255, .42); opacity: 0; transform: translate(-50%, -50%) scale(var(--trail-scale)); animation: number-trail-float 1.22s cubic-bezier(.2, .7, .25, 1) forwards; will-change: transform, opacity; }
+@keyframes number-trail-float { 0% { opacity: 0; transform: translate(-50%, -35%) scale(.42) rotate(-12deg); } 12% { opacity: .98; } 62% { opacity: .82; } 100% { opacity: 0; transform: translate(calc(-50% + var(--trail-drift)), calc(-50% - var(--trail-lift))) scale(var(--trail-scale)) rotate(var(--trail-rotate)); } }
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse), (pointer: none) {
+  .number-trail-layer { display: none; }
+}

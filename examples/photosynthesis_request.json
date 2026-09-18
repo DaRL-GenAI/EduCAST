@@ -1,0 +1,17 @@
+{
+  "request_id": "photosynthesis",
+  "topic": "Photosynthesis: how a leaf turns light into sugar",
+  "audience": "Grade 9 biology students; 12-minute focus; no chemistry background assumed",
+  "learning_goal": "Explain where the light reactions and the Calvin cycle happen inside a chloroplast, what each stage takes in and gives out, and why the two stages depend on each other.",
+  "source_text": "Photosynthesis is the process that turns light energy into chemical energy stored in sugar. The overall reaction is 6 CO2 + 6 H2O + light -> C6H12O6 + 6 O2.\n\nIt happens inside the chloroplast, and it runs in two connected stages that occupy two different places.\n\nSTAGE 1 -- the light reactions -- take place in the thylakoid membranes, the stacked discs inside the chloroplast. Chlorophyll in those membranes absorbs light. The energy is used to split water molecules, which releases the oxygen we breathe out into the air as a by-product. The energy that is captured is carried away in two shuttle molecules: ATP and NADPH.\n\nSTAGE 2 -- the Calvin cycle -- takes place in the stroma, the fluid around the thylakoid stacks. It does not need light directly. It takes carbon dioxide from the air and, using the ATP and NADPH delivered by stage 1, builds the carbon atoms into sugar. The spent shuttles return to the thylakoid to be recharged.\n\nThe dependency runs both ways, and this is the point students most often miss. The light reactions supply the energy carriers the Calvin cycle spends; the Calvin cycle returns the empty carriers the light reactions need in order to keep working. Neither stage runs for long on its own.\n\nThree inputs, three outputs, worth keeping straight: light, water and carbon dioxide go in; oxygen, sugar and recycled carriers come out. Water is split in stage 1, carbon dioxide is fixed in stage 2, and the oxygen released comes from the water, not from the carbon dioxide.",
+  "preferred_theme": "studio_light",
+  "language": "en",
+  "max_review_rounds": 5,
+  "enable_remotion": true,
+  "enable_manim": true,
+  "enable_image": true,
+  "enable_narration": true,
+  "voice": "alloy",
+  "allow_unreviewed_bundle": false,
+  "parallel": 4
+}

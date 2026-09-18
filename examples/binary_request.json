@@ -1,0 +1,17 @@
+{
+  "request_id": "binary_intro_01",
+  "topic": "Binary Numbers for Beginners",
+  "audience": "First-year CS undergraduates",
+  "learning_goal": "Explain binary place values and convert small decimals.",
+  "source_text": "Topic: Binary Numbers for Beginners\n\nLearning goal: Help students understand why computers use binary and how to convert small decimals.\n\nOutline:\n1. Metaphor: light switches ON/OFF as 1/0.\n2. Place values: 8-4-2-1.\n3. Convert 13 to binary with a short Manim place-value animation.\n4. Interactive check: multiple-choice \"What is 1010 in decimal?\"\n5. Recap slide/motion graphic of key takeaways.\n\nAudience: first-year CS undergrads, no prior digital logic.\n",
+  "preferred_theme": "academic_dark",
+  "max_review_rounds": 5,
+  "enable_remotion": true,
+  "enable_manim": true,
+  "language": "en",
+  "enable_image": true,
+  "enable_narration": true,
+  "voice": "alloy",
+  "allow_unreviewed_bundle": false,
+  "parallel": 3
+}

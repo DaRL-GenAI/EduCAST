@@ -1,0 +1,11 @@
+{
+  "request_id": "lever_physics_01",
+  "topic": "Torque and Lever Balance",
+  "audience": "Grade 9 science students; 15-minute focus; basic algebra OK",
+  "learning_goal": "Explain torque as force times distance, and let students balance a lever interactively.",
+  "source_text": "A lever is a rigid bar that rotates about a fulcrum. Torque (moment) equals force times perpendicular distance from the fulcrum. To balance, clockwise torque must equal counterclockwise torque. If the fulcrum is centered, equal weights balance. If the fulcrum shifts, the heavier side or the longer arm wins. Students should feel this by adjusting two weights until the lever is level.",
+  "preferred_theme": "academic_dark",
+  "max_review_rounds": 2,
+  "enable_remotion": true,
+  "enable_manim": true
+}

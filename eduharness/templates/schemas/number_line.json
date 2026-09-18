@@ -1,0 +1,24 @@
+{
+  "id": "number_line",
+  "title": "Number Line Placement",
+  "description": "Student drags a marker along a labelled number line to the target value and submits; after three misses the target is revealed.",
+  "parameters_schema": {
+    "prompt": "string",
+    "min": "number",
+    "max": "number",
+    "target": "number inside [min, max]",
+    "tolerance": "number, at most (max-min)/4",
+    "unit": "string suffix shown after values (e.g. N·m)",
+    "hint": "string shown on request"
+  },
+  "defaults": {
+    "prompt": "Place the marker at the correct value.",
+    "min": 0,
+    "max": 10,
+    "target": 5,
+    "tolerance": 0.5,
+    "unit": "",
+    "hint": ""
+  },
+  "success_hint": "abs(value - target) <= tolerance on Submit"
+}
