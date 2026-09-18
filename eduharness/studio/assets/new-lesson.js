@@ -59,6 +59,11 @@
     return key;
   }
 
+  function showProcess() {
+    const panel = $('lesson-process');
+    if (panel) panel.hidden = false;
+  }
+
   function showError(message = '') {
     $('lesson-error').textContent = message;
     $('lesson-error').hidden = !message;
@@ -107,6 +112,7 @@
     if (!lesson || typeof lesson.id !== 'string') throw new Error('The lesson status could not be read. Please try again.');
     currentLesson = lesson;
     rememberLesson(lesson.id);
+    showProcess();
     const running = lesson.status === 'running';
     const ready = lesson.status === 'ready';
     const retryable = ['failed', 'interrupted', 'needs_attention'].includes(lesson.status);
@@ -232,6 +238,8 @@
     });
     showError();
     syncControls();
+    const panel = $('lesson-process');
+    if (panel) panel.hidden = true;
     $('lesson-topic').focus();
   }
 
@@ -274,6 +282,11 @@
     $('lesson-topic').value = $('lesson-topic').value.trim();
     if (form.reportValidity()) start();
   });
+  $('lesson-topic').addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
+    event.preventDefault();
+    form.requestSubmit();
+  });
   form.addEventListener('input', () => { formTouched = true; saveDraft(); });
   form.addEventListener('change', () => { formTouched = true; saveDraft(); });
   $('lesson-retry').addEventListener('click', () => start(true));
@@ -286,6 +299,7 @@
   const savedId = new URL(location.href).searchParams.get('lesson') || storage.get('active');
   if (savedId && /^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$/.test(savedId)) {
     lessonId = savedId;
+    showProcess();
     $('progress-heading').textContent = 'Welcome back to your lesson.';
     $('lesson-progress-copy').textContent = 'Checking your saved progress…';
     poll();

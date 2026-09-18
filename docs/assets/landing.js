@@ -93,80 +93,17 @@
     }
   }));
 
-  const frame = $("demo-frame");
-  let loadTimeout;
-  function ready() {
-    clearTimeout(loadTimeout);
-    $("demo-loading").hidden = true;
-    frame.parentElement.setAttribute("aria-busy", "false");
-  }
-  function loading() {
-    clearTimeout(loadTimeout);
-    $("demo-loading").hidden = false;
-    $("demo-loading").querySelector("span:last-child").textContent = "Preparing your classroom…";
-    frame.parentElement.setAttribute("aria-busy", "true");
-    loadTimeout = setTimeout(() => {
-      $("demo-loading").querySelector("span:last-child").textContent = "Still loading. You can also open the full player above.";
-    }, 16000);
-  }
-  frame.addEventListener("load", () => {
-    ready();
-    try {
-      if (!frame.contentDocument.getElementById("stage")) {
-        $("demo-loading").hidden = false;
-        $("demo-loading").querySelector("span:last-child").textContent = "This lesson could not be loaded. Try the full player above.";
-      }
-    } catch (_) { /* The player can also be hosted in a separate origin. */ }
-  });
-  new MutationObserver(loading).observe(frame, { attributes: true, attributeFilter: ["src"] });
-  window.addEventListener("message", (event) => {
-    if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
-    if (event.data?.type !== "educast-player:resize" || !Number.isFinite(event.data.height)) return;
-    frame.style.height = `${Math.max(360, Math.min(6000, Math.ceil(event.data.height) + 1))}px`;
-    ready();
-  });
+  // The starter chips fill the composer so a visitor can begin from an example.
+  const topic = $("lesson-topic");
+  qsa(".starter-chip").forEach((chip) => chip.addEventListener("click", () => {
+    const audience = $("lesson-audience");
+    topic.value = chip.dataset.topic;
+    if (audience && !audience.value.trim()) audience.value = chip.dataset.audience || "";
+    [topic, audience].forEach((field) => field && field.dispatchEvent(new Event("input", { bubbles: true })));
+    topic.focus();
+    topic.setSelectionRange(topic.value.length, topic.value.length);
+  }));
 
-  const manifests = new Map();
-  function duration(seconds) {
-    const value = Math.round(Number(seconds) || 0);
-    return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
-  }
-  function updateDemoInfo(card) {
-    $("demo-current-title").textContent = card.dataset.title;
-    $("demo-panel").setAttribute("aria-labelledby", card.id);
-    $("demo-open").href = card.dataset.src;
-    const warnings = manifests.get(card.dataset.run)?.warnings;
-    $("demo-review-note").textContent = warnings?.allow_unreviewed
-      ? "Preview build · some scenes need review"
-      : "Example build · review details in Studio";
-  }
-  qsa(".demo-card").forEach((card) => {
-    card.addEventListener("click", () => updateDemoInfo(card));
-    const base = `runs/${encodeURIComponent(card.dataset.run)}/bundle/`;
-    Promise.all([
-      fetch(base + "manifest.json", { cache: "no-cache" }).then((response) => { if (!response.ok) throw Error("Manifest unavailable"); return response.json(); }),
-      fetch(base + "warnings.json", { cache: "no-cache" }).then((response) => response.ok ? response.json() : null).catch(() => null),
-    ]).then(([manifest, warnings]) => {
-      manifests.set(card.dataset.run, { manifest, warnings });
-      // Follow the published bundle version, including for the full-player link.
-      if (manifest.content_version) {
-        const url = new URL(card.dataset.src, location.href);
-        url.searchParams.set("v", manifest.content_version);
-        url.searchParams.set("fresh", "1");
-        card.dataset.src = url.pathname + url.search;
-        if (card.classList.contains("active") && frame.getAttribute("src") !== card.dataset.src) {
-          frame.src = card.dataset.src;
-        }
-      }
-      const timeline = Array.isArray(manifest.timeline) ? manifest.timeline : [];
-      const practice = timeline.reduce((count, item) => count + (item.type === "interactive" ? 1 : 0) + (item.overlays || []).length, 0);
-      const meta = card.querySelector("[data-demo-meta]");
-      meta.replaceChildren(...[`${timeline.length} chapters`, duration(manifest.total_duration), `${practice} ${practice === 1 ? "practice" : "practices"}`].map((label) => {
-        const item = document.createElement("i"); item.textContent = label; return item;
-      }));
-      if (card.classList.contains("active")) updateDemoInfo(card);
-    }).catch(() => { /* The authored demo summary stays useful when offline. */ });
-  });
 
   if ("IntersectionObserver" in window) {
     const anchors = qsa(".top-nav a");
@@ -179,6 +116,6 @@
         });
       });
     }, { rootMargin: "-15% 0px -65%" });
-    qsa("#top, #demo, #pipeline, #studio").forEach((section) => observer.observe(section));
+    qsa("#top, #try, #pipeline, #studio").forEach((section) => observer.observe(section));
   }
 })();

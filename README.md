@@ -18,17 +18,17 @@ python -m pip install -r requirements.txt
 python -m eduharness.studio.public --host 127.0.0.1 --port 8091
 ```
 
-Open `http://127.0.0.1:8091/` for the homepage and
-`http://127.0.0.1:8091/new-lesson` for the lesson form.
+Open `http://127.0.0.1:8091/`. The lesson brief is the home page: a composer
+takes the topic, audience, language, and visual style, with the learning goal,
+source material, and creative tools behind "Make it your own". Submitting it
+reveals the build progress panel in place.
+
 The public application requires a Python server; GitHub Pages alone cannot run
 the generation API or local renderers.
 
-The homepage's featured players reference pre-generated bundles under
-`runs/quadratics/bundle`, `runs/lever_v2_backup/bundle`, and `runs/ohms_law/bundle`.
-The additional examples reference `runs/binary/bundle` and
-`runs/photosynthesis/bundle`. Those media files are not part of this source export.
-Until the corresponding bundles are copied or generated, their players will be
-unavailable. The rest of the interface and the New lesson form remain accessible.
+Generated bundles are served from `runs/<id>/bundle/` and open in their own
+player. Those media files are not part of this source export, so a link to an
+earlier example lesson only resolves once its bundle is copied or generated.
 
 ## Project site
 
@@ -39,12 +39,11 @@ unavailable. The rest of the interface and the New lesson form remain accessible
 python scripts/build_pages.py
 ```
 
-The script reuses `eduharness.studio.public.public_html`, so the published pages
-stay in step with the server's public mode, and rewrites the server's absolute
+The script reuses `eduharness.studio.public.public_html`, so the published page
+stays in step with the server's public mode, and rewrites the server's absolute
 `/assets/...` routes to paths relative to the project site. Because Pages serves
-files only, the New lesson form cannot reach the generation API there and the
-featured players stay unavailable until `runs/*/bundle` media is copied into
-`docs/runs/`.
+files only, the composer has no generation API to submit to there, so the static
+build replaces its footnote with a link back to these instructions.
 
 ## Enable lesson generation
 
@@ -70,7 +69,7 @@ and quota for the selected models. No credentials are bundled with this reposito
 
 ## Bring your own OpenAI API key
 
-The New lesson form accepts an OpenAI API key with the lesson request. Public
+The composer accepts an OpenAI API key with the lesson request. Public
 creation and retry requests require a key and do not fall back to the server's key.
 The backend passes it through the job's child-process environment to the official
 `https://api.openai.com/v1` endpoint for text, vision, images, and narration.
@@ -100,10 +99,9 @@ python -m eduharness.studio --runs-dir runs --port 8080
 
 | Location | Purpose |
 | --- | --- |
-| `eduharness/studio/index.html` | Homepage and Studio markup |
+| `eduharness/studio/index.html` | Composer, showcase, and Studio markup |
 | `eduharness/studio/app.css`, `landing.js` | Visual design and homepage interactions |
-| `eduharness/studio/assets/new-lesson.*` | New lesson form |
-| `eduharness/studio/assets/more-lessons.*` | Additional examples |
+| `eduharness/studio/assets/new-lesson.js` | Composer submission and build progress |
 | `eduharness/studio/public.py` | Public routes and lesson API |
 | `eduharness/studio/server.py` | Local Studio and background jobs |
 | `eduharness/pipeline.py`, `stage1/`, `stage2/` | Planning, preparation, rendering, review, repair |

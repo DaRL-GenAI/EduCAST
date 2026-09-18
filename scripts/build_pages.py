@@ -2,15 +2,13 @@
 
 GitHub Pages serves files only, so the site is the public showcase without the
 generation API: `eduharness.studio.public.public_html` already strips the Studio
-panel and swaps in showcase.js, and this script additionally rewrites the
-server's absolute `/assets/...` routes into paths relative to the published
-project site (https://<owner>.github.io/EduCAST/).
+desk, and this script rewrites the server's absolute `/assets/...` routes into
+paths relative to the published project site (https://<owner>.github.io/EduCAST/).
 
     python scripts/build_pages.py
 
-The lesson players stay unavailable until the `runs/*/bundle` media is copied
-into docs/runs/; landing.js and more-lessons.js already degrade to the authored
-summaries when a bundle manifest is missing.
+The composer is the home page, and on Pages it has no backend to submit to, so
+the static build swaps in a notice pointing at the local-server instructions.
 """
 from __future__ import annotations
 
@@ -26,21 +24,27 @@ from eduharness.studio.public import public_html  # noqa: E402
 
 STUDIO = ROOT / 'eduharness' / 'studio'
 DOCS = ROOT / 'docs'
+REPO = 'https://github.com/DaRL-GenAI/EduCAST#run-the-website'
 
 # Files the server exposes under /assets/ but keeps beside index.html.
 ROOT_ASSETS = ('app.css', 'landing.js')
 # docs/ also holds the hand-written pipeline diagrams, so only the generated
 # entries are cleared on rebuild.
-GENERATED = ('index.html', 'new-lesson.html', 'more-lessons.html', 'assets', '.nojekyll')
+GENERATED = ('index.html', 'assets', '.nojekyll')
+
+STATIC_NOTE = (
+    '<p class="composer-note">This published page is a static preview: generating a lesson '
+    f'needs the EduCast Python server. <a href="{REPO}">Run it locally</a> to build one.</p>'
+)
 
 
 def rewrite_html(html: str) -> str:
-    """Point the server's absolute routes at their published neighbours."""
+    """Point the server's absolute asset routes at their published neighbours."""
     html = html.replace('"/assets/', '"assets/')
-    html = re.sub(r'"/(new-lesson|more-lessons)"', r'"\1.html"', html)
-    html = html.replace('"/runs/', '"runs/')
-    html = html.replace('"/#', '"./#')
-    html = re.sub(r'"/"', '"./"', html)
+    # Nothing can reach /api/lessons from a static host, so say so up front and
+    # let app.css drop the runtime "service unavailable" notice that follows it.
+    html = re.sub(r'<p class="composer-note">.*?</p>', STATIC_NOTE, html, flags=re.S)
+    html = html.replace('<body>', '<body data-static>', 1)
     return html
 
 
@@ -58,23 +62,12 @@ def main() -> None:
     for name in ROOT_ASSETS:
         shutil.copy2(STUDIO / name, assets / name)
 
-    # The two secondary pages are served from /new-lesson and /more-lessons.
-    for name in ('new-lesson.html', 'more-lessons.html'):
-        page = assets / name
-        (DOCS / name).write_text(rewrite_html(page.read_text(encoding='utf-8')), encoding='utf-8')
-        page.unlink()
-
     (DOCS / 'index.html').write_text(
         rewrite_html(public_html().decode('utf-8')), encoding='utf-8')
 
     # app.css sits in assets/, so its @font-face URLs lose the /assets/ prefix.
     css = assets / 'app.css'
     css.write_text(css.read_text(encoding='utf-8').replace('url("/assets/', 'url("'), encoding='utf-8')
-
-    # The bundle fetches resolve against the published page, not the domain root.
-    for name in ('landing.js', 'more-lessons.js'):
-        script = assets / name
-        script.write_text(script.read_text(encoding='utf-8').replace('`/runs/', '`runs/'), encoding='utf-8')
 
     # Serve assets verbatim instead of running the files through Jekyll.
     (DOCS / '.nojekyll').write_text('', encoding='utf-8')

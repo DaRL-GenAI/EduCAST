@@ -19,7 +19,7 @@
       <span class="product-name">EduCast<span class="brand-dot">.</span></span>
     </a>
     <nav class="top-nav" aria-label="Page sections">
-      <a href="#demo"><span class="nav-desktop">Explore lessons</span><span class="nav-mobile">Lessons</span></a>
+      <a href="#try"><span class="nav-desktop">Try a lesson piece</span><span class="nav-mobile">Try it</span></a>
       <a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>
       <a href="#studio">Studio</a>
     </nav>
@@ -31,19 +31,93 @@
   </header>
 
   <main class="site-shell" id="main">
-    <section class="hero-section" id="top">
-      <div class="hero-copy">
+
+    <section class="compose-section" id="top">
+      <div class="compose-intro">
         <span class="hero-kicker"><i></i> FROM A LITTLE CURIOSITY TO A LOT OF POSSIBILITY</span>
-        <h1>Build lessons<br>that come<br><em>to life.</em><span class="title-spark" aria-hidden="true">✳</span></h1>
-        <p class="hero-lede">Some ideas need more than words. Turn your teaching brief into a story students can watch, explore, and make their own.</p>
-        <div class="hero-actions">
-          <a class="button primary large" href="#demo"><span class="play-icon" aria-hidden="true">&#9654;</span> Explore the lessons</a>
-          <button class="text-button" id="hero-new-build" type="button">Make something new <span aria-hidden="true">&#8599;</span></button>
-        </div>
-        <div class="hero-proof"><span class="proof-mark" aria-hidden="true">↗</span><p>One brief. Four creative tools. <br><strong>A whole new way to understand.</strong></p></div>
+        <h1>Start with a little <em>curiosity.</em><span class="title-spark" aria-hidden="true">&#10039;</span></h1>
+        <p class="compose-lede">Tell us what you want to teach. EduCast turns your brief into animation, illustration, narration, and practice students can explore.</p>
       </div>
-      <div class="hero-art">
-        <div class="floating-note"><span aria-hidden="true">✦</span> Learning by doing, built in.</div>
+
+      <form id="lesson-form" class="composer">
+        <fieldset id="lesson-fields" class="lesson-fields">
+          <legend class="sr-only">Your lesson brief</legend>
+          <div class="composer-shell">
+            <div class="composer-bar">
+              <label class="composer-chip" for="lesson-audience"><span>Who</span><input id="lesson-audience" name="audience" type="text" placeholder="Grade 9 students" maxlength="1000" autocomplete="off"></label>
+              <label class="composer-chip" for="lesson-language"><span>Language</span><select id="lesson-language" name="language"><option value="en">English</option><option value="zh-CN">Chinese</option></select></label>
+              <label class="composer-chip" for="lesson-theme"><span>Style</span><select id="lesson-theme" name="preferred_theme"><option value="studio_light">Studio Light</option><option value="academic_dark">Academic Dark</option></select></label>
+            </div>
+            <label class="composer-prompt" for="lesson-topic">
+              <span class="sr-only">What are we learning?</span>
+              <textarea id="lesson-topic" name="topic" rows="3" required maxlength="500" autocomplete="off" placeholder="What are we learning? Try &#8220;Why does a longer lever need less force?&#8221;"></textarea>
+            </label>
+            <div class="composer-foot">
+              <label class="composer-key" for="openai-api-key"><span aria-hidden="true">Key</span><span class="sr-only">OpenAI API key</span><input id="openai-api-key" name="openai_api_key" type="password" placeholder="OpenAI API key" required minlength="24" autocomplete="new-password" spellcheck="false"></label>
+              <button id="lesson-submit" class="button primary large composer-submit" type="submit">Generate lesson <span aria-hidden="true">&#8599;</span></button>
+            </div>
+          </div>
+          <details class="lesson-options">
+            <summary><span>Make it your own <small>Goal, context &amp; media</small></span><span aria-hidden="true">+</span></summary>
+            <div class="lesson-options-content">
+              <label class="lesson-field" for="lesson-goal"><span>The learning goal <small>Optional</small></span><textarea id="lesson-goal" name="learning_goal" rows="3" maxlength="5000" placeholder="By the end, students should be able to&#8230;"></textarea></label>
+              <label class="lesson-field" for="lesson-source"><span>A little more context <small>Optional</small></span><textarea id="lesson-source" name="source_text" rows="4" maxlength="50000" placeholder="Paste notes, a lesson outline, or key ideas to include."></textarea><small class="lesson-hint">Have a specific explanation in mind? Add it here.</small></label>
+              <fieldset class="lesson-media"><legend>Creative tools</legend><div class="lesson-media-grid">
+                <label><input type="checkbox" name="enable_remotion" checked><span><strong>Motion graphics</strong><small>Stories, charts &amp; diagrams</small></span></label>
+                <label><input type="checkbox" name="enable_manim" checked><span><strong>Math animation</strong><small>Equations &amp; geometry</small></span></label>
+                <label><input type="checkbox" name="enable_image" checked><span><strong>Illustrations</strong><small>Ideas you can picture</small></span></label>
+                <label><input type="checkbox" name="enable_narration" checked><span><strong>Voice &amp; captions</strong><small>A guide at every step</small></span></label>
+              </div><p class="lesson-hint">Your lesson uses the selected tools where they fit the content.</p></fieldset>
+            </div>
+          </details>
+        </fieldset>
+        <p class="composer-note">Your key is used only for this build. It is never saved with your lesson.</p>
+        <p class="lesson-notice" id="lesson-config-note" role="status" hidden></p>
+        <p class="lesson-error" id="lesson-error" role="alert" hidden></p>
+        <noscript><p class="lesson-error">Enable JavaScript to create a lesson and follow its progress.</p></noscript>
+      </form>
+
+      <div class="starter-row" aria-label="Lesson starters">
+        <span class="starter-label">Or start from</span>
+        <button class="starter-chip" type="button" data-topic="Why does a longer lever need less force?" data-audience="Grade 9 students"><span class="starter-kicker">PHYSICS</span>Why does a longer lever need less force?</button>
+        <button class="starter-chip" type="button" data-topic="What makes a parabola change its shape?" data-audience="Grade 9 students"><span class="starter-kicker">ALGEBRA</span>What makes a parabola change its shape?</button>
+        <button class="starter-chip" type="button" data-topic="How do plants turn sunlight into food?" data-audience="Grade 7 students"><span class="starter-kicker">BIOLOGY</span>How do plants turn sunlight into food?</button>
+        <button class="starter-chip" type="button" data-topic="How do computers count in binary?" data-audience="Grade 8 students"><span class="starter-kicker">COMPUTING</span>How do computers count in binary?</button>
+        <button class="starter-chip" type="button" data-topic="What actually happens when ice melts?" data-audience="Grade 6 students"><span class="starter-kicker">CHEMISTRY</span>What actually happens when ice melts?</button>
+      </div>
+
+      <section class="lesson-process-card" id="lesson-process" aria-labelledby="progress-heading" hidden>
+        <span class="lesson-eyebrow" id="lesson-progress-kicker">02 / FROM BRIEF TO POSSIBILITY</span>
+        <h2 id="progress-heading">Ideas take shape,<br>one step at a time.</h2>
+        <p class="lesson-process-copy" id="lesson-progress-copy">A thoughtful path from what you want to teach to something students can explore.</p>
+        <div id="lesson-live" class="lesson-live" role="status" aria-live="polite" hidden><span class="lesson-status-dot" aria-hidden="true"></span><span id="lesson-status-text"></span></div>
+        <ol class="lesson-stages" aria-label="Lesson generation stages">
+          <li data-stage="plan"><span class="lesson-stage-number">01</span><div><strong>Plan the story</strong><span data-stage-detail>Turn your goal into a lesson blueprint.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="prepare"><span class="lesson-stage-number">02</span><div><strong>Prepare the pieces</strong><span data-stage-detail>Shape each scene around an idea.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="render"><span class="lesson-stage-number">03</span><div><strong>Bring it to life</strong><span data-stage-detail>Create the visuals and sound.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="review"><span class="lesson-stage-number">04</span><div><strong>Review &amp; refine</strong><span data-stage-detail>Check the lesson&#8217;s scenes.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="bundle"><span class="lesson-stage-number">05</span><div><strong>Ready to explore</strong><span data-stage-detail>Bring the experience together.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+        </ol>
+        <div class="lesson-result" id="lesson-result" hidden><a class="button primary large" id="lesson-open" hidden>Open your lesson <span aria-hidden="true">&#8599;</span></a><button class="button large" id="lesson-retry" type="button" hidden>Retry generation <span aria-hidden="true">&#8635;</span></button><button class="lesson-start-over" id="lesson-start-over" type="button" hidden>Create another lesson &#8594;</button></div>
+        <p class="lesson-connection-note" id="lesson-connection-note" role="status" hidden></p>
+        <p class="lesson-timing" id="lesson-timing">Build time depends on your lesson and selected media.</p>
+      </section>
+    </section>
+
+    <div class="capability-band" aria-label="Four ways to bring a lesson to life">
+      <span class="band-label">A FULL CREATIVE TOOLKIT</span>
+      <span><i class="cap-icon motion-icon" aria-hidden="true">▥</i> Motion graphics</span>
+      <span><i class="cap-icon math-icon" aria-hidden="true">ƒ</i> Mathematical animation</span>
+      <span><i class="cap-icon art-icon" aria-hidden="true">✳</i> Visual explanations</span>
+      <span><i class="cap-icon practice-icon" aria-hidden="true">↔</i> Hands-on practice</span>
+    </div>
+
+    <section class="try-section" id="try">
+      <div class="section-heading">
+        <div class="section-intro"><span class="section-index">01 &#8212; A PIECE OF A LESSON</span><h2>Less watching.<br><em>More wondering.</em></h2></div>
+        <p class="section-aside">Every lesson can pause for a question. <br>This is one interactive moment, running live.</p>
+      </div>
+      <div class="try-stage">
         <div class="experiment-card">
           <div class="experiment-topline"><span><i class="live-dot"></i> THE INTERACTIVE CLASSROOM</span><span class="mini-label">01 / PHYSICS</span></div>
           <div class="experiment-heading"><h2>A little distance. <br>A bigger difference.</h2><span class="experiment-icon" aria-hidden="true">↔</span></div>
@@ -73,59 +147,18 @@
             <div class="balance-feedback" id="balance-feedback" role="status"><span class="balance-symbol" aria-hidden="true">↔</span><span id="balance-message">Can you make both turning effects equal?</span><button class="reset-experiment" id="reset-experiment" type="button" title="Reset experiment" aria-label="Reset lever experiment">↺</button></div>
           </div>
         </div>
-        <div class="hero-art-caption"><span>LESS WATCHING. MORE WONDERING.</span><span class="hand-arrow" aria-hidden="true">↖</span> Try it yourself</div>
-      </div>
-    </section>
-
-    <div class="capability-band" aria-label="Four ways to bring a lesson to life">
-      <span class="band-label">A FULL CREATIVE TOOLKIT</span>
-      <span><i class="cap-icon motion-icon" aria-hidden="true">▥</i> Motion graphics</span>
-      <span><i class="cap-icon math-icon" aria-hidden="true">ƒ</i> Mathematical animation</span>
-      <span><i class="cap-icon art-icon" aria-hidden="true">✳</i> Visual explanations</span>
-      <span><i class="cap-icon practice-icon" aria-hidden="true">↔</i> Hands-on practice</span>
-    </div>
-
-    <section class="demo-section" id="demo">
-      <div class="section-heading">
-        <div class="section-intro"><span class="section-index">01 — MADE WITH EDUCAST</span><h2>See the classroom<br><em>differently.</em></h2></div>
-        <p class="section-aside">A concept becomes a story. <br>A story becomes an experiment. <br>Explore three lessons from start to finish.</p>
-      </div>
-      <div class="demo-gallery" id="demo-gallery" role="tablist" aria-label="Example lessons">
-        <button class="demo-card active" id="demo-tab-quadratics" type="button" role="tab" aria-selected="true" aria-controls="demo-panel" tabindex="0" data-run="quadratics" data-src="/runs/quadratics/bundle/index.html?fresh=20260912fonts&amp;layout=board" data-title="Quadratic Functions: The Shape of a Parabola">
-          <span class="demo-thumbnail quadratics-thumbnail" aria-hidden="true"><img src="/assets/lesson-quadratics.svg" alt=""><span class="thumbnail-number">01</span></span>
-          <span class="demo-card-body"><span class="demo-card-kicker">ALGEBRA · GRADE 9</span><strong>The Shape of a Parabola</strong><span class="demo-card-description">Change a coefficient. See a new curve.</span><span class="demo-card-meta" data-demo-meta><i>8 chapters</i><i>2:47</i><i>1 practice</i></span></span><span class="demo-card-arrow" aria-hidden="true">↗</span>
-        </button>
-        <button class="demo-card" id="demo-tab-lever" type="button" role="tab" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-run="lever_v2_backup" data-src="/runs/lever_v2_backup/bundle/index.html?fresh=20260912fonts&layout=board" data-title="Torque and Lever Balance">
-          <span class="demo-thumbnail torque-thumbnail" aria-hidden="true"><img src="/assets/lesson-lever.svg" alt=""><span class="thumbnail-number">02</span></span>
-          <span class="demo-card-body"><span class="demo-card-kicker">PHYSICS · GRADE 9</span><strong>Torque &amp; Lever Balance</strong><span class="demo-card-description">Small force. Big turning effect.</span><span class="demo-card-meta" data-demo-meta><i>6 chapters</i><i>2:09</i><i>2 practices</i></span></span><span class="demo-card-arrow" aria-hidden="true">↗</span>
-        </button>
-        <button class="demo-card" id="demo-tab-ohm" type="button" role="tab" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-run="ohms_law" data-src="/runs/ohms_law/bundle/index.html?fresh=20260912fonts&layout=board" data-title="Ohm’s Law: Current, Voltage and Resistance">
-          <span class="demo-thumbnail ohm-thumbnail" aria-hidden="true"><img src="/assets/lesson-ohm.svg" alt=""><span class="thumbnail-number">03</span></span>
-          <span class="demo-card-body"><span class="demo-card-kicker">PHYSICS · GRADE 9</span><strong>Making Sense of Ohm’s Law</strong><span class="demo-card-description">Find the connection. Follow the current.</span><span class="demo-card-meta" data-demo-meta><i>7 chapters</i><i>2:24</i><i>2 practices</i></span></span><span class="demo-card-arrow" aria-hidden="true">↗</span>
-        </button>
-      </div>
-      <div class="demo-panel" id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-quadratics">
-        <div class="demo-player-heading"><div><span class="watch-indicator" aria-hidden="true">▶</span><span id="demo-current-title">Quadratic Functions: The Shape of a Parabola</span><span class="preview-badge">EXAMPLE LESSON</span></div><a id="demo-open" href="/runs/quadratics/bundle/index.html?layout=board" target="_blank" rel="noopener">Open full player <span aria-hidden="true">↗</span></a></div>
-        <div class="demo-player-shell" aria-busy="true">
-          <div class="demo-loading" id="demo-loading" role="status"><span class="loading-ring"></span><span>Preparing your classroom…</span></div>
-          <iframe id="demo-frame" src="/runs/quadratics/bundle/index.html?fresh=20260912fonts&amp;layout=board" title="Quadratic Functions: The Shape of a Parabola interactive lesson" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+        <div class="try-aside">
+          <div class="classroom-cast" aria-hidden="true">
+            <img src="/assets/characters/character-1.png" alt="" loading="lazy">
+            <img src="/assets/characters/character-2.png" alt="" loading="lazy">
+            <img src="/assets/characters/character-4.png" alt="" loading="lazy">
+          </div>
+          <div class="learning-features">
+            <article><span class="feature-number">01 / WATCH</span><h3>Make the invisible visible.</h3><p>Equations unfold, diagrams explain, and abstract ideas find their shape.</p></article>
+            <article><span class="feature-number">02 / LISTEN</span><h3>Every step has a voice.</h3><p>Narration and captions stay with the lesson, so each idea has room to land.</p></article>
+            <article><span class="feature-number">03 / TRY</span><h3>Understanding takes practice.</h3><p>Explore a simulation or answer a question, right where the concept clicks.</p></article>
+          </div>
         </div>
-        <div class="demo-player-bottom"><span><i></i> Watch, jump between chapters, or pause to practice.</span><span id="demo-review-note">Example build · review details in Studio</span></div>
-      </div>
-      <div class="demo-more">
-        <a class="button primary" id="more-lessons" href="/more-lessons">More lessons <span aria-hidden="true">↗</span></a>
-        <p>Two newer builds — <strong>Binary Numbers</strong> and <strong>Photosynthesis</strong> — are still finishing review.</p>
-      </div>
-      <div class="learning-features">
-        <article><span class="feature-number">01 / WATCH</span><h3>Make the invisible visible.</h3><p>Equations unfold, diagrams explain, and abstract ideas find their shape.</p></article>
-        <article><span class="feature-number">02 / LISTEN</span><h3>Every step has a voice.</h3><p>Narration and captions stay with the lesson, so each idea has room to land.</p></article>
-        <article><span class="feature-number">03 / TRY</span><h3>Understanding takes practice.</h3><p>Explore a simulation or answer a question, right where the concept clicks.</p></article>
-      </div>
-      <div class="classroom-cast" aria-hidden="true">
-        <img src="/assets/characters/character-1.png" alt="" loading="lazy">
-        <img src="/assets/characters/character-2.png" alt="" loading="lazy">
-        <img src="/assets/characters/character-4.png" alt="" loading="lazy">
-        <img src="/assets/characters/character-5.png" alt="" loading="lazy">
       </div>
     </section>
 
@@ -180,7 +213,8 @@
   <footer class="site-footer"><a class="product" href="#top"><img src="/assets/brand.svg" width="28" height="28" alt=""><span class="product-name">EduCast.</span></a><span>Made for the moment an idea clicks.</span><span class="footer-engine">POWERED BY EDUHARNESS</span><a href="#pipeline">Back to the process ↗</a></footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="/assets/pointer-trail.js?v=20260910"></script>
-  <script src="/assets/landing.js?v=20260912-bundle-refresh"></script>
+  <script src="/assets/landing.js?v=20260918-composer"></script>
+  <script src="/assets/new-lesson.js?v=20260918-composer"></script>
   <script src="/assets/app.js?v=20260910-design"></script>
 </body>
 </html>

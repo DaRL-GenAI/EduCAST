@@ -669,10 +669,6 @@ class StudioHandler(RangeHandler):
             "/assets/app.css": (ASSET_DIR / "app.css", "text/css; charset=utf-8"),
             "/assets/app.js": (ASSET_DIR / "app.js", "text/javascript; charset=utf-8"),
             "/assets/landing.js": (ASSET_DIR / "landing.js", "text/javascript; charset=utf-8"),
-            # Standalone pages live under assets/ but get a clean URL, so the
-            # home page can link to them the same way the public site does.
-            "/more-lessons": (ASSET_DIR / "assets" / "more-lessons.html", "text/html; charset=utf-8"),
-            "/more-lessons/": (ASSET_DIR / "assets" / "more-lessons.html", "text/html; charset=utf-8"),
         }
         if path in assets:
             file_path, content_type = assets[path]
@@ -752,9 +748,6 @@ class StudioHandler(RangeHandler):
             return
         if path == "/assets/landing.js":
             self._send_asset("landing.js", "text/javascript; charset=utf-8")
-            return
-        if path in {"/more-lessons", "/more-lessons/"}:
-            self._send_asset_path("more-lessons.html")
             return
         if path.startswith("/assets/"):
             self._send_asset_path(path.removeprefix("/assets/"))

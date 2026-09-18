@@ -26,30 +26,37 @@ from .server import (
 
 ASSET_DIR = Path(__file__).resolve().parent
 RUNS_ROOT = ASSET_DIR.parents[1] / 'runs'
-# The three finished lessons on the home page, plus the newer preview builds
-# listed on /more-lessons. Membership only makes a bundle servable; whether a
-# lesson reads as finished or as a preview comes from its bundle/warnings.json.
+# Bundles that stay servable by id even though the showcase no longer lists
+# them, so links handed out for an earlier example lesson keep working.
 FEATURED_RUNS = frozenset({'quadratics', 'lever_v2_backup', 'ohms_law',
                            'binary', 'photosynthesis'})
+RETIRED_PAGES = frozenset({'/new-lesson', '/new-lesson/',
+                          '/more-lessons', '/more-lessons/'})
 _CREATE_LOCK = threading.Lock()
 
 
 def public_html() -> bytes:
+    """The home page without the local Studio desk.
+
+    The composer and its progress panel are the page itself, so the public
+    build only has to drop the Studio section and the controls that drive it.
+    """
     html = (ASSET_DIR / 'index.html').read_text(encoding='utf-8')
     html = re.sub(r'<section\b[^>]*\bid="studio"[^>]*>.*?(?=</main>)', '', html, flags=re.S)
     html = re.sub(r'<a href="#studio">.*?</a>', '', html, flags=re.S)
     html = re.sub(r'<span class="connection" id="connection">.*?</span></span>', '', html, flags=re.S)
     html = re.sub(r'<button\b(?=[^>]*\bid="refresh")[^>]*>.*?</button>', '', html, flags=re.S)
+    # Studio's build buttons become plain links to the composer at the top.
     links = {
-        'new-build': ('/new-lesson', 'button primary', 'New lesson ↗'),
-        'hero-new-build': ('/new-lesson', 'text-button', 'Make something new ↗'),
-        'pipeline-new-build': ('/new-lesson', 'button primary large', 'Create your lesson ↗'),
+        'new-build': ('button primary', '<span class="nav-desktop">Create a lesson</span>'
+                      '<span class="nav-mobile">Create</span> <span aria-hidden="true">↗</span>'),
+        'pipeline-new-build': ('button primary large', 'Create your lesson <span aria-hidden="true">↗</span>'),
     }
-    for element_id, (href, css, label) in links.items():
+    for element_id, (css, label) in links.items():
         pattern = rf'<button\b(?=[^>]*\bid="{element_id}")[^>]*>.*?</button>'
-        html = re.sub(pattern, f'<a id="{element_id}" href="{href}" class="{css}">{label}</a>', html, flags=re.S)
-    html = re.sub(r'<script src="/assets/app\.js[^\"]*"></script>',
-                  '<script src="/assets/showcase.js?v=20260910"></script>', html)
+        html = re.sub(pattern, f'<a id="{element_id}" href="#top" class="{css}">{label}</a>', html, flags=re.S)
+    # app.js only drives the Studio desk, which this page does not include.
+    html = re.sub(r'<script src="/assets/app\.js[^\"]*"></script>', '', html)
     return html.encode('utf-8')
 
 
@@ -128,10 +135,6 @@ class PublicHandler(RangeHandler):
     def public_path(self) -> Path | None:
         path = unquote(urlparse(self.path).path)
         assets = {'/assets/app.css': 'app.css', '/assets/landing.js': 'landing.js'}
-        if path in {'/new-lesson', '/new-lesson/'}:
-            return _within_file(ASSET_DIR / 'assets', 'new-lesson.html')
-        if path in {'/more-lessons', '/more-lessons/'}:
-            return _within_file(ASSET_DIR / 'assets', 'more-lessons.html')
         if path in assets:
             return _within_file(ASSET_DIR, assets[path])
         if path.startswith('/assets/'):
@@ -146,6 +149,13 @@ class PublicHandler(RangeHandler):
         return str(resolved) if resolved else str(ASSET_DIR / '__not_public__')
 
     def send_head(self):
+        # The lesson form lives on the home page now; keep the old links working.
+        if urlparse(self.path).path in RETIRED_PAGES:
+            self.send_response(HTTPStatus.MOVED_PERMANENTLY)
+            self.send_header('Location', '/')
+            self.send_header('Content-Length', '0')
+            self.end_headers()
+            return None
         if urlparse(self.path).path in {'/', '/index.html'}:
             data = public_html()
             self.send_response(HTTPStatus.OK)

@@ -324,19 +324,6 @@
 
   function scrollToStudio() { revealStudio().scrollIntoView({ behavior: "smooth", block: "start" }); }
 
-  function selectDemo(card) {
-    const frame = $("demo-frame");
-    if (!card || !frame || card.classList.contains("active")) return;
-    qsa(".demo-card").forEach((item) => {
-      const on = item === card;
-      item.classList.toggle("active", on);
-      item.setAttribute("aria-selected", on ? "true" : "false");
-      item.tabIndex = on ? 0 : -1;
-    });
-    frame.src = card.dataset.src;
-    frame.title = `${card.dataset.title} interactive lesson`;
-  }
-
   function beginNew() {
     state.newMode = true;
     state.dirty = false;
@@ -363,10 +350,11 @@
   function bind() {
     $("refresh").addEventListener("click", () => refresh(false));
     $("new-build").addEventListener("click", beginNew);
-    $("hero-new-build").addEventListener("click", beginNew);
-    const pipelineNew = $("pipeline-new-build");
-    if (pipelineNew) pipelineNew.addEventListener("click", beginNew);
-    qsa(".demo-card").forEach((card) => card.addEventListener("click", () => selectDemo(card)));
+    // The showcase composer replaced the hero and demo build buttons.
+    ["hero-new-build", "pipeline-new-build"].forEach((id) => {
+      const button = $(id);
+      if (button) button.addEventListener("click", beginNew);
+    });
     qsa('.top-nav a[href="#studio"]').forEach((link) => link.addEventListener("click", () => revealStudio()));
     $("run-search").addEventListener("input", renderRuns);
     qsa(".tab").forEach((tab) => tab.addEventListener("click", () => activateTab(tab.dataset.tab)));

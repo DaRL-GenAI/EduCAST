@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import json
-import re
 from html.parser import HTMLParser
 from pathlib import Path
 import threading
 import time
 from urllib.error import HTTPError
-from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 import pytest
@@ -136,7 +134,8 @@ def test_studio_http_api_and_path_guard(tmp_path) -> None:
             "/assets/characters/character-1.png": "image/png",
             "/assets/landing.js": "text/javascript",
             "/assets/brand.svg": "image/svg+xml",
-            "/assets/lesson-lever.svg": "image/svg+xml",
+            "/assets/new-lesson.js": "text/javascript",
+            "/assets/pointer-trail.css": "text/css",
             "/assets/fonts/dmsans-400.ttf": "font/ttf",
         }
         for path, content_type in assets.items():
@@ -181,34 +180,49 @@ def test_studio_homepage_preserves_navigation_and_build_controls() -> None:
     assert any(tag == "html" and attrs.get("lang") == "en" for tag, attrs in page.elements)
     ids = {attrs["id"] for _, attrs in page.elements if "id" in attrs}
     assert {
-        "demo", "pipeline", "studio", "new-build", "hero-new-build",
+        "top", "try", "pipeline", "studio", "new-build",
         "pipeline-new-build", "run-search", "run-list", "request-form",
         "save-draft", "save-and-plan", "open-player", "open-standalone",
         "metric-scenes", "scene-list", "preview-stage",
     } <= ids
     links = {attrs.get("href") for tag, attrs in page.elements if tag == "a"}
-    assert {"#demo", "#pipeline", "#studio"} <= links
+    assert {"#try", "#pipeline", "#studio"} <= links
     assert not any("\u4e00" <= char <= "\u9fff" for char in html)
 
 
-def test_demo_embeds_complete_lesson_player() -> None:
+def test_home_page_leads_with_the_lesson_composer() -> None:
+    """The brief, its controls, and its progress panel share the home page."""
     page = _Homepage(Path("eduharness/studio/index.html").read_text(encoding="utf-8"))
-    frame = next(attrs for tag, attrs in page.elements
-                 if tag == "iframe" and attrs.get("id") == "demo-frame")
-    assert frame.get("title"), "the embedded player needs an accessible label"
-    assert "allowfullscreen" in frame
-    cards = [attrs for tag, attrs in page.elements
-             if tag == "button" and attrs.get("data-run")]
-    assert cards, "visitors must be able to select complete example lessons"
-    assert frame["src"] in {card["data-src"] for card in cards}
-    for card in cards:
-        source = urlsplit(card["data-src"])
-        assert not source.scheme and not source.netloc
-        assert re.fullmatch(r"/runs/[\w.-]+/bundle/index\.html", source.path), source.path
-        assert source.path == f'/runs/{card["data-run"]}/bundle/index.html'
-    full_player = next(attrs for tag, attrs in page.elements
-                       if tag == "a" and attrs.get("id") == "demo-open")
-    assert urlsplit(full_player["href"]).path == urlsplit(frame["src"]).path
+    ids = {attrs["id"] for _, attrs in page.elements if "id" in attrs}
+    # new-lesson.js drives the composer through these elements.
+    assert {
+        "lesson-form", "lesson-fields", "lesson-topic", "openai-api-key",
+        "lesson-submit", "lesson-error", "lesson-config-note", "lesson-process",
+        "lesson-live", "lesson-status-text", "lesson-result", "lesson-open",
+        "lesson-retry", "lesson-start-over", "lesson-timing",
+        "lesson-connection-note", "lesson-progress-kicker", "progress-heading",
+        "lesson-progress-copy",
+    } <= ids
+
+    topic = next(attrs for tag, attrs in page.elements
+                 if tag == "textarea" and attrs.get("id") == "lesson-topic")
+    assert "required" in topic and topic.get("name") == "topic"
+    key = next(attrs for tag, attrs in page.elements
+               if tag == "input" and attrs.get("id") == "openai-api-key")
+    assert key.get("type") == "password" and key.get("autocomplete") == "new-password"
+
+    # The panel stays hidden until a build starts, so the page opens on the brief.
+    process = next(attrs for tag, attrs in page.elements
+                   if attrs.get("id") == "lesson-process")
+    assert "hidden" in process
+
+    starters = [attrs for tag, attrs in page.elements
+                if tag == "button" and attrs.get("class") == "starter-chip"]
+    assert starters, "visitors need example briefs to start from"
+    assert all(chip.get("data-topic") and chip.get("data-audience") for chip in starters)
+
+    stages = [attrs for tag, attrs in page.elements if attrs.get("data-stage")]
+    assert [chip["data-stage"] for chip in stages if chip.get("class") != "pipeline-card"]
 
 
 def test_player_contains_resume_snapshot_contract() -> None:
