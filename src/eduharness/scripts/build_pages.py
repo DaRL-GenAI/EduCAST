@@ -50,7 +50,7 @@ def rewrite_html(html: str) -> str:
     html = html.replace(
         '<a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>',
         '<a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>\n'
-        '      <a href="../project/"><span class="nav-desktop">Project page</span><span class="nav-mobile">Resources</span></a>', 1)
+        '      <a href="../" target="_top"><span class="nav-desktop">Project page</span><span class="nav-mobile">Resources</span></a>', 1)
     return html
 
 
