@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="description"
         content="EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review">
+  <link rel="canonical" href="https://darl-genai.github.io/EduCAST/">
   <meta name="keywords" content="Agents, Education, Video Generation, LLM, VLM">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review</title>
@@ -27,39 +28,29 @@
     .figure-caption { color: #666; font-size: 0.95rem; margin-top: 0.5rem; }
     pre.bibtex { white-space: pre-wrap; text-align: left; }
     .table-wrap { overflow-x: auto; }
+    html { scroll-behavior: smooth; }
+    .project-nav { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 24px; padding:16px; border-bottom:1px solid #eee; }
+    .project-nav a { color:#505050; padding:8px 4px; font-weight:600; }
+    .resource-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .resource-card { display:block; padding:24px; border:1px solid #dedee5; border-radius:14px; color:#363636; background:#fff; transition:border-color .2s,transform .2s; }
+    .resource-card:hover { border-color:#b60000; transform:translateY(-2px); color:#363636; }
+    .resource-card h3 { font-size:1.2rem; font-weight:700; margin-bottom:8px; color:#960000; }
+    .resource-card p { line-height:1.6; }
+    .resource-card .resource-action { display:block; margin-top:14px; font-weight:600; color:#960000; }
+    a:focus-visible { outline:3px solid #b60000; outline-offset:4px; }
+    section[id] { scroll-margin-top:20px; }
+    @media(max-width:600px) { .resource-grid { grid-template-columns:1fr; } .publication-title { font-size:2.1rem !important; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .resource-card { transition:none; } .resource-card:hover { transform:none; } }
   </style>
 </head>
 <body>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu" id="navMenu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://labs.engineering.asu.edu/hw/" aria-label="DaRL Lab home">
-        <span class="icon"><i class="fas fa-home"></i></span>
-      </a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">More Research</a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://darl-genai.github.io/instructional_agents_homepage/">
-            Instructional Agents: Reducing Teaching Faculty Workload through Multi-Agent Instructional Design (EACL 2026)
-          </a>
-          <a class="navbar-item" href="https://github.com/DaRL-GenAI/instructional_agents_studio">
-            Instructional Agents Studio: the course-building app for instructors
-          </a>
-          <a class="navbar-item" href="https://darl-genai.github.io/instructional_agents_homepage/grounding/">
-            Textbook Grounding for Instructional Agents (NeurIPS 2026 Workshop)
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+<nav class="project-nav" aria-label="Project navigation">
+  <a href="#resources">Resources</a>
+  <a href="#overview">Overview</a>
+  <a href="#method">Method</a>
+  <a href="#evaluation">Evaluation</a>
+  <a href="#BibTeX">Citation</a>
 </nav>
 
 <section class="hero">
@@ -90,25 +81,54 @@
               <span class="link-block">
                 <a href="./demo/" class="external-link button is-normal is-rounded is-danger">
                   <span class="icon"><i class="fas fa-play"></i></span>
-                  <span>Demo</span>
+                  <span>GUI / Demo</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://github.com/DaRL-GenAI/EduCAST/tree/main/src" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://github.com/DaRL-GenAI/EduCAST" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
+                  <span>GitHub</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://darl-genai.github.io/instructional_agents_homepage/" class="external-link button is-normal is-rounded is-dark">
+                <a href="#resources" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fas fa-chalkboard-teacher"></i></span>
-                  <span>Instructional Agents</span>
+                  <span>All resources</span>
                 </a>
               </span>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="resources" style="background:#faf9f7;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Explore EduCAST</h2>
+    <p class="has-text-centered" style="margin-bottom:24px;">One project page for the interface, code, documentation, and citation.</p>
+    <div class="resource-grid">
+      <a class="resource-card" href="./demo/">
+        <h3><i class="fas fa-desktop" aria-hidden="true"></i> GUI / Interactive demo</h3>
+        <p>Explore the lesson composer, scene workflow, and lesson showcase in your browser.</p>
+        <span class="resource-action">Open the GUI &rarr;</span>
+      </a>
+      <a class="resource-card" href="https://github.com/DaRL-GenAI/EduCAST">
+        <h3><i class="fab fa-github" aria-hidden="true"></i> GitHub repository</h3>
+        <p>Browse the source code, project files, and repository documentation.</p>
+        <span class="resource-action">View on GitHub &rarr;</span>
+      </a>
+      <a class="resource-card" href="https://github.com/DaRL-GenAI/EduCAST/tree/main/src/eduharness#run-the-website">
+        <h3><i class="fas fa-terminal" aria-hidden="true"></i> Run locally</h3>
+        <p>Set up the Python server and renderers to generate lessons with your own API key.</p>
+        <span class="resource-action">Read the setup guide &rarr;</span>
+      </a>
+      <a class="resource-card" href="#BibTeX">
+        <h3><i class="fas fa-quote-left" aria-hidden="true"></i> Cite EduCAST</h3>
+        <p>Find the project citation and BibTeX entry.</p>
+        <span class="resource-action">View citation &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -124,7 +144,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="overview">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
@@ -143,7 +163,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="method">
   <div class="container is-max-desktop">
     <h2 class="title is-3">How does EduCAST work?</h2>
     <div class="content has-text-justified">
@@ -179,7 +199,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="demo">
   <div class="container is-max-desktop">
     <h2 class="title is-3">Try the demo</h2>
     <div class="content has-text-justified">
@@ -199,7 +219,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="evaluation">
   <div class="container is-max-desktop">
     <h2 class="title is-3">Does the reviewer loop help?</h2>
     <div class="content has-text-justified">
