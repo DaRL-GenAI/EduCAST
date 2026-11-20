@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 610" role="img" aria-label="EduHarness review 机制：渲染期 guard、复审期检查、静态源码扫描三路证据合并成 GuardReport，与采样帧一起送进 VLM，_to_repair 用三条规则把证据提升为 blocking，其中静态扫描经由 kind 共用获得了否决权">
+          <defs>
+            <marker id="bh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <polygon points="0,1 10,5 0,9" fill="#17201B"></polygon>
+            </marker>
+            <marker id="bhd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <polygon points="0,1 10,5 0,9" fill="#B4423D"></polygon>
+            </marker>
+          </defs>
+<rect x="0" y="0" width="980" height="610" fill="#FAFBF8"/>
+
+          <text x="20" y="30" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17201B" opacity="0.6" letter-spacing="0.09em">三路证据</text>
+
+          <!-- evidence A -->
+          <rect x="20" y="44" width="238" height="78" rx="3" fill="#FAFBF8" stroke="#17201B" stroke-width="1.3"></rect>
+          <text x="34" y="68" font-family="IBM Plex Sans Condensed, sans-serif" font-size="15" font-weight="600" fill="#17201B">渲染期 guard</text>
+          <text x="34" y="88" font-size="11.5" fill="#17201B" opacity="0.68">每次 play()/wait() 量文字包围盒，</text>
+          <text x="34" y="105" font-size="11.5" fill="#17201B" opacity="0.68">运动按 0.25s 采样</text>
+          <text x="244" y="68" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#16734A">实测</text>
+
+          <!-- evidence B -->
+          <rect x="20" y="134" width="238" height="78" rx="3" fill="#FAFBF8" stroke="#17201B" stroke-width="1.3"></rect>
+          <text x="34" y="158" font-family="IBM Plex Sans Condensed, sans-serif" font-size="15" font-weight="600" fill="#17201B">复审期检查</text>
+          <text x="34" y="178" font-size="11.5" fill="#17201B" opacity="0.68">空帧 · DOM 溢出 · 素材缺失</text>
+          <text x="34" y="195" font-size="11.5" fill="#17201B" opacity="0.68">每轮从帧重算，不继承</text>
+          <text x="244" y="158" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#16734A">实测</text>
+
+          <!-- evidence C -->
+          <rect x="20" y="224" width="238" height="86" rx="3" fill="#FAFBF8" stroke="#B4423D" stroke-width="1.6"></rect>
+          <text x="34" y="248" font-family="IBM Plex Sans Condensed, sans-serif" font-size="15" font-weight="600" fill="#B4423D">静态源码扫描</text>
+          <text x="34" y="268" font-size="11.5" fill="#17201B" opacity="0.68">正则扫 place_at_grid /</text>
+          <text x="34" y="285" font-size="11.5" fill="#17201B" opacity="0.68">place_in_area，找重叠格子</text>
+          <text x="34" y="302" font-size="11.5" fill="#B4423D">没有时间概念</text>
+          <text x="244" y="248" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#B4423D">猜测</text>
+
+          <!-- merge -->
+          <g color="#17201B">
+            <path d="M 258 83 L 290 83 L 290 168" fill="none" stroke="#17201B" stroke-width="1.3"></path>
+            <line x1="258" y1="173" x2="316" y2="173" stroke="#17201B" stroke-width="1.3" marker-end="url(#bh)"></line>
+            <path d="M 258 267 L 290 267 L 290 178" fill="none" stroke="#B4423D" stroke-width="1.5"></path>
+          </g>
+
+          <rect x="320" y="140" width="150" height="66" rx="3" fill="#E7ECE6" stroke="#17201B" stroke-opacity="0.4"></rect>
+          <text x="334" y="166" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#17201B">GuardReport</text>
+          <text x="334" y="188" font-size="11.5" fill="#17201B" opacity="0.68">按 kind + subjects 去重</text>
+
+          <!-- frames -->
+          <rect x="320" y="44" width="150" height="66" rx="3" fill="#FAFBF8" stroke="#17201B" stroke-width="1.3"></rect>
+          <text x="334" y="70" font-family="IBM Plex Sans Condensed, sans-serif" font-size="15" font-weight="600" fill="#17201B">采样帧</text>
+          <text x="334" y="92" font-size="11.5" fill="#17201B" opacity="0.68">5 帧均匀 + guard 命中时刻</text>
+
+          <!-- to VLM -->
+          <g color="#17201B">
+            <path d="M 470 77 L 506 77 L 506 128" fill="none" stroke="#17201B" stroke-width="1.3"></path>
+            <line x1="470" y1="173" x2="516" y2="173" stroke="#17201B" stroke-width="1.3" marker-end="url(#bh)"></line>
+          </g>
+          <text x="478" y="158" font-family="IBM Plex Mono, monospace" font-size="10" fill="#17201B" opacity="0.62">"实测，非猜测"</text>
+
+          <rect x="520" y="100" width="210" height="112" rx="3" fill="#FAFBF8" stroke="#17201B" stroke-width="1.3"></rect>
+          <text x="536" y="126" font-family="IBM Plex Sans Condensed, sans-serif" font-size="16" font-weight="600" fill="#17201B">独立 VLM 审查</text>
+          <text x="536" y="147" font-size="11.5" fill="#17201B" opacity="0.68">一次结构化 vision 调用</text>
+          <text x="536" y="167" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17201B" opacity="0.75">score · brief_adherence</text>
+          <text x="536" y="184" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17201B" opacity="0.75">key_elements 必须分类</text>
+          <text x="536" y="201" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17201B" opacity="0.75">blocking / minor / ops</text>
+
+          <!-- down into _to_repair -->
+          <g color="#17201B">
+            <line x1="625" y1="212" x2="625" y2="252" stroke="#17201B" stroke-width="1.3" marker-end="url(#bh)"></line>
+          </g>
+
+          <!-- _to_repair rules -->
+          <rect x="320" y="256" width="610" height="132" rx="3" fill="#F2F5F0" stroke="#17201B" stroke-width="1.3"></rect>
+          <text x="338" y="282" font-family="IBM Plex Mono, monospace" font-size="13" fill="#17201B">_to_repair() — 三条覆写规则，都只往 blocking_issues 里加</text>
+          <text x="338" y="309" font-size="12.5" fill="#17201B" opacity="0.8">① key element 没列全 → 未分类的按"缺失"算（fail closed）</text>
+          <text x="338" y="331" font-size="12.5" fill="#17201B" opacity="0.8">② minor / layout / temporal 里出现实观缺陷措辞 → 提升为 blocking</text>
+          <text x="338" y="353" font-size="12.5" fill="#B4423D">③ guard 的 kind ∈ {text_overlap, text_occluded} → blocking，无视 severity</text>
+          <text x="338" y="375" font-size="11.5" fill="#17201B" opacity="0.62">规则 ③ 的本意是"实测几何不容 VLM 放水"</text>
+
+          <!-- the danger annotation -->
+          <path d="M 139 310 L 139 342 L 318 342" fill="none" stroke="#B4423D"
+                stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#bhd)"></path>
+          <text x="150" y="334" font-size="11.5" fill="#B4423D">静态猜测走了实测证据的通道</text>
+
+          <!-- finalize -->
+          <g color="#17201B">
+            <line x1="625" y1="388" x2="625" y2="420" stroke="#17201B" stroke-width="1.3" marker-end="url(#bh)"></line>
+          </g>
+          <rect x="440" y="424" width="370" height="56" rx="3" fill="#FAFBF8" stroke="#17201B" stroke-width="1.3"></rect>
+          <text x="456" y="448" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#17201B">finalize(pass_score = 7)</text>
+          <text x="456" y="468" font-size="12" fill="#17201B" opacity="0.72">passed = 没有任何 blocking，且 score ≥ 7</text>
+
+          <!-- outcomes -->
+          <g color="#16734A">
+            <path d="M 480 480 L 480 520 L 300 520" fill="none" stroke="#16734A" stroke-width="1.4" marker-end="url(#bh)"></path>
+          </g>
+          <text x="292" y="516" text-anchor="end" font-family="IBM Plex Sans Condensed, sans-serif" font-size="15" font-weight="600" fill="#16734A">通过 → Stage 3</text>
+
+          <g color="#356B8F">
+            <path d="M 770 480 L 770 520 L 700 520" fill="none" stroke="#356B8F" stroke-width="1.4" marker-end="url(#bh)"></path>
+          </g>
+          <rect x="330" y="536" width="368" height="56" rx="3" fill="#FAFBF8" stroke="#356B8F" stroke-width="1.3"></rect>
+          <text x="346" y="559" font-family="IBM Plex Sans Condensed, sans-serif" font-size="15" font-weight="600" fill="#356B8F">不通过 → repair_router</text>
+          <text x="346" y="578" font-size="11.5" fill="#17201B" opacity="0.72">先按 ops 定点打补丁（只打一次）→ 再失败则整段重生成</text>
+          <text x="712" y="516" font-family="IBM Plex Mono, monospace" font-size="11" fill="#356B8F">needs_repair()</text>
+
+          <text x="20" y="560" font-size="11.5" fill="#17201B" opacity="0.66">reviewer 自己挂了</text>
+          <text x="20" y="578" font-size="11.5" fill="#17201B" opacity="0.66">→ 转人工，绝不放行</text>
+        </svg>

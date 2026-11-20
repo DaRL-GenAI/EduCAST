@@ -1,0 +1,34 @@
+{
+  "critiques": [
+    {
+      "segment_id": "seg2",
+      "severity": "minor",
+      "issue": "Excessive emphasis in phrasing with bold and asterisks.",
+      "fix_action": "rewrite_narration",
+      "detail": ""
+    },
+    {
+      "segment_id": "seg3",
+      "severity": "major",
+      "issue": "Dark background with colored text is not legible.",
+      "fix_action": "re_render",
+      "detail": "Re-render to improve contrast and readability."
+    },
+    {
+      "segment_id": "seg4",
+      "severity": "major",
+      "issue": "Dark background reduces clarity.",
+      "fix_action": "re_render",
+      "detail": "Re-render for better visibility."
+    },
+    {
+      "segment_id": "seg5",
+      "severity": "major",
+      "issue": "Color contrast could be improved for clarity.",
+      "fix_action": "re_render",
+      "detail": "Re-render for clarity and to ensure consistent style with previous segments."
+    }
+  ],
+  "overall_score": 7.0,
+  "summary": "The video does a good job introducing vectors to high school students, but it would benefit from clearer visuals, especially in segments with black backgrounds. Improving the readability of text and the contrast in animations will significantly enhance understanding."
+}

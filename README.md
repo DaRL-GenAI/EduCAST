@@ -1,124 +1,65 @@
-# EduCAST
+<div align="center">
 
-EduCAST is the web interface for EduHarness: teaching requests become narrated
-lessons with animations, illustrations, chapter navigation, and interactive practice.
+# EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review
 
-This repository contains the existing website, its Python backend, lesson-generation
-pipeline, Remotion template, fonts, character artwork, and tests. Generated course
-bundles, local API credentials, execution logs, and development artifacts are excluded.
+**AAAI-27 Demonstration Program**
 
-## Run the website
+[**Project page**](https://darl-genai.github.io/EduCAST/) · [**Demo**](https://darl-genai.github.io/EduCAST/demo/) · [**Source code**](src/) · [**Instructional Agents**](https://darl-genai.github.io/instructional_agents_homepage/)
 
-Use Python 3.10 or later. From the repository root:
+</div>
+
+EduCAST turns a topic, a learner profile, and a learning goal into a narrated lesson with
+animations, illustrations, and interactive practice. An instructional planner writes a
+learner-conditioned lesson plan, a visual designer turns each scene into animation code or an
+image prompt, a rendering engine produces narrated media, and a VLM reviewer checks every scene
+and repairs only the ones that fail.
+
+![EduCAST pipeline](docs/static/images/pipeline.png)
+
+## Repository layout
+
+| Path | What it is | Published at |
+| --- | --- | --- |
+| [`docs/index.html`](docs/index.html) | Project page | <https://darl-genai.github.io/EduCAST/> |
+| [`docs/demo/`](docs/demo/) | Static build of the lesson composer and showcase | <https://darl-genai.github.io/EduCAST/demo/> |
+| [`src/`](src/) | Source code: the EduHarness system, the legacy pipeline, baselines, notebooks | |
+
+GitHub Pages serves `docs/` from the `main` branch. The demo is generated; rebuild it after
+changing the website under `src/eduharness/eduharness/studio/`:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+cd src/eduharness
+python scripts/build_pages.py      # writes ../../docs/demo/
+```
+
+## Run EduCAST locally
+
+The online demo cannot generate lessons, because that needs the Python server and local
+renderers. To run it yourself:
+
+```bash
+cd src/eduharness
+python -m venv .venv && source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m eduharness.studio.public --host 127.0.0.1 --port 8091
 ```
 
-Open `http://127.0.0.1:8091/`. The lesson brief is the home page: a composer
-takes the topic, audience, language, and visual style, with the learning goal,
-source material, and creative tools behind "Make it your own". Submitting it
-reveals the build progress panel in place.
+Then open <http://127.0.0.1:8091/>. Full setup, including the renderers (FFmpeg, Manim,
+Playwright, Remotion) and the bring-your-own-key API, is in
+[`src/eduharness/README.md`](src/eduharness/README.md).
 
-The public application requires a Python server; GitHub Pages alone cannot run
-the generation API or local renderers.
+## Related projects
 
-Generated bundles are served from `runs/<id>/bundle/` and open in their own
-player. Those media files are not part of this source export, so a link to an
-earlier example lesson only resolves once its bundle is copied or generated.
+- [Instructional Agents](https://github.com/DaRL-GenAI/instructional_agents) (EACL 2026): multi-agent course generation, from learning objectives and syllabus to slides, scripts, and assessments. [Project page](https://darl-genai.github.io/instructional_agents_homepage/)
+- [Instructional Agents Studio](https://github.com/DaRL-GenAI/instructional_agents_studio): the no-code app for instructors, `npx instructional-agents`.
 
-## Project site
+## Citation
 
-`docs/` holds a static copy of the showcase, published with GitHub Pages from the
-`main` branch. Rebuild it after changing anything under `eduharness/studio/`:
-
-```bash
-python scripts/build_pages.py
+```bibtex
+@inproceedings{chen2027educast,
+  title     = {EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review},
+  author    = {Chen, Qingyue and Nandra, Aarshdeeep Singh and Yao, Huaiyuan and Shourie, Varun and Kazi, Rayan and Wei, Hua},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (Demonstration Track)},
+  year      = {2027}
+}
 ```
-
-The script reuses `eduharness.studio.public.public_html`, so the published page
-stays in step with the server's public mode, and rewrites the server's absolute
-`/assets/...` routes to paths relative to the project site. Because Pages serves
-files only, the composer has no generation API to submit to there, so the static
-build replaces its footnote with a link back to these instructions.
-
-## Enable lesson generation
-
-Generation additionally requires FFmpeg, a local Manim installation, a Playwright
-browser, and the pinned Remotion dependencies. On Debian/Ubuntu:
-
-```bash
-sudo apt-get install ffmpeg build-essential python3-dev pkg-config \
-  libcairo2-dev libpango1.0-dev fonts-liberation
-python -m pip install -r requirements-render.txt
-python -m playwright install --with-deps chromium
-cd remotion_template
-npm ci
-cd ..
-```
-
-Use Node.js 18 or later for the template. A LaTeX installation is optional for
-Manim MathTex; without it, some explanations use plain text. Restart the Python
-server from the environment containing the installed rendering tools.
-
-The default model names are recorded in `.env.example`; users need API access
-and quota for the selected models. No credentials are bundled with this repository.
-
-## Bring your own OpenAI API key
-
-The composer accepts an OpenAI API key with the lesson request. Public
-creation and retry requests require a key and do not fall back to the server's key.
-The backend passes it through the job's child-process environment to the official
-`https://api.openai.com/v1` endpoint for text, vision, images, and narration.
-
-The credential is removed before writing the lesson request and is not placed in
-the command line, job metadata, or browser localStorage. The form clears it after
-a successful submission; retries require re-entry. This is server-mediated use:
-the hosting server receives the key for the job. Use HTTPS outside localhost and
-do not enable request-body/header logging for credential-bearing requests.
-
-Endpoints:
-
-- `GET /api/lessons/config`: form defaults and local rendering capabilities.
-- `POST /api/lessons`: lesson fields plus `openai_api_key`; supports `Idempotency-Key`.
-- `GET /api/lessons/{id}`: saved progress.
-- `POST /api/lessons/{id}/retry`: `openai_api_key` for retrying a saved lesson.
-
-This demo does not implement user accounts or private ownership of generated
-bundles. Keep it on localhost or behind appropriate access controls when handling
-private lesson content. The separate local Studio exposes job controls and logs:
-
-```bash
-python -m eduharness.studio --runs-dir runs --port 8080
-```
-
-## Source map
-
-| Location | Purpose |
-| --- | --- |
-| `eduharness/studio/index.html` | Composer, showcase, and Studio markup |
-| `eduharness/studio/app.css`, `landing.js` | Visual design and homepage interactions |
-| `eduharness/studio/assets/new-lesson.js` | Composer submission and build progress |
-| `eduharness/studio/public.py` | Public routes and lesson API |
-| `eduharness/studio/server.py` | Local Studio and background jobs |
-| `eduharness/pipeline.py`, `stage1/`, `stage2/` | Planning, preparation, rendering, review, repair |
-| `eduharness/stage3/` | EduBundle packaging and player |
-| `remotion_template/` | Motion-graphics renderer |
-| `scripts/build_pages.py` | Builds the static `docs/` project site |
-
-![EduHarness pipeline](docs/eduharness-pipeline.svg)
-
-## Tests
-
-```bash
-python -m pip install -r requirements-dev.txt
-python -m pytest -q tests/test_studio.py tests/test_user_api_key.py tests/test_config.py
-```
-
-Browser tests additionally require Playwright and Chromium. Unit tests use
-simulated providers or subprocesses; they do not require a real API key.
-
-Bundled font license notices are retained alongside their font files.

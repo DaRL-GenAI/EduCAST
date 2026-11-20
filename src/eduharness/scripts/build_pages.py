@@ -1,11 +1,11 @@
-"""Build the static GitHub Pages copy of the EduCast showcase into docs/.
+"""Build the static GitHub Pages copy of the EduCast showcase into docs/demo/.
 
 GitHub Pages serves files only, so the site is the public showcase without the
 generation API: `eduharness.studio.public.public_html` already strips the Studio
 desk, and this script rewrites the server's absolute `/assets/...` routes into
 paths relative to the published project site (https://<owner>.github.io/EduCAST/).
 
-    python scripts/build_pages.py
+    python scripts/build_pages.py          # from src/eduharness/
 
 The composer is the home page, and on Pages it has no backend to submit to, so
 the static build swaps in a notice pointing at the local-server instructions.
@@ -23,14 +23,15 @@ sys.path.insert(0, str(ROOT))
 from eduharness.studio.public import public_html  # noqa: E402
 
 STUDIO = ROOT / 'eduharness' / 'studio'
-DOCS = ROOT / 'docs'
-REPO = 'https://github.com/DaRL-GenAI/EduCAST#run-the-website'
+# The project page sits at docs/index.html; the showcase is published under /demo/.
+SITE = ROOT.parent.parent / 'docs'
+DOCS = SITE / 'demo'
+REPO = 'https://github.com/DaRL-GenAI/EduCAST/tree/main/src/eduharness#run-the-website'
 
 # Files the server exposes under /assets/ but keeps beside index.html.
 ROOT_ASSETS = ('app.css', 'landing.js')
-# docs/ also holds the hand-written pipeline diagrams, so only the generated
-# entries are cleared on rebuild.
-GENERATED = ('index.html', 'assets', '.nojekyll')
+# Only the generated entries are cleared on rebuild.
+GENERATED = ('index.html', 'assets')
 
 STATIC_NOTE = (
     '<p class="composer-note">This published page is a static preview: generating a lesson '
@@ -45,6 +46,11 @@ def rewrite_html(html: str) -> str:
     # let app.css drop the runtime "service unavailable" notice that follows it.
     html = re.sub(r'<p class="composer-note">.*?</p>', STATIC_NOTE, html, flags=re.S)
     html = html.replace('<body>', '<body data-static>', 1)
+    # The published demo sits under the project page; give it a way back.
+    html = html.replace(
+        '<a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>',
+        '<a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>\n'
+        '      <a href="../"><span class="nav-desktop">Project page</span><span class="nav-mobile">Paper</span></a>', 1)
     return html
 
 
@@ -55,7 +61,7 @@ def main() -> None:
             shutil.rmtree(target)
         elif target.exists():
             target.unlink()
-    DOCS.mkdir(exist_ok=True)
+    DOCS.mkdir(parents=True, exist_ok=True)
 
     assets = DOCS / 'assets'
     shutil.copytree(STUDIO / 'assets', assets, ignore=shutil.ignore_patterns('.DS_Store'))
@@ -70,8 +76,8 @@ def main() -> None:
     css.write_text(css.read_text(encoding='utf-8').replace('url("/assets/', 'url("'), encoding='utf-8')
 
     # Serve assets verbatim instead of running the files through Jekyll.
-    (DOCS / '.nojekyll').write_text('', encoding='utf-8')
-    print(f'Built {DOCS.relative_to(ROOT)}/ from {STUDIO.relative_to(ROOT)}/')
+    (SITE / '.nojekyll').write_text('', encoding='utf-8')
+    print(f'Built {DOCS} from {STUDIO.relative_to(ROOT)}/')
 
 
 if __name__ == '__main__':

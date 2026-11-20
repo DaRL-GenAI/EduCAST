@@ -1,0 +1,13 @@
+{
+  "overall_score": 8.0,
+  "content_issues": [
+    {
+      "segment_id": "seg2",
+      "field": "narration",
+      "issue": "Animation of matrix components shows decimal numbers like 1.002.00, which may confuse viewers. Ensure that numeric elements are displayed correctly as whole numbers to match the explanation of rows and columns.",
+      "suggestion": ""
+    }
+  ],
+  "visual_issues": [],
+  "summary": ""
+}

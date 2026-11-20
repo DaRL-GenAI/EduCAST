@@ -28,9 +28,12 @@ __pycache__/
 node_modules/
 .DS_Store
 .ipynb_checkpoints/
-eduharness/runtime/
-eduharness/browser-libs/
-eduharness/local/
-remotion_template/out/
-remotion_template/public/scene-props.json
-remotion_template/.eduharness_*.lock
+src/eduharness/eduharness/runtime/
+src/eduharness/eduharness/browser-libs/
+src/eduharness/eduharness/local/
+src/eduharness/remotion_template/out/
+src/eduharness/remotion_template/public/scene-props.json
+src/eduharness/remotion_template/.eduharness_*.lock
+
+# legacy/ ships its two sample runs (see src/legacy/README.md)
+!src/legacy/runs/
