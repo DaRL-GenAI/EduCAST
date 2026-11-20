@@ -1,322 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review">
-  <link rel="canonical" href="https://darl-genai.github.io/EduCAST/">
-  <meta name="keywords" content="Agents, Education, Video Generation, LLM, VLM">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review</title>
-
-  <meta property="og:title" content="EduCAST: Personalized Educational Video Generation with Closed-Loop Review">
-  <meta property="og:description" content="A topic, a learner profile and a learning goal become a narrated, interactive lesson, reviewed scene by scene. AAAI-27 Demo.">
-  <meta property="og:image" content="https://darl-genai.github.io/EduCAST/static/images/pipeline.png">
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/sun_devil.webp">
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <style>
-    .eval-table { margin: 0 auto; font-size: 0.95rem; }
-    .eval-table th, .eval-table td { text-align: center !important; vertical-align: middle !important; }
-    .eval-table td:first-child, .eval-table th:first-child { text-align: left !important; }
-    .component h3 { margin-bottom: 0.4rem !important; }
-    .figure-caption { color: #666; font-size: 0.95rem; margin-top: 0.5rem; }
-    pre.bibtex { white-space: pre-wrap; text-align: left; }
-    .table-wrap { overflow-x: auto; }
-    html { scroll-behavior: smooth; }
-    .project-nav { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 24px; padding:16px; border-bottom:1px solid #eee; }
-    .project-nav a { color:#505050; padding:8px 4px; font-weight:600; }
-    .resource-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
-    .resource-card { display:block; padding:24px; border:1px solid #dedee5; border-radius:14px; color:#363636; background:#fff; transition:border-color .2s,transform .2s; }
-    .resource-card:hover { border-color:#b60000; transform:translateY(-2px); color:#363636; }
-    .resource-card h3 { font-size:1.2rem; font-weight:700; margin-bottom:8px; color:#960000; }
-    .resource-card p { line-height:1.6; }
-    .resource-card .resource-action { display:block; margin-top:14px; font-weight:600; color:#960000; }
-    a:focus-visible { outline:3px solid #b60000; outline-offset:4px; }
-    section[id] { scroll-margin-top:20px; }
-    @media(max-width:600px) { .resource-grid { grid-template-columns:1fr; } .publication-title { font-size:2.1rem !important; } }
-    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .resource-card { transition:none; } .resource-card:hover { transform:none; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduCAST — Demo</title>
+<meta name="description" content="EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review. Watch the demo and explore the project and code.">
+<link rel="canonical" href="https://darl-genai.github.io/EduCAST/">
+<link rel="icon" href="./static/images/sun_devil.webp">
+<style>
+:root{color-scheme:light;--ink:#17232e;--muted:#586675;--accent:#315e78}
+*{box-sizing:border-box}body{margin:0;background:#fafbfc;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:1120px;margin:auto;padding:64px 28px 48px;text-align:center}
+h1{font-size:clamp(44px,7vw,72px);letter-spacing:-.055em;line-height:1.08;margin:0 0 18px;font-weight:800}
+.subtitle{max-width:860px;margin:0 auto 25px;font-size:clamp(20px,3vw,28px);line-height:1.4;font-weight:500;letter-spacing:-.02em}
+.authors{max-width:870px;margin:0 auto 10px;font-size:16px;line-height:1.9;color:var(--muted)}.authors span{display:inline-block}.authors sup{font-size:11px}
+.affiliation{font-size:15px;color:var(--muted);margin:0}.equal{font-size:12px;color:var(--muted);margin:7px 0 0}
+.links{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:28px 0 36px}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:11px 22px;border:1px solid #d5dce2;border-radius:30px;text-decoration:none;color:var(--ink);background:white;font-size:15px;font-weight:600;transition:background .18s,border-color .18s}
+.button.primary{background:var(--ink);border-color:var(--ink);color:white}.button:hover{background:#e9eff3;border-color:#a3b4c1}.button.primary:hover{background:var(--accent)}.button svg{width:18px;height:18px;fill:currentColor}a:focus-visible{outline:3px solid #5294b8;outline-offset:4px}
+figure{margin:0}video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#101820;border-radius:14px;box-shadow:0 12px 36px #17232e12}figcaption{margin-top:15px;color:var(--muted);font-size:14px}
+@media(max-width:600px){main{padding:38px 16px 28px}.subtitle{font-size:21px}.authors{font-size:14px}.links{margin:22px 0 26px}video{border-radius:8px}}
+@media(prefers-reduced-motion:reduce){.button{transition:none}}
+</style>
 </head>
-<body>
-
-<nav class="project-nav" aria-label="Project navigation">
-  <a href="#resources">Resources</a>
-  <a href="#overview">Overview</a>
-  <a href="#method">Method</a>
-  <a href="#evaluation">Evaluation</a>
-  <a href="#BibTeX">Citation</a>
-</nav>
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">Qingyue Chen<sup>*</sup>,</span>
-            <span class="author-block">Aarshdeeep Singh Nandra<sup>*</sup>,</span>
-            <span class="author-block"><a href="https://scholar.google.com/citations?user=I9aR8d8AAAAJ">Huaiyuan Yao</a><sup>*</sup>,</span>
-            <span class="author-block">Varun Shourie,</span>
-            <span class="author-block">Rayan Kazi,</span>
-            <span class="author-block"><a href="https://labs.engineering.asu.edu/hw/">Hua Wei</a></span>
-          </div>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">Arizona State University</span>
-            <span class="author-block">&nbsp;&nbsp;<sup>*</sup>Equal Contribution</span>
-          </div>
-
-          <p class="is-size-5 has-text-centered" style="color:#b60000; font-weight:600; display:block; margin-top:0.5rem;">
-            Accepted to the AAAI-27 Demonstration Program
-          </p>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <span class="link-block">
-                <a href="./demo/" class="external-link button is-normal is-rounded is-danger">
-                  <span class="icon"><i class="fas fa-play"></i></span>
-                  <span>GUI / Demo</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://github.com/DaRL-GenAI/EduCAST" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>GitHub</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#resources" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-chalkboard-teacher"></i></span>
-                  <span>All resources</span>
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="resources" style="background:#faf9f7;">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Explore EduCAST</h2>
-    <p class="has-text-centered" style="margin-bottom:24px;">One project page for the interface, code, documentation, and citation.</p>
-    <div class="resource-grid">
-      <a class="resource-card" href="./demo/">
-        <h3><i class="fas fa-desktop" aria-hidden="true"></i> GUI / Interactive demo</h3>
-        <p>Explore the lesson composer, scene workflow, and lesson showcase in your browser.</p>
-        <span class="resource-action">Open the GUI &rarr;</span>
-      </a>
-      <a class="resource-card" href="https://github.com/DaRL-GenAI/EduCAST">
-        <h3><i class="fab fa-github" aria-hidden="true"></i> GitHub repository</h3>
-        <p>Browse the source code, project files, and repository documentation.</p>
-        <span class="resource-action">View on GitHub &rarr;</span>
-      </a>
-      <a class="resource-card" href="https://github.com/DaRL-GenAI/EduCAST/tree/main/src/eduharness#run-the-website">
-        <h3><i class="fas fa-terminal" aria-hidden="true"></i> Run locally</h3>
-        <p>Set up the Python server and renderers to generate lessons with your own API key.</p>
-        <span class="resource-action">Read the setup guide &rarr;</span>
-      </a>
-      <a class="resource-card" href="#BibTeX">
-        <h3><i class="fas fa-quote-left" aria-hidden="true"></i> Cite EduCAST</h3>
-        <p>Find the project citation and BibTeX entry.</p>
-        <span class="resource-action">View citation &rarr;</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body has-text-centered">
-      <img src="./static/images/demo.png" alt="An EduCAST lesson on torque and levers: concept illustration, animated explanation, interactive practice, and lesson outline" style="max-width:100%; height:auto;">
-      <p class="figure-caption">
-        An EduCAST lesson on torque and levers: a concept illustration leads into an animated explanation and a lever-balancing exercise.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="overview">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Personalized instructional videos are costly to produce because lesson planning, visual design, narration, rendering, and quality control must be coordinated for each learner.
-            We present EduCAST, an open-source demonstration system that turns a topic, learner profile, and learning objective into an inspectable educational lesson.
-            A multi-agent pipeline creates a learner-conditioned plan, converts segments into animation code or structured specifications, renders narrated media, and uses VLM review to trigger localized repairs.
-            The interface exposes segment plans, media previews, and review feedback, while a browser player combines video, illustrations, and interactive practice.
-            A pilot comparison examines output quality and the overhead of the reviewer loop.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="method">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">How does EduCAST work?</h2>
-    <div class="content has-text-justified">
-      <p>
-        <strong>EduCAST</strong> makes <strong>Edu</strong>cational videos that are <strong>C</strong>ontrollable, <strong>A</strong>daptive, and <strong>S</strong>elf-correc<strong>T</strong>ing.
-        It combines explicit lesson and scene specifications with heterogeneous renderers, a review-and-repair loop, and a browser lesson player.
-      </p>
-    </div>
-    <div class="has-text-centered">
-      <img src="./static/images/pipeline.png" alt="EduCAST architecture: instructional planner, visual designer, rendering engine, and VLM reviewer with scene-level repair" style="max-width:720px; width:100%; height:auto;">
-      <p class="figure-caption">
-        Learner-conditioned planning, visual specification, rendering, and scene-level review. Feedback identifies the scenes to repair and recheck.
-      </p>
-    </div>
-    <div class="columns is-multiline" style="margin-top:1.5rem">
-      <div class="column is-half component">
-        <h3 class="title is-5">1) Instructional Planner</h3>
-        <p>Builds an ordered lesson blueprint from the topic, learner background, and learning goal: scene titles, narration, visual briefs, modality choices, and the teaching elements each scene must show.</p>
-      </div>
-      <div class="column is-half component">
-        <h3 class="title is-5">2) Visual Designer</h3>
-        <p>Turns each scene into something renderable: Python or JavaScript animation code, image-generation prompts, or code for an interactive exercise, under shared layout constraints.</p>
-      </div>
-      <div class="column is-half component">
-        <h3 class="title is-5">3) Rendering Engine</h3>
-        <p>Renders every scene independently, synchronizes it with synthesized narration, and packages a lesson bundle that the browser player can pause at planned practice points.</p>
-      </div>
-      <div class="column is-half component">
-        <h3 class="title is-5">4) VLM Reviewer</h3>
-        <p>Checks sampled frames against the scene brief and narration, flags missing content, wrong formulas, unreadable labels, and occlusion, then patches or regenerates only the flagged scenes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="demo">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Try the demo</h2>
-    <div class="content has-text-justified">
-      <p>
-        Enter a topic, learner profile, and learning goal, inspect the ordered scene cards, and follow preparation, rendering, and review progress.
-        Scene details show the narration, generated artifacts, previews, and review findings, and a failed stage resumes from its checkpoint.
-      </p>
-      <p>
-        The <a href="./demo/">online demo</a> shows the lesson composer and the pipeline. Generating a lesson needs the Python server, which you can
-        <a href="https://github.com/DaRL-GenAI/EduCAST/tree/main/src/eduharness#run-the-website">run locally</a> with your own OpenAI API key.
-      </p>
-    </div>
-    <div class="has-text-centered">
-      <a class="button is-danger is-rounded is-medium" href="./demo/"><span class="icon"><i class="fas fa-play"></i></span><span>Open the demo</span></a>
-      &nbsp;<a class="button is-dark is-rounded is-medium" href="https://github.com/DaRL-GenAI/EduCAST/tree/main/src"><span class="icon"><i class="fab fa-github"></i></span><span>Source code</span></a>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="evaluation">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Does the reviewer loop help?</h2>
-    <div class="content has-text-justified">
-      <p>
-        Five human evaluators scored 32 sections across five lessons on six 1&ndash;5 quality scales, comparing EduCAST with and without reviewer-guided repair.
-        The reviewer improves all six dimensions, with the largest gains in visual quality and multimedia design, at an estimated cost below $1 per output minute.
-      </p>
-    </div>
-    <div class="table-wrap">
-      <table class="table is-striped is-narrow eval-table">
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>Objective<br>alignment</th>
-            <th>Content<br>accuracy</th>
-            <th>Logic<br>flow</th>
-            <th>Visual<br>quality</th>
-            <th>Multimedia<br>design</th>
-            <th>Learner<br>adaptation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>w/o Reviewer</td><td>4.48</td><td>4.32</td><td>4.40</td><td>3.13</td><td>3.80</td><td>4.47</td></tr>
-          <tr><td>w/ Reviewer</td><td><strong>4.80</strong></td><td><strong>5.00</strong></td><td><strong>4.93</strong></td><td><strong>4.33</strong></td><td><strong>4.66</strong></td><td><strong>4.87</strong></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap" style="margin-top:1rem">
-      <table class="table is-striped is-narrow eval-table">
-        <thead>
-          <tr><th>Method</th><th>Generation time ratio</th><th>Tokens (k/min)</th><th>Cost (USD/min)</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>w/o Reviewer</td><td>2.21</td><td>35.30</td><td>0.29</td></tr>
-          <tr><td>w/ Reviewer</td><td>7.63</td><td>147.31</td><td>0.82</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="figure-caption has-text-centered">Pilot comparison. Quality scores range from 1 to 5; efficiency is per minute of output video.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Related projects</h2>
-    <div class="box" style="border-left:6px solid #b60000">
-      <h3 class="title is-5">Instructional Agents (EACL 2026)</h3>
-      <p>
-        Multi-agent instructional design that generates a whole course: learning objectives, syllabus, slides, lecture scripts, and assessments.
-        Its Studio app runs on your own computer with one command, <code>npx instructional-agents</code>.
-      </p>
-      <p style="margin-top:10px">
-        <a class="button is-danger is-rounded is-small" href="https://darl-genai.github.io/instructional_agents_homepage/"><span class="icon"><i class="fas fa-globe"></i></span><span>Project page</span></a>
-        &nbsp;<a class="button is-light is-rounded is-small" href="https://github.com/DaRL-GenAI/instructional_agents_studio"><span class="icon"><i class="fas fa-desktop"></i></span><span>Studio app</span></a>
-        &nbsp;<a class="button is-light is-rounded is-small" href="https://github.com/DaRL-GenAI/instructional_agents"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a>
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre class="bibtex"><code>@inproceedings{chen2027educast,
-  title     = {EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review},
-  author    = {Chen, Qingyue and Nandra, Aarshdeeep Singh and Yao, Huaiyuan and Shourie, Varun and Kazi, Rayan and Wei, Hua},
-  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (Demonstration Track)},
-  year      = {2027}
-}</code></pre>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content has-text-centered">
-          <p>
-            This work was partially supported by NSF awards #2442477, #2536297, #2550203, #2613637, #2616632, #2555560 and #2623317.
-          </p>
-          <p>
-            Page template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, licensed under
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-  document.querySelectorAll('.navbar-burger').forEach(function (b) {
-    b.addEventListener('click', function () {
-      b.classList.toggle('is-active');
-      document.getElementById(b.dataset.target).classList.toggle('is-active');
-    });
-  });
-</script>
-</body>
-</html>
+<body><main>
+<header>
+<h1>EduCAST</h1>
+<p class="subtitle">A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review</p>
+<p class="authors"><span>Qingyue Chen<sup>*</sup>,</span> <span>Aarshdeeep Singh Nandra<sup>*</sup>,</span> <span>Huaiyuan Yao<sup>*</sup>,</span> <span>Varun Shourie,</span> <span>Rayan Kazi,</span> <span>Hua Wei</span></p>
+<p class="affiliation">Arizona State University</p><p class="equal">* Equal contribution</p>
+<nav class="links" aria-label="Project links">
+<a class="button primary" href="./project/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v18H4V3zm2 2v14h12V5H6zm2 3h8v2H8V8zm0 4h8v2H8v-2z"/></svg>Project Page</a>
+<a class="button" href="https://github.com/DaRL-GenAI/EduCAST"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.54 21.82c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.4-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.54 0-1.22.44-2.22 1.16-3-.12-.29-.5-1.42.11-2.96 0 0 .95-.3 3.08 1.15a10.7 10.7 0 0 1 5.6 0c2.14-1.45 3.08-1.15 3.08-1.15.61 1.54.23 2.67.11 2.96.72.78 1.16 1.78 1.16 3 0 4.3-2.63 5.25-5.14 5.53.4.35.76 1.03.76 2.08v3.11c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8z"/></svg>GitHub</a>
+</nav></header>
+<figure><video controls playsinline preload="metadata" poster="./static/images/demo-poster.jpg" aria-label="EduCAST demonstration: parabola interactive lesson"><source src="./static/videos/educast-demo.mp4" type="video/mp4">Your browser does not support video playback. <a href="./static/videos/educast-demo.mp4">Download the demo</a>.</video><figcaption>EduCAST demo · Personalized lesson generation and interactive practice</figcaption></figure>
+</main></body></html>
