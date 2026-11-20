@@ -4,7 +4,7 @@
 
 **AAAI-27 Demonstration Program**
 
-[**Video demo**](https://darl-genai.github.io/EduCAST/) · [**Project page**](https://darl-genai.github.io/EduCAST/project/) · [**Demo**](https://darl-genai.github.io/EduCAST/demo/) · [**Source code**](src/) · [**Instructional Agents**](https://darl-genai.github.io/instructional_agents_homepage/)
+[**Project page / GUI**](https://darl-genai.github.io/EduCAST/) · [**Video demo**](https://darl-genai.github.io/EduCAST/video/) · [**Source code**](src/) · [**Instructional Agents**](https://darl-genai.github.io/instructional_agents_homepage/)
 
 </div>
 

@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT))
 from eduharness.studio.public import public_html  # noqa: E402
 
 STUDIO = ROOT / 'eduharness' / 'studio'
-# The project page sits at docs/index.html; the showcase is published under /demo/.
+# Publish the GUI at the project root and retain its assets under /demo/.
 SITE = ROOT.parent.parent / 'docs'
 DOCS = SITE / 'demo'
 REPO = 'https://github.com/DaRL-GenAI/EduCAST/tree/main/src/eduharness#run-the-website'
@@ -46,12 +46,25 @@ def rewrite_html(html: str) -> str:
     # let app.css drop the runtime "service unavailable" notice that follows it.
     html = re.sub(r'<p class="composer-note">.*?</p>', STATIC_NOTE, html, flags=re.S)
     html = html.replace('<body>', '<body data-static>', 1)
-    # The published demo sits under the project page; give it a way back.
-    html = html.replace(
-        '<a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>',
-        '<a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>\n'
-        '      <a href="../" target="_top"><span class="nav-desktop">Project page</span><span class="nav-mobile">Resources</span></a>', 1)
     return html
+
+
+
+def publish_gui_home() -> None:
+    """Publish the original GUI as the project home, with demo/code resources."""
+    html = (DOCS / 'index.html').read_text(encoding='utf-8')
+    html = html.replace('"assets/', '"./demo/assets/')
+    html = re.sub(r'\s*<a href="\.\./"[^>]*><span class="nav-desktop">Project page</span><span class="nav-mobile">Resources</span></a>', '', html)
+    links = ('<nav class="project-resources" aria-label="Project resources">'
+             '<a class="button primary" href="./video/">'
+             '<span aria-hidden="true">&#9654;</span> Watch demo</a>'
+             '<a class="button" href="https://github.com/DaRL-GenAI/EduCAST">GitHub '
+             '<span aria-hidden="true">&#8599;</span></a></nav>')
+    html = html.replace('</head>', '<link rel="canonical" href="https://darl-genai.github.io/EduCAST/">'
+                        '<style>.project-resources{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0 0}'
+                        '.project-resources .button{min-height:44px;padding:11px 22px;font-size:13px}</style></head>')
+    html = re.sub(r'(<p class="compose-lede">.*?</p>)', lambda m: m.group(1) + links, html, count=1, flags=re.S)
+    (SITE / 'index.html').write_text('\n'.join(line.rstrip() for line in html.splitlines()) + '\n', encoding='utf-8')
 
 
 def main() -> None:
@@ -74,6 +87,8 @@ def main() -> None:
     # app.css sits in assets/, so its @font-face URLs lose the /assets/ prefix.
     css = assets / 'app.css'
     css.write_text(css.read_text(encoding='utf-8').replace('url("/assets/', 'url("'), encoding='utf-8')
+
+    publish_gui_home()
 
     # Serve assets verbatim instead of running the files through Jekyll.
     (SITE / '.nojekyll').write_text('', encoding='utf-8')

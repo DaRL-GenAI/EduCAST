@@ -1,47 +1,189 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EduCAST — Personalized Educational Video Generation</title>
-<meta name="description" content="EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review. Watch the demo and explore the project and code.">
-<link rel="canonical" href="https://darl-genai.github.io/EduCAST/">
-<link rel="icon" href="./static/images/sun_devil.webp">
-<style>
-:root{color-scheme:light;--ink:#261d38;--muted:#756b83;--line:#e8e0ef;--accent:#7357ba}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;color:var(--ink);background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}.topbar{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1100px)/2));background:#ffffffed;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}.brand{text-decoration:none;font-weight:800;letter-spacing:-.035em;font-size:22px}.topbar nav{display:flex;gap:26px}.topbar nav a{text-decoration:none;font-size:14px;color:var(--muted)}.topbar nav a:hover{color:var(--accent)}
-header{padding:66px 24px 40px;text-align:center;background:radial-gradient(ellipse at 15% 15%,#fdeaf3,transparent 55%),radial-gradient(ellipse at 90% 35%,#edf0ff,transparent 55%),#fdfaff}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#8a67b0;font-size:12px;font-weight:700;margin:0 0 18px}h1{font-size:clamp(54px,8vw,86px);letter-spacing:-.065em;line-height:1.1;margin:0 0 20px;font-weight:800;background:linear-gradient(110deg,#c75e92 15%,#8c5fbd 48%,#556fd3 85%);color:transparent;background-clip:text}.subtitle{max-width:850px;margin:0 auto 24px;font-size:clamp(21px,3vw,29px);line-height:1.35;font-weight:650;letter-spacing:-.025em}.authors{max-width:900px;margin:0 auto 10px;font-size:16px;line-height:1.9;color:#62576f}.authors span{display:inline-block}.authors sup{font-size:11px}.affiliation{font-size:15px;color:var(--muted);margin:0}.equal{font-size:12px;color:var(--muted);margin:7px 0 0}.links{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:28px 0 0}.button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:11px 23px;border:1px solid #d9cee8;border-radius:30px;text-decoration:none;background:#fff;font-size:14px;font-weight:650;transition:transform .18s,box-shadow .18s}.button.primary{background:#7054ad;border-color:#7054ad;color:white}.button:hover{transform:translateY(-2px);box-shadow:0 6px 18px #7054ad20}.button svg{width:18px;height:18px;fill:currentColor}a:focus-visible{outline:3px solid #9f83d0;outline-offset:4px}
-section{padding:64px 24px}.shell{max-width:1100px;margin:auto}.section-head{text-align:center;margin:0 auto 28px}.section-head:before{content:"";display:block;width:48px;height:3px;margin:0 auto 17px;background:linear-gradient(90deg,#7180d7,#e39abf);border-radius:3px}h2{font-size:32px;letter-spacing:-.035em;margin:0 0 10px;font-weight:750}.section-head p{font-size:16px;line-height:1.6;color:var(--muted);margin:0}figure{margin:0}video{display:block;width:100%;aspect-ratio:16/9;background:#18202d;border-radius:16px;box-shadow:0 16px 50px #49316118}figcaption{text-align:center;margin-top:16px;color:var(--muted);font-size:14px;line-height:1.6}.abstract{background:linear-gradient(115deg,#fdf3f8,#f8f5fd 48%,#f1f5fd);border-block:1px solid var(--line)}.abstract .copy{max-width:880px;margin:auto;font-size:18px;line-height:1.85;color:#51465e}.pipeline-frame{padding:24px;background:white;border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 36px #49316108}.pipeline-frame img{display:block;width:100%;height:490px;object-fit:contain}.steps{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:24px 0 0}.steps span{font-size:13px;padding:8px 14px;border-radius:30px;background:#f5f0fb;color:#7054ad;border:1px solid #e8def3}footer{text-align:center;padding:30px 20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;background:#fcfaff}footer a{text-decoration:none}
-@media(max-width:600px){.topbar{padding:0 18px;height:58px}.topbar nav{gap:16px}.topbar nav a{font-size:12px}header{padding:42px 18px 34px}.authors{font-size:14px}.subtitle{font-size:22px}section{padding:44px 18px}h2{font-size:28px}.abstract .copy{font-size:16px;line-height:1.8}.pipeline-frame{padding:12px}.pipeline-frame img{height:auto}.section-head p{font-size:14px}video{border-radius:10px}.steps{gap:7px}.steps span{font-size:11px;padding:7px 10px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="EduCast turns a lesson brief into animation, illustration, narration, and interactive practice with the EduHarness pipeline.">
+  <meta name="theme-color" content="#f8f7f3">
+  <title>EduCast — Bring learning to life</title>
+  <link rel="icon" href="./demo/assets/brand.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./demo/assets/app.css?v=20260910-cast-trail">
+  <link rel="stylesheet" href="./demo/assets/pointer-trail.css?v=20260910">
+<link rel="canonical" href="https://darl-genai.github.io/EduCAST/"><style>.project-resources{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0 0}.project-resources .button{min-height:44px;padding:11px 22px;font-size:13px}</style></head>
+<body data-static>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="appbar">
+    <a class="product" href="#top" aria-label="EduCast home">
+      <img class="product-mark" src="./demo/assets/brand.svg" width="34" height="34" alt="">
+      <span class="product-name">EduCast<span class="brand-dot">.</span></span>
+    </a>
+    <nav class="top-nav" aria-label="Page sections">
+      <a href="#try"><span class="nav-desktop">Try a lesson piece</span><span class="nav-mobile">Try it</span></a>
+      <a href="#pipeline"><span class="nav-desktop">How it works</span><span class="nav-mobile">Process</span></a>
 
-[hidden]{display:none!important}.gui-panel{padding:0;background:#f8f7f3}.gui-tools{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:1440px;margin:0 auto 14px;font-size:14px;color:var(--muted)}.gui-tools a{color:var(--accent);text-underline-offset:3px}.gui-frame{display:block;width:100%;height:calc(100dvh - 64px);min-height:0;border:0;border-radius:0;background:#f8f7f3}.topbar nav a{display:inline-flex;align-items:center;min-height:44px}@media(max-width:600px){.gui-panel{padding:0}.gui-frame{height:calc(100dvh - 58px);min-height:0}.topbar nav{gap:12px}.topbar nav a{font-size:11px}}
-</style>
-</head>
-<body><div class="topbar"><a class="brand" href="#">EduCAST</a><nav aria-label="Sections"><a href="#gui" data-open-gui>GUI</a><a href="#demo">Demo</a><a href="#abstract">Abstract</a><a href="#pipeline">Pipeline</a></nav></div><main>
-<div id="overview-panel" role="region" aria-label="Project overview">
-<header><p class="eyebrow">Personalized educational video generation</p>
-<h1>EduCAST</h1>
-<p class="subtitle">A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review</p>
-<p class="authors"><span>Qingyue Chen<sup>*</sup>,</span> <span>Aarshdeeep Singh Nandra<sup>*</sup>,</span> <span>Huaiyuan Yao<sup>*</sup>,</span> <span>Varun Shourie,</span> <span>Rayan Kazi,</span> <span>Hua Wei</span></p>
-<p class="affiliation">Arizona State University</p><p class="equal">* Equal contribution</p>
-<nav class="links" aria-label="Project links">
-<a class="button primary" href="#gui" data-open-gui><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v18H4V3zm2 2v14h12V5H6zm2 3h8v2H8V8zm0 4h8v2H8v-2z"/></svg>GUI</a>
-<a class="button" href="https://github.com/DaRL-GenAI/EduCAST"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.54 21.82c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.4-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.54 0-1.22.44-2.22 1.16-3-.12-.29-.5-1.42.11-2.96 0 0 .95-.3 3.08 1.15a10.7 10.7 0 0 1 5.6 0c2.14-1.45 3.08-1.15 3.08-1.15.61 1.54.23 2.67.11 2.96.72.78 1.16 1.78 1.16 3 0 4.3-2.63 5.25-5.14 5.53.4.35.76 1.03.76 2.08v3.11c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8z"/></svg>GitHub</a>
-</nav></header>
-<section id="demo"><div class="shell"><div class="section-head"><h2>See EduCAST in action</h2><p>From a learning goal to a narrated lesson with interactive practice.</p></div>
-<figure><video controls playsinline preload="metadata" poster="./static/images/demo-poster.jpg" aria-label="EduCAST demonstration: parabola interactive lesson"><source src="./static/videos/educast-demo.mp4" type="video/mp4">Your browser does not support video playback. <a href="./static/videos/educast-demo.mp4">Download the demo</a>.</video><figcaption>EduCAST demo · Personalized lesson generation and interactive practice</figcaption></figure></div></section>
-<section id="abstract" class="abstract"><div class="shell"><div class="section-head"><h2>Abstract</h2></div><p class="copy">Personalized instructional videos are costly to produce because lesson planning, visual design, narration, rendering, and quality control must be coordinated for each learner. We present <strong>EduCAST</strong>, an open-source demonstration system that turns a topic, learner profile, and learning objective into an inspectable educational lesson. A multi-agent pipeline creates a learner-conditioned plan, converts segments into animation code or structured specifications, renders narrated media, and uses VLM review to trigger localized repairs. The interface exposes segment plans, media previews, and review feedback, while a browser player combines video, illustrations, and interactive practice. A pilot comparison examines output quality and the overhead of the reviewer loop.</p></div></section>
-<section id="pipeline"><div class="shell"><div class="section-head"><h2>From learning goals to interactive lessons</h2><p>Plan, visualize, render, and review—with localized repair when a scene needs another pass.</p></div><figure class="pipeline-frame"><img src="./static/images/pipeline.png" alt="EduCAST pipeline: the Instructional Planner creates a lesson plan; the Visual Designer produces code and image prompts; the Rendering Engine creates media; the VLM Reviewer returns scene-level feedback for repair, or passes the lesson to the learner." loading="lazy"><figcaption>Learner-conditioned generation with a closed-loop, scene-level review process.</figcaption></figure><div class="steps" aria-label="Pipeline stages"><span>01 · Instructional Planner</span><span>02 · Visual Designer</span><span>03 · Rendering Engine</span><span>04 · VLM Reviewer</span></div></div></section>
-</div>
-<div id="gui-panel" class="gui-panel" role="region" aria-label="GUI" hidden><iframe id="gui-frame" class="gui-frame" title="EduCAST original interactive GUI" data-src="./demo/" allow="fullscreen" allowfullscreen></iframe></div>
-</main><footer>EduCAST · Arizona State University &nbsp;·&nbsp; <a href="#gui" data-open-gui>GUI</a> &nbsp;·&nbsp; <a href="https://github.com/DaRL-GenAI/EduCAST">GitHub</a></footer><script>
-(()=>{
-function activate(gui){
- document.getElementById('overview-panel').hidden=gui;document.getElementById('gui-panel').hidden=!gui;
- if(gui){const frame=document.getElementById('gui-frame');if(!frame.hasAttribute('src'))frame.src=frame.dataset.src;document.querySelector('video')?.pause();}
-}
-document.querySelectorAll('[data-open-gui]').forEach(link=>link.addEventListener('click',()=>{activate(true);window.scrollTo({top:0,behavior:'instant'});}));
-function fromHash(){const gui=location.hash==='#gui';activate(gui);}
-window.addEventListener('hashchange',fromHash);fromHash();
-})();
-</script></body></html>
+    </nav>
+    <div class="appbar-actions">
+
+
+      <a id="new-build" href="#top" class="button primary"><span class="nav-desktop">Create a lesson</span><span class="nav-mobile">Create</span> <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main class="site-shell" id="main">
+
+    <section class="compose-section" id="top">
+      <div class="compose-intro">
+        <span class="hero-kicker"><i></i> FROM A LITTLE CURIOSITY TO A LOT OF POSSIBILITY</span>
+        <h1>Start with a little <em>curiosity.</em><span class="title-spark" aria-hidden="true">&#10039;</span></h1>
+        <p class="compose-lede">Tell us what you want to teach. EduCast turns your brief into animation, illustration, narration, and practice students can explore.</p><nav class="project-resources" aria-label="Project resources"><a class="button primary" href="./video/"><span aria-hidden="true">&#9654;</span> Watch demo</a><a class="button" href="https://github.com/DaRL-GenAI/EduCAST">GitHub <span aria-hidden="true">&#8599;</span></a></nav>
+      </div>
+
+      <form id="lesson-form" class="composer">
+        <fieldset id="lesson-fields" class="lesson-fields">
+          <legend class="sr-only">Your lesson brief</legend>
+          <div class="composer-shell">
+            <div class="composer-bar">
+              <label class="composer-chip" for="lesson-audience"><span>Who</span><input id="lesson-audience" name="audience" type="text" placeholder="Grade 9 students" maxlength="1000" autocomplete="off"></label>
+              <label class="composer-chip" for="lesson-language"><span>Language</span><select id="lesson-language" name="language"><option value="en">English</option><option value="zh-CN">Chinese</option></select></label>
+              <label class="composer-chip" for="lesson-theme"><span>Style</span><select id="lesson-theme" name="preferred_theme"><option value="studio_light">Studio Light</option><option value="academic_dark">Academic Dark</option></select></label>
+            </div>
+            <label class="composer-prompt" for="lesson-topic">
+              <span class="sr-only">What are we learning?</span>
+              <textarea id="lesson-topic" name="topic" rows="3" required maxlength="500" autocomplete="off" placeholder="What are we learning? Try &#8220;Why does a longer lever need less force?&#8221;"></textarea>
+            </label>
+            <div class="composer-foot">
+              <label class="composer-key" for="openai-api-key"><span aria-hidden="true">Key</span><span class="sr-only">OpenAI API key</span><input id="openai-api-key" name="openai_api_key" type="password" placeholder="OpenAI API key" required minlength="24" autocomplete="new-password" spellcheck="false"></label>
+              <button id="lesson-submit" class="button primary large composer-submit" type="submit">Generate lesson <span aria-hidden="true">&#8599;</span></button>
+            </div>
+          </div>
+          <details class="lesson-options">
+            <summary><span>Make it your own <small>Goal, context &amp; media</small></span><span aria-hidden="true">+</span></summary>
+            <div class="lesson-options-content">
+              <label class="lesson-field" for="lesson-goal"><span>The learning goal <small>Optional</small></span><textarea id="lesson-goal" name="learning_goal" rows="3" maxlength="5000" placeholder="By the end, students should be able to&#8230;"></textarea></label>
+              <label class="lesson-field" for="lesson-source"><span>A little more context <small>Optional</small></span><textarea id="lesson-source" name="source_text" rows="4" maxlength="50000" placeholder="Paste notes, a lesson outline, or key ideas to include."></textarea><small class="lesson-hint">Have a specific explanation in mind? Add it here.</small></label>
+              <fieldset class="lesson-media"><legend>Creative tools</legend><div class="lesson-media-grid">
+                <label><input type="checkbox" name="enable_remotion" checked><span><strong>Motion graphics</strong><small>Stories, charts &amp; diagrams</small></span></label>
+                <label><input type="checkbox" name="enable_manim" checked><span><strong>Math animation</strong><small>Equations &amp; geometry</small></span></label>
+                <label><input type="checkbox" name="enable_image" checked><span><strong>Illustrations</strong><small>Ideas you can picture</small></span></label>
+                <label><input type="checkbox" name="enable_narration" checked><span><strong>Voice &amp; captions</strong><small>A guide at every step</small></span></label>
+              </div><p class="lesson-hint">Your lesson uses the selected tools where they fit the content.</p></fieldset>
+            </div>
+          </details>
+        </fieldset>
+        <p class="composer-note">This published page is a static preview: generating a lesson needs the EduCast Python server. <a href="https://github.com/DaRL-GenAI/EduCAST/tree/main/src/eduharness#run-the-website">Run it locally</a> to build one.</p>
+        <p class="lesson-notice" id="lesson-config-note" role="status" hidden></p>
+        <p class="lesson-error" id="lesson-error" role="alert" hidden></p>
+        <noscript><p class="lesson-error">Enable JavaScript to create a lesson and follow its progress.</p></noscript>
+      </form>
+
+      <div class="starter-row" aria-label="Lesson starters">
+        <span class="starter-label">Or start from</span>
+        <button class="starter-chip" type="button" data-topic="Why does a longer lever need less force?" data-audience="Grade 9 students"><span class="starter-kicker">PHYSICS</span>Why does a longer lever need less force?</button>
+        <button class="starter-chip" type="button" data-topic="What makes a parabola change its shape?" data-audience="Grade 9 students"><span class="starter-kicker">ALGEBRA</span>What makes a parabola change its shape?</button>
+        <button class="starter-chip" type="button" data-topic="How do plants turn sunlight into food?" data-audience="Grade 7 students"><span class="starter-kicker">BIOLOGY</span>How do plants turn sunlight into food?</button>
+        <button class="starter-chip" type="button" data-topic="How do computers count in binary?" data-audience="Grade 8 students"><span class="starter-kicker">COMPUTING</span>How do computers count in binary?</button>
+        <button class="starter-chip" type="button" data-topic="What actually happens when ice melts?" data-audience="Grade 6 students"><span class="starter-kicker">CHEMISTRY</span>What actually happens when ice melts?</button>
+      </div>
+
+      <section class="lesson-process-card" id="lesson-process" aria-labelledby="progress-heading" hidden>
+        <span class="lesson-eyebrow" id="lesson-progress-kicker">02 / FROM BRIEF TO POSSIBILITY</span>
+        <h2 id="progress-heading">Ideas take shape,<br>one step at a time.</h2>
+        <p class="lesson-process-copy" id="lesson-progress-copy">A thoughtful path from what you want to teach to something students can explore.</p>
+        <div id="lesson-live" class="lesson-live" role="status" aria-live="polite" hidden><span class="lesson-status-dot" aria-hidden="true"></span><span id="lesson-status-text"></span></div>
+        <ol class="lesson-stages" aria-label="Lesson generation stages">
+          <li data-stage="plan"><span class="lesson-stage-number">01</span><div><strong>Plan the story</strong><span data-stage-detail>Turn your goal into a lesson blueprint.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="prepare"><span class="lesson-stage-number">02</span><div><strong>Prepare the pieces</strong><span data-stage-detail>Shape each scene around an idea.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="render"><span class="lesson-stage-number">03</span><div><strong>Bring it to life</strong><span data-stage-detail>Create the visuals and sound.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="review"><span class="lesson-stage-number">04</span><div><strong>Review &amp; refine</strong><span data-stage-detail>Check the lesson&#8217;s scenes.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+          <li data-stage="bundle"><span class="lesson-stage-number">05</span><div><strong>Ready to explore</strong><span data-stage-detail>Bring the experience together.</span></div><span class="lesson-stage-check" aria-hidden="true"></span></li>
+        </ol>
+        <div class="lesson-result" id="lesson-result" hidden><a class="button primary large" id="lesson-open" hidden>Open your lesson <span aria-hidden="true">&#8599;</span></a><button class="button large" id="lesson-retry" type="button" hidden>Retry generation <span aria-hidden="true">&#8635;</span></button><button class="lesson-start-over" id="lesson-start-over" type="button" hidden>Create another lesson &#8594;</button></div>
+        <p class="lesson-connection-note" id="lesson-connection-note" role="status" hidden></p>
+        <p class="lesson-timing" id="lesson-timing">Build time depends on your lesson and selected media.</p>
+      </section>
+    </section>
+
+    <div class="capability-band" aria-label="Four ways to bring a lesson to life">
+      <span class="band-label">A FULL CREATIVE TOOLKIT</span>
+      <span><i class="cap-icon motion-icon" aria-hidden="true">▥</i> Motion graphics</span>
+      <span><i class="cap-icon math-icon" aria-hidden="true">ƒ</i> Mathematical animation</span>
+      <span><i class="cap-icon art-icon" aria-hidden="true">✳</i> Visual explanations</span>
+      <span><i class="cap-icon practice-icon" aria-hidden="true">↔</i> Hands-on practice</span>
+    </div>
+
+    <section class="try-section" id="try">
+      <div class="section-heading">
+        <div class="section-intro"><span class="section-index">01 &#8212; A PIECE OF A LESSON</span><h2>Less watching.<br><em>More wondering.</em></h2></div>
+        <p class="section-aside">Every lesson can pause for a question. <br>This is one interactive moment, running live.</p>
+      </div>
+      <div class="try-stage">
+        <div class="experiment-card">
+          <div class="experiment-topline"><span><i class="live-dot"></i> THE INTERACTIVE CLASSROOM</span><span class="mini-label">01 / PHYSICS</span></div>
+          <div class="experiment-heading"><h2>A little distance. <br>A bigger difference.</h2><span class="experiment-icon" aria-hidden="true">↔</span></div>
+          <p class="experiment-description">Move the weight. Find the balance.</p>
+          <svg class="lever-drawing" viewBox="0 0 540 265" role="img" aria-labelledby="lever-title lever-desc">
+            <title id="lever-title">An interactive lever</title><desc id="lever-desc">A 20 newton weight at 1.5 metres on the left. Adjust the distance of a 10 newton weight on the right to balance their turning effects.</desc>
+            <defs><pattern id="dot-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#dcded4"/></pattern></defs>
+            <rect width="540" height="265" fill="url(#dot-grid)"/>
+            <ellipse cx="270" cy="221" rx="83" ry="8" fill="#e7e7df"/>
+            <path d="M270 146 L239 211 Q270 220 301 211 Z" fill="#dddfd2" stroke="#bcc2b3" stroke-width="1.5"/>
+            <path d="M80 220H460" stroke="#cfd2c6" stroke-width="1.5"/>
+            <g id="lever-beam" transform="rotate(-9.75 270 146)">
+              <rect x="35" y="141" width="470" height="11" rx="5.5" fill="#424f46"/>
+              <path d="M90 141v11 M150 141v11 M210 141v11 M330 141v11 M390 141v11 M450 141v11" stroke="#849286" stroke-width="1.5"/>
+              <g transform="translate(180 141)"><rect x="-32" y="-65" width="64" height="63" rx="9" fill="#c2d8e0" stroke="#97b6c4"/><path d="M-9-65v-9h18v9" fill="none" stroke="#799fac" stroke-width="3"/><text x="0" y="-28" text-anchor="middle" fill="#33596b" font-size="18" font-weight="700">20 N</text></g>
+              <g id="lever-weight" transform="translate(360 141)"><rect x="-28" y="-48" width="56" height="46" rx="8" fill="#edbea5" stroke="#d99775"/><path d="M-8-48v-8h16v8" fill="none" stroke="#c98664" stroke-width="3"/><text x="0" y="-19" text-anchor="middle" fill="#824528" font-size="17" font-weight="700">10 N</text></g>
+              <path d="M180 167v6h90v-6" fill="none" stroke="#8b9588"/><text x="225" y="192" text-anchor="middle" font-size="13" fill="#717a6e">1.5 m</text>
+              <path id="lever-distance-line" d="M270 167v6h90v-6" fill="none" stroke="#bd7958"/><text id="lever-distance-label" x="315" y="192" text-anchor="middle" font-size="13" fill="#a55b38">1.5 m</text>
+            </g>
+            <circle cx="270" cy="146" r="7" fill="#f8f7f3" stroke="#424f46" stroke-width="3"/>
+            <text x="270" y="251" text-anchor="middle" fill="#818779" font-size="10" letter-spacing="2">THE TURNING EFFECT OF A FORCE</text>
+          </svg>
+          <div class="experiment-controls">
+            <div class="range-heading"><label for="lever-distance">Distance from the pivot</label><output id="distance-output" for="lever-distance">1.5 m</output></div>
+            <input id="lever-distance" type="range" min="1" max="3.5" step="0.1" value="1.5" aria-describedby="balance-feedback">
+            <div class="range-scale"><span>1 m</span><span>3.5 m</span></div>
+            <div class="balance-feedback" id="balance-feedback" role="status"><span class="balance-symbol" aria-hidden="true">↔</span><span id="balance-message">Can you make both turning effects equal?</span><button class="reset-experiment" id="reset-experiment" type="button" title="Reset experiment" aria-label="Reset lever experiment">↺</button></div>
+          </div>
+        </div>
+        <div class="try-aside">
+          <div class="classroom-cast" aria-hidden="true">
+            <img src="./demo/assets/characters/character-1.png" alt="" loading="lazy">
+            <img src="./demo/assets/characters/character-2.png" alt="" loading="lazy">
+            <img src="./demo/assets/characters/character-4.png" alt="" loading="lazy">
+          </div>
+          <div class="learning-features">
+            <article><span class="feature-number">01 / WATCH</span><h3>Make the invisible visible.</h3><p>Equations unfold, diagrams explain, and abstract ideas find their shape.</p></article>
+            <article><span class="feature-number">02 / LISTEN</span><h3>Every step has a voice.</h3><p>Narration and captions stay with the lesson, so each idea has room to land.</p></article>
+            <article><span class="feature-number">03 / TRY</span><h3>Understanding takes practice.</h3><p>Explore a simulation or answer a question, right where the concept clicks.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pipeline-section" id="pipeline">
+      <div class="section-heading"><div class="section-intro"><span class="section-index">02 — THE METHOD BEHIND THE MAGIC</span><h2>From prompt<br><em>to possibility.</em></h2></div><p class="section-aside">A thoughtful lesson takes a few steps. <br>EduHarness connects them all. <br><span class="subtle-instruction">Select a stage to look inside ↓</span></p></div>
+      <div class="pipeline-visual" role="tablist" aria-label="Explore the lesson pipeline">
+        <button class="pipeline-card active" id="pipeline-tab-plan" type="button" role="tab" aria-selected="true" aria-controls="pipeline-detail" data-stage="plan"><span class="pipeline-number">01</span><span class="pipeline-tool">MAIN AGENT</span><strong>Plan the lesson</strong><span class="pipeline-card-copy">Start with a learning goal.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-prepare" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="prepare"><span class="pipeline-number">02</span><span class="pipeline-tool">SCENE EXECUTORS</span><strong>Prepare the pieces</strong><span class="pipeline-card-copy">Give each idea a medium.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-render" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="render"><span class="pipeline-number">03</span><span class="pipeline-tool">CREATIVE TOOLKIT</span><strong>Bring it to life</strong><span class="pipeline-card-copy">Compose motion and sound.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-review" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="review"><span class="pipeline-number">04</span><span class="pipeline-tool">GUARDS + REVIEWER</span><strong>Review &amp; refine</strong><span class="pipeline-card-copy">Check the things that matter.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+        <button class="pipeline-card" id="pipeline-tab-bundle" type="button" role="tab" aria-selected="false" aria-controls="pipeline-detail" tabindex="-1" data-stage="bundle"><span class="pipeline-number">05</span><span class="pipeline-tool">EDUBUNDLE</span><strong>Ready to explore</strong><span class="pipeline-card-copy">One connected experience.</span><span class="pipeline-arrow" aria-hidden="true">↗</span></button>
+      </div>
+      <div class="pipeline-detail" id="pipeline-detail" role="tabpanel" aria-labelledby="pipeline-tab-plan" tabindex="0">
+        <div class="pipeline-detail-copy"><span class="section-kicker" id="pipeline-detail-kicker">01 / A PURPOSE FOR EVERY SCENE</span><h3 id="pipeline-detail-title">Good teaching starts<br>with a clear intention.</h3><p id="pipeline-detail-description">The planner turns your topic, audience, and learning goal into a scene-by-scene blueprint. Every scene gets a medium, narration, and a short list of ideas that must be visible.</p><div class="pipeline-tags" id="pipeline-detail-tags"><span>Learning goals</span><span>Scene planning</span><span>Shared visual style</span></div></div>
+        <div class="artifact-preview" id="pipeline-artifact"><div class="artifact-top"><span class="artifact-dot"></span> LESSON BLUEPRINT <span>Illustrative example</span></div><div class="blueprint-preview"><span class="artifact-label">LEARNING GOAL</span><h4>Explain why a longer lever<br>needs less force.</h4><div class="blueprint-row"><span>01</span><strong>Set the scene</strong><i>Motion</i></div><div class="blueprint-row"><span>02</span><strong>Build intuition</strong><i>Illustration</i></div><div class="blueprint-row"><span>03</span><strong>Show the relationship</strong><i>Animation</i></div><div class="blueprint-row"><span>04</span><strong>Let the learner try</strong><i>Practice</i></div></div></div>
+      </div>
+      <div class="repair-note"><span class="repair-icon" aria-hidden="true">↺</span><div><strong>A feedback loop, not a finish line.</strong><p>Layout checks and visual review feed targeted repairs. Saved checkpoints let a build pick up where it left off.</p></div><span class="repair-route">RENDER <i>→</i> REVIEW <i>↩</i> REFINE</span></div>
+      <div class="pipeline-cta"><div><span class="section-index">YOUR NEXT GREAT EXPLANATION</span><h3>What will you bring <em>to life?</em></h3><p>A topic, a question, a moment of curiosity. Start there.</p></div><a id="pipeline-new-build" href="#top" class="button primary large">Create your lesson <span aria-hidden="true">↗</span></a></div>
+    </section>
+    </main>
+  <footer class="site-footer"><a class="product" href="#top"><img src="./demo/assets/brand.svg" width="28" height="28" alt=""><span class="product-name">EduCast.</span></a><span>Made for the moment an idea clicks.</span><span class="footer-engine">POWERED BY EDUHARNESS</span><a href="#pipeline">Back to the process ↗</a></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./demo/assets/pointer-trail.js?v=20260910"></script>
+  <script src="./demo/assets/landing.js?v=20260918-composer"></script>
+  <script src="./demo/assets/new-lesson.js?v=20260918-composer"></script>
+
+</body>
+</html>
