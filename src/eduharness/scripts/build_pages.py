@@ -73,7 +73,7 @@ def publish_gui_home() -> None:
         '<p class="paper-affiliation">Arizona State University</p>'
         '<p class="paper-equal">* Equal contribution</p></div>')
     html = html.replace('<div class="compose-intro">', '<div class="compose-intro">' + paper_header, 1)
-    html = html.replace('</head>', '<link rel="stylesheet" href="./static/styles/project.css?v=20261120"></head>')
+    html = html.replace('</head>', '<link rel="stylesheet" href="./static/styles/project.css?v=20261120-polish2"></head>')
     html = re.sub(r'<h1>(Start with a little.*?)</h1>', r'<h2 class="curiosity-title">\1</h2>', html, count=1, flags=re.S)
     html = re.sub(r'(<p class="compose-lede">.*?</p>)', lambda m: m.group(1) + links, html, count=1, flags=re.S)
     (SITE / 'index.html').write_text('\n'.join(line.rstrip() for line in html.splitlines()) + '\n', encoding='utf-8')
