@@ -14,3 +14,10 @@
 .project-resources{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0 0}.project-resources .button{min-height:44px;min-width:132px;padding:11px 22px;font-size:13px;font-weight:500;border-radius:8px}.project-resources .button svg{width:16px;height:16px;flex:none}
 .composer{max-width:840px;margin-inline:auto}.appbar .product-name{font-weight:700}
 @media(max-width:600px){.compose-section{padding:34px 20px 50px}.paper-header{margin-bottom:26px;padding-bottom:25px}.compose-intro .paper-title{font-size:22px;letter-spacing:-.5px;line-height:1.35}.paper-title .paper-name{font-size:50px;letter-spacing:-1.7px;margin-bottom:14px}.paper-authors{max-width:350px;font-size:13px;line-height:1.95}.paper-affiliation{font-size:13px}.paper-equal{font-size:11px}.compose-intro .hero-kicker{font-size:8px;letter-spacing:1px}.compose-intro .curiosity-title{font-size:30px;letter-spacing:-.8px}.compose-intro .title-spark{font-size:19px}.compose-lede{font-size:14px}.project-resources{gap:10px;margin-top:19px}.project-resources .button{min-width:124px}}
+
+/* Keep the three learning modes readable beside the interactive example. */
+.try-aside .learning-features .feature-number{font-size:11px;line-height:1.5;letter-spacing:1px}
+.try-aside .learning-features h3{font-family:var(--body-font);font-size:21px;font-weight:500;line-height:1.35;letter-spacing:-.35px;margin:10px 0 9px}
+.try-aside .learning-features p{font-size:15px;line-height:1.7;color:var(--secondary)}
+.try-aside .learning-features article + article{padding-top:24px;margin-top:24px}
+@media(max-width:600px){.try-aside .learning-features h3{font-size:20px}.try-aside .learning-features article + article{padding-top:22px;margin-top:22px}}
