@@ -51,7 +51,7 @@ Playwright, Remotion) and the bring-your-own-key API, is in
 ## Related projects
 
 - [Instructional Agents](https://github.com/DaRL-GenAI/instructional_agents) (EACL 2026): multi-agent course generation, from learning objectives and syllabus to slides, scripts, and assessments. [Project page](https://darl-genai.github.io/instructional_agents_homepage/)
-- [Instructional Agents Studio](https://github.com/DaRL-GenAI/instructional_agents_studio): the no-code app for instructors, `npx instructional-agents`.
+- [Instructional Agents Studio](https://github.com/DaRL-GenAI/instructional_agents_studio): the course-building app for instructors, `npx instructional-agents`.
 
 ## Citation
 
