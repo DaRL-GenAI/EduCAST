@@ -1,0 +1,16 @@
+/* Academic identity and the original GUI share the same warm editorial palette. */
+.compose-section{max-width:1020px;padding:58px 28px 76px}
+.compose-intro{margin-bottom:30px}
+.paper-header{max-width:900px;margin:0 auto 34px;padding:0 0 30px;border-bottom:1px solid var(--divider)}
+.compose-intro .paper-title{margin:0 auto 22px;max-width:880px;color:var(--ink);font-family:var(--body-font);font-size:clamp(23px,2.6vw,32px);font-weight:500;letter-spacing:-.8px;line-height:1.35;text-wrap:balance}
+.paper-title .paper-name{display:block;font-family:var(--display-font);font-size:clamp(48px,5.5vw,68px);font-weight:400;line-height:1.08;letter-spacing:-2.4px;margin-bottom:16px}
+.paper-authors{max-width:850px;margin:0 auto 10px;color:var(--ink);font-family:var(--body-font);font-size:15px;font-weight:400;line-height:1.9}
+.paper-authors span{display:inline-block}.paper-authors sup{color:var(--orange-dark);font-size:10px;margin-left:2px}
+.paper-affiliation{font-size:14px;line-height:1.6;color:var(--secondary);margin:0}.paper-equal{font-size:12px;line-height:1.5;color:var(--secondary);margin:6px 0 0}
+.compose-intro .hero-kicker{font-family:var(--body-font);font-size:10px;font-weight:500;letter-spacing:1.4px;line-height:1.6;color:var(--secondary)}
+.compose-intro .curiosity-title{font-family:var(--display-font);font-size:clamp(28px,3.4vw,40px);font-weight:400;line-height:1.18;letter-spacing:-1.1px;margin:14px 0 14px;color:var(--ink)}
+.compose-intro .curiosity-title em{color:var(--orange);font-weight:400}.compose-intro .title-spark{font-size:23px;margin-left:10px;color:var(--orange)}
+.compose-lede{max-width:590px;font-family:var(--body-font);font-size:15px;line-height:1.75;color:var(--secondary);text-wrap:pretty}
+.project-resources{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0 0}.project-resources .button{min-height:44px;min-width:132px;padding:11px 22px;font-size:13px;font-weight:500;border-radius:8px}.project-resources .button svg{width:16px;height:16px;flex:none}
+.composer{max-width:840px;margin-inline:auto}.appbar .product-name{font-weight:700}
+@media(max-width:600px){.compose-section{padding:34px 20px 50px}.paper-header{margin-bottom:26px;padding-bottom:25px}.compose-intro .paper-title{font-size:22px;letter-spacing:-.5px;line-height:1.35}.paper-title .paper-name{font-size:50px;letter-spacing:-1.7px;margin-bottom:14px}.paper-authors{max-width:350px;font-size:13px;line-height:1.95}.paper-affiliation{font-size:13px}.paper-equal{font-size:11px}.compose-intro .hero-kicker{font-size:8px;letter-spacing:1px}.compose-intro .curiosity-title{font-size:30px;letter-spacing:-.8px}.compose-intro .title-spark{font-size:19px}.compose-lede{font-size:14px}.project-resources{gap:10px;margin-top:19px}.project-resources .button{min-width:124px}}
