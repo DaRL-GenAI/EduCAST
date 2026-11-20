@@ -63,6 +63,25 @@ def publish_gui_home() -> None:
     html = html.replace('</head>', '<link rel="canonical" href="https://darl-genai.github.io/EduCAST/">'
                         '<style>.project-resources{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0 0}'
                         '.project-resources .button{min-height:44px;padding:11px 22px;font-size:13px}</style></head>')
+    paper_header = (
+        '<div class="paper-header">'
+        '<h2 class="paper-title">EduCAST: A Multi-Agent System for Personalized Educational Video Generation with Closed-Loop Review</h2>'
+        '<p class="paper-authors"><span>Qingyue Chen<sup>*</sup>,</span> '
+        '<span>Aarshdeeep Singh Nandra<sup>*</sup>,</span> '
+        '<span>Huaiyuan Yao<sup>*</sup>,</span> <span>Varun Shourie,</span> '
+        '<span>Rayan Kazi,</span> <span>Hua Wei</span></p>'
+        '<p class="paper-affiliation">Arizona State University</p>'
+        '<p class="paper-equal">* Equal contribution</p></div>')
+    html = html.replace('<div class="compose-intro">', '<div class="compose-intro">' + paper_header, 1)
+    html = html.replace('</head>', '<style>'
+        '.paper-header{max-width:960px;margin:0 auto 38px;padding-bottom:30px;border-bottom:1px solid var(--divider)}'
+        '.paper-title{font-family:var(--body-font, sans-serif);font-size:clamp(24px,3vw,36px);line-height:1.25;letter-spacing:-.8px;font-weight:600;margin:0 auto 20px;color:var(--ink)}'
+        '.paper-authors{font-size:15px;line-height:1.9;margin:0 0 8px;color:var(--ink)}'
+        '.paper-authors span{display:inline-block}.paper-authors sup{font-size:10px}'
+        '.paper-affiliation{font-size:14px;color:var(--secondary);margin:0}'
+        '.paper-equal{font-size:11px;color:var(--secondary);margin:7px 0 0}'
+        '@media(max-width:600px){.paper-header{margin-bottom:28px;padding-bottom:24px}.paper-title{letter-spacing:-.4px}.paper-authors{font-size:13px}}'
+        '</style></head>')
     html = re.sub(r'(<p class="compose-lede">.*?</p>)', lambda m: m.group(1) + links, html, count=1, flags=re.S)
     (SITE / 'index.html').write_text('\n'.join(line.rstrip() for line in html.splitlines()) + '\n', encoding='utf-8')
 
