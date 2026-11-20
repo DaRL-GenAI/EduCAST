@@ -21,3 +21,32 @@
 .try-aside .learning-features p{font-size:15px;line-height:1.7;color:var(--secondary)}
 .try-aside .learning-features article + article{padding-top:24px;margin-top:24px}
 @media(max-width:600px){.try-aside .learning-features h3{font-size:20px}.try-aside .learning-features article + article{padding-top:22px;margin-top:22px}}
+
+/* A quieter, more tactile finish for the interactive landing page. */
+:root{--secondary:#626c60}
+.appbar{box-shadow:0 3px 20px #283b3104}
+.project-resources .button{border-radius:12px;box-shadow:0 3px 8px #283b3106}
+.composer{border-radius:20px;box-shadow:0 12px 40px #283b3109}
+.try-section{background:linear-gradient(180deg,var(--paper),#f8f8f2)}
+.try-stage{gap:48px;align-items:center}
+.experiment-card{border-radius:22px;box-shadow:0 16px 44px #283b310b;background:linear-gradient(145deg,#f6f7ef,#f0f3e8)}
+.experiment-description{font-size:13px;line-height:1.65}
+.range-heading{font-size:12px}.balance-feedback{font-size:12px;line-height:1.6}
+.reset-experiment{width:44px;height:44px}
+.try-aside .classroom-cast{margin-bottom:24px;justify-content:center}
+.try-aside .learning-features{gap:12px}
+.try-aside .learning-features article{position:relative;padding:20px 22px 20px 84px;border:1px solid var(--divider-soft);border-radius:16px;background:#fffefa;box-shadow:0 3px 12px #283b3103}
+.try-aside .learning-features article + article{border:1px solid var(--divider-soft);padding:20px 22px 20px 84px;margin:0}
+.try-aside .learning-features article::before{content:"";position:absolute;left:21px;top:23px;width:42px;height:42px;border-radius:12px;background-color:var(--orange-soft);background-position:center;background-repeat:no-repeat;background-size:23px}
+.try-aside .learning-features article:nth-child(2)::before{background-color:var(--blue-soft)}
+.try-aside .learning-features article:nth-child(3)::before{background-color:var(--green-soft)}
+.try-aside .learning-features .feature-number{font-family:var(--body-font);font-weight:600;color:var(--orange-dark);font-size:11px}
+.try-aside .learning-features article:nth-child(2) .feature-number{color:var(--blue)}
+.try-aside .learning-features article:nth-child(3) .feature-number{color:var(--green)}
+.try-aside .learning-features h3{margin:7px 0;font-size:20px}
+.try-aside .learning-features p{font-size:15px;line-height:1.65;text-wrap:pretty}
+.pipeline-card{border-radius:15px}.pipeline-detail{border-radius:20px}
+@media(max-width:700px){.try-stage{gap:30px}.try-aside .learning-features article,.try-aside .learning-features article + article{padding:18px 16px 18px 72px}.try-aside .learning-features article::before{left:16px;top:20px;width:38px;height:38px}.try-aside .learning-features h3{font-size:19px}.experiment-heading h2{font-size:28px}}
+.try-aside .learning-features article:nth-child(1)::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23964324%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2214%22%20rx%3D%223%22/%3E%3Cpath%20d%3D%22m10%209%205%203-5%203Z%22/%3E%3C/svg%3E")}
+.try-aside .learning-features article:nth-child(2)::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23426a7c%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%2014v-3a8%208%200%200%201%2016%200v3%22/%3E%3Crect%20x%3D%223%22%20y%3D%2211%22%20width%3D%224%22%20height%3D%228%22%20rx%3D%222%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2211%22%20width%3D%224%22%20height%3D%228%22%20rx%3D%222%22/%3E%3C/svg%3E")}
+.try-aside .learning-features article:nth-child(3)::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2354705b%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m14%203%207%207-10%2010H4v-7Z%22/%3E%3Cpath%20d%3D%22m11%206%207%207M4%2020l5-5%22/%3E%3C/svg%3E")}
