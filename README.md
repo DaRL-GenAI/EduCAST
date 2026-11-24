@@ -22,7 +22,7 @@ and repairs only the ones that fail.
 | --- | --- | --- |
 | [`docs/index.html`](docs/index.html) | Project page | <https://darl-genai.github.io/EduCAST/> |
 | [`docs/demo/`](docs/demo/) | Static build of the lesson composer and showcase | <https://darl-genai.github.io/EduCAST/demo/> |
-| [`src/`](src/) | Source code: the EduHarness system, the legacy pipeline, baselines, notebooks | |
+| [`src/`](src/) | Source code: the current generation system, baselines, and evaluation notebook | |
 
 GitHub Pages serves `docs/` from the `main` branch. The demo is generated; rebuild it after
 changing the website under `src/eduharness/eduharness/studio/`:
