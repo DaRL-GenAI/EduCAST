@@ -1,0 +1,23 @@
+{
+  "previous_github_commit": "eb0d00637359c6069591be1c8be8966b7d56d9d7",
+  "production_files": [
+    "eduharness/stage2/workflow.py",
+    "eduharness/stage2/reviewer.py"
+  ],
+  "validation": {
+    "existing_tests": 133,
+    "new_tests": 7,
+    "new_tests_status": "passed",
+    "initial_full_run": "138 passed, 2 new test failures due to missing prepared argument in the test call; test corrected and all 7 new tests rerun successfully",
+    "method": "Offline FakeProvider integration tests, not a new real API quality experiment"
+  },
+  "reviewed_by": [
+    "independent source audit",
+    "critic"
+  ],
+  "limits": [
+    "No claim of demo-level quality",
+    "No new generated sample; existing preview unchanged",
+    "No continuous audio/video or click testing"
+  ]
+}
