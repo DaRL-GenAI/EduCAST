@@ -113,7 +113,7 @@ Output directory: `runs/sample_algebra/`. Open the finished lesson with:
 python -m educast.serve runs/sample_algebra/bundle
 ```
 
-Then open `http://127.0.0.1:8765/` in your local browser. For a separate run directory:
+Open the local address printed in the terminal in your browser. For a separate run directory:
 
 ```bash
 python -m educast --sample --run-dir runs/algebra-new
@@ -140,10 +140,10 @@ Important request fields:
 #### (c) Local GUI
 
 ```bash
-python -m gui.public --host 127.0.0.1 --port 8091
+python -m gui.public
 ```
 
-Open `http://127.0.0.1:8091/` in your local browser and enter your topic and API key.
+Open the local address printed in the terminal in your browser, then enter your topic and API key.
 
 ### 4. Project Organization
 
