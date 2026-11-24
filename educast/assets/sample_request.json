@@ -1,0 +1,17 @@
+{
+  "request_id": "sample_algebra",
+  "topic": "Solve x + 2 = 5",
+  "audience": "Grade 7 students learning one-step equations",
+  "learning_goal": "Explain why subtracting 2 from both sides gives x = 3, then solve a similar equation.",
+  "source_text": "Create exactly two short scenes. First, a Manim worked example teaches x + 2 = 5 by subtracting 2 from both sides and showing x = 3. Use a simple balance drawing to explain that both sides stay equal. Show only one equation state at a time. Second, an interactive multiple-choice question asks students to solve x + 1 = 4, with feedback explaining the answer. Keep narration to two short sentences per scene. Do not add an opener, recap, or image scene.",
+  "preferred_theme": "studio_light",
+  "language": "en",
+  "max_review_rounds": 3,
+  "enable_remotion": false,
+  "enable_manim": true,
+  "enable_image": false,
+  "enable_narration": true,
+  "voice": "alloy",
+  "allow_unreviewed_bundle": false,
+  "parallel": 1
+}

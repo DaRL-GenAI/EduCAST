@@ -20,7 +20,12 @@ from educast.pipeline import (
 
 def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(prog="educast")
-    p.add_argument("--request-json", required=True)
+    source = p.add_mutually_exclusive_group(required=True)
+    source.add_argument("--request-json", help="Path to a teaching request JSON")
+    source.add_argument(
+        "--sample", action="store_true",
+        help="Run the bundled algebra lesson, including generation and review/repair",
+    )
     p.add_argument("--run-dir", default=None)
     p.add_argument(
         "--force",
@@ -40,7 +45,11 @@ def main(argv: list[str] | None = None) -> None:
     )
     args = p.parse_args(argv)
 
-    request = load_request(args.request_json)
+    request_path = (
+        Path(__file__).resolve().parent / "assets" / "sample_request.json"
+        if args.sample else Path(args.request_json)
+    )
+    request = load_request(request_path)
     needs_api = args.stage in {"all", "1", "2", "2-prepare", "2-review"}
     # 2-render only *optionally* uses the key, for repairing a crashed scene.
     cfg = Config.from_env(

@@ -1,6 +1,6 @@
 # EduCAST setup
 
-[Project page](https://darl-genai.github.io/EduCAST/) · [Demo](https://darl-genai.github.io/EduCAST/demo/) · [Code layout](README.md#code-layout)
+[Project page](https://darl-genai.github.io/EduCAST/) · [Demo](https://darl-genai.github.io/EduCAST/video/) · [Code layout](README.md#4-project-organization)
 
 EduCAST turns teaching requests into narrated
 lessons with animations, illustrations, chapter navigation, and interactive practice.
@@ -108,6 +108,9 @@ the original planning, rendering or repair sequence.
 Bundled font license notices are retained alongside their font files.
 
 ## Generation and review
+
+Run the bundled algebra sample with `python -m educast --sample`. It uses the same
+planning, generation, narration, review/repair and packaging stages as a custom request.
 
 After installing the rendering dependencies above, set `OPENAI_API_KEY` in your
 shell or `.env`, then run from this directory:
