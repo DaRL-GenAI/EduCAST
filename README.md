@@ -4,7 +4,7 @@
 
 **AAAI-27 Demonstration Program**
 
-[**Project page / GUI**](https://darl-genai.github.io/EduCAST/) · [**Video demo**](https://darl-genai.github.io/EduCAST/video/) · [**Source code**](src/) · [**Instructional Agents**](https://darl-genai.github.io/instructional_agents_homepage/)
+[**Project page / GUI**](https://darl-genai.github.io/EduCAST/) · [**Video demo**](https://darl-genai.github.io/EduCAST/video/) · [**Source code**](educast/) · [**Instructional Agents**](https://darl-genai.github.io/instructional_agents_homepage/)
 
 </div>
 
@@ -16,37 +16,49 @@ and repairs only the ones that fail.
 
 ![EduCAST pipeline](docs/static/images/pipeline.png)
 
-## Repository layout
+## Code layout
 
-| Path | What it is | Published at |
-| --- | --- | --- |
-| [`docs/index.html`](docs/index.html) | Project page | <https://darl-genai.github.io/EduCAST/> |
-| [`docs/demo/`](docs/demo/) | Static build of the lesson composer and showcase | <https://darl-genai.github.io/EduCAST/demo/> |
-| [`src/`](src/) | Source code: the current generation system, baselines, and evaluation notebook | |
-
-GitHub Pages serves `docs/` from the `main` branch. The demo is generated; rebuild it after
-changing the website under `src/eduharness/eduharness/studio/`:
-
-```bash
-cd src/eduharness
-python scripts/build_pages.py      # writes ../../docs/demo/
+```text
+requirements/             Python dependencies: base, render, dev, lock
+educast/
+  assets/                 Fixed fonts, interaction templates, Remotion, GUI artwork
+  agents/                 Planner, Manim, Remotion, image, interaction, narration
+  reviewloop/             Review, targeted repair, checkpoints and retry loop
+  pipeline.py             Connects planning → generation/review → lesson packaging
+  bundle/                 Video, captions and interactive player packaging
+  studio/                 GUI server and job control
+  providers/              API clients and usage accounting
+  config.py, schema.py     Configuration and data contracts
+examples/                 Teaching requests
+tests/                    Regression tests
+scripts/                  Static-site build and optional Node compatibility adapter
+notebooks/                Colab examples
+research/                 Separate comparison and historical evaluation materials
+docs/                     Published project page and development documentation
 ```
 
-## Run EduCAST locally
+## Run locally
 
-The online demo cannot generate lessons, because that needs the Python server and local
-renderers. To run it yourself:
+From the repository root, with Python 3.10 or later:
 
 ```bash
-cd src/eduharness
-python -m venv .venv && source .venv/bin/activate
-python -m pip install -r requirements.txt
-python -m eduharness.studio.public --host 127.0.0.1 --port 8091
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements/base.txt
+python -m educast.studio.public --host 127.0.0.1 --port 8091
 ```
 
-Then open <http://127.0.0.1:8091/>. Full setup, including the renderers (FFmpeg, Manim,
-Playwright, Remotion) and the bring-your-own-key API, is in
-[`src/eduharness/README.md`](src/eduharness/README.md).
+Open <http://127.0.0.1:8091/>. Generating lessons also requires the local rendering
+tools and an OpenAI API key; follow [SETUP.md](SETUP.md).
+
+After that setup, the minimal example runs the existing generation and review loop:
+
+```bash
+python -m educast --request-json examples/minimal_request.json --run-dir runs/minimal
+python -m educast.serve runs/minimal/bundle
+```
+
+GitHub Pages serves `docs/`. Rebuild it with `python scripts/build_pages.py`.
 
 ## Related projects
 

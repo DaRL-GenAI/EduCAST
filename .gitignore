@@ -28,12 +28,12 @@ __pycache__/
 node_modules/
 .DS_Store
 .ipynb_checkpoints/
-src/eduharness/eduharness/runtime/
-src/eduharness/eduharness/browser-libs/
-src/eduharness/eduharness/local/
-src/eduharness/remotion_template/out/
-src/eduharness/remotion_template/public/scene-props.json
-src/eduharness/remotion_template/.eduharness_*.lock
+educast/runtime/
+educast/browser-libs/
+educast/local/
+educast/assets/remotion/out/
+educast/assets/remotion/public/scene-props.json
+educast/assets/remotion/.eduharness_*.lock
 
 # Local verification artifacts
 .repro-check/
