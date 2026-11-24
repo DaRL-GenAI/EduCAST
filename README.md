@@ -21,19 +21,18 @@ and repairs only the ones that fail.
 ```text
 requirements/             Python dependencies: base, render, dev, lock
 educast/
-  assets/                 Fixed fonts, interaction templates, Remotion, GUI artwork
+  assets/                 Fixed fonts, interaction templates and Remotion
   agents/                 Planner, Manim, Remotion, image, interaction, narration
   reviewloop/             Review, targeted repair, checkpoints and retry loop
   pipeline.py             Connects planning → generation/review → lesson packaging
   bundle/                 Video, captions and interactive player packaging
-  studio/                 GUI server and job control
   providers/              API clients and usage accounting
   config.py, schema.py     Configuration and data contracts
+gui/                      GUI server, pages and artwork
 examples/                 Teaching requests
 tests/                    Regression tests
 scripts/                  Static-site build and optional Node compatibility adapter
 notebooks/                Colab examples
-research/                 Separate comparison and historical evaluation materials
 docs/                     Published project page and development documentation
 ```
 
@@ -45,7 +44,7 @@ From the repository root, with Python 3.10 or later:
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements/base.txt
-python -m educast.studio.public --host 127.0.0.1 --port 8091
+python -m gui.public --host 127.0.0.1 --port 8091
 ```
 
 Open <http://127.0.0.1:8091/>. Generating lessons also requires the local rendering

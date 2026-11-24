@@ -1,7 +1,7 @@
 """Build the static GitHub Pages copy of the EduCast showcase into docs/demo/.
 
 GitHub Pages serves files only, so the site is the public showcase without the
-generation API: `educast.studio.public.public_html` already strips the Studio
+generation API: `gui.public.public_html` already strips the Studio
 desk, and this script rewrites the server's absolute `/assets/...` routes into
 paths relative to the published project site (https://<owner>.github.io/EduCAST/).
 
@@ -20,9 +20,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from educast.studio.public import public_html
+from gui.public import public_html
 
-STUDIO = ROOT / 'educast' / 'assets' / 'studio'
+STUDIO = ROOT / 'gui'
 # Publish the GUI at the project root and retain its assets under /demo/.
 SITE = ROOT / 'docs'
 DOCS = SITE / 'demo'

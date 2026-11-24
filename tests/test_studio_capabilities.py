@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from educast.agents import manim
-from educast.studio.server import _capabilities
+from gui.server import _capabilities
 
 
 @pytest.fixture

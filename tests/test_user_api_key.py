@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 
 import pytest
 
-from educast.studio import public, server as studio
+from gui import public, server as studio
 
 
 @contextmanager

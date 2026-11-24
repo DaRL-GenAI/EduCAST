@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from educast.studio.server import serve
+from gui.server import serve
 
 
 @pytest.mark.parametrize('width', [1440, 390])

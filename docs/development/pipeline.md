@@ -173,7 +173,7 @@ and review state, and starts the existing CLI in the background; the browser is
 not the owner of the generation process.
 
 ```bash
-python -m educast.studio --runs-dir runs --port 8080
+python -m gui --runs-dir runs --port 8080
 # open the forwarded http://127.0.0.1:8080/ address
 ```
 
@@ -191,7 +191,7 @@ original pastel number trail. Creation controls are replaced with links to the
 lessons and pipeline; private requests, logs, and job endpoints are unavailable.
 
 ```bash
-python -m educast.studio.public --port 8091
+python -m gui.public --port 8091
 /data/chenqingyue/bin/cloudflared tunnel --no-autoupdate --protocol http2 --url http://127.0.0.1:8091
 ```
 
@@ -397,7 +397,7 @@ python -m scripts.refresh_demo_players quadratics lever_v2_backup ohms_law
 This generates cached video posters locally with ffmpeg and updates only each
 bundle’s `index.html` and `player.js`. Future bundle generation also picks up
 existing `media/<video-name>.poster.jpg` files. Frontend assets are in
-`educast/studio/`; the persistent toolchain lives separately under
+`gui/`; the persistent toolchain lives separately under
 `/data/chenqingyue/educast/eduharness` on this host.
 
 ## Layout

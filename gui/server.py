@@ -31,8 +31,8 @@ from educast.serve import RangeHandler, ThreadingHTTPServer, _RANGE
 load_dotenv(find_dotenv(usecwd=True))
 
 
-ASSET_DIR = Path(__file__).resolve().parents[1] / "assets" / "studio"
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+ASSET_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RUNS_ROOT = PROJECT_ROOT / "runs"
 _SAFE_ID = re.compile(r"^[0-9A-Za-z][0-9A-Za-z_-]{0,95}$")
 _VALID_STAGES = {"all", "1", "2", "2-prepare", "2-render", "2-review", "3"}
@@ -843,7 +843,7 @@ def serve(
 
 
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(prog="educast.studio")
+    parser = argparse.ArgumentParser(prog="gui")
     parser.add_argument("--runs-dir", default=str(RUNS_ROOT))
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8080)

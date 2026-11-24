@@ -1,7 +1,7 @@
 """Public showcase and a dedicated lesson-creation API backed by Studio jobs.
 
 Run behind a Cloudflare Tunnel:
-    python -m educast.studio.public --port 8091
+    python -m gui.public --port 8091
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from urllib.parse import unquote, urlparse
 
 from educast.serve import RangeHandler, ThreadingHTTPServer
 from educast.schema import HarnessRequest
-from educast.studio.server import (
+from gui.server import (
     StudioHandler,
     _atomic_json,
     _capabilities,
@@ -31,8 +31,8 @@ from educast.studio.server import (
     normalize_user_api_key,
 )
 
-ASSET_DIR = Path(__file__).resolve().parents[1] / "assets" / "studio"
-RUNS_ROOT = Path(__file__).resolve().parents[2] / 'runs'
+ASSET_DIR = Path(__file__).resolve().parent
+RUNS_ROOT = Path(__file__).resolve().parents[1] / 'runs'
 # Bundles that stay servable by id even though the showcase no longer lists
 # them, so links handed out for an earlier example lesson keep working.
 FEATURED_RUNS = frozenset({'quadratics', 'lever_v2_backup', 'ohms_law',

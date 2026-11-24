@@ -27,7 +27,7 @@ def character_index(scene_id: str) -> int:
 
 
 def character_path(scene_id: str) -> Path:
-    root = Path(__file__).resolve().parent / "assets" / "studio" / "assets" / "characters"
+    root = Path(__file__).resolve().parent / "assets" / "remotion" / "public" / "characters"
     return root / f"character-{character_index(scene_id)}.png"
 
 
@@ -38,7 +38,7 @@ def character_asset_path(scene_id: str) -> Path:
 
 def character_asset(number: int) -> Path:
     """One specific character sheet, by the number the templates address it with."""
-    root = Path(__file__).resolve().parent / "assets" / "studio" / "assets" / "characters"
+    root = Path(__file__).resolve().parent / "assets" / "remotion" / "public" / "characters"
     return root / f"character-{int(number)}.png"
 
 

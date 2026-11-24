@@ -18,7 +18,7 @@ Run all commands from the repository root:
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements/base.txt
-python -m educast.studio.public --host 127.0.0.1 --port 8091
+python -m gui.public --host 127.0.0.1 --port 8091
 ```
 
 Open `http://127.0.0.1:8091/`. The lesson brief is the home page: a composer
@@ -37,13 +37,13 @@ earlier example lesson only resolves once its bundle is copied or generated.
 
 The repository's top-level `docs/` is the GitHub Pages site: `docs/index.html` is the
 project page and `docs/demo/` a static copy of this showcase, published from the
-`main` branch. Rebuild the demo after changing anything under `educast/studio/`:
+`main` branch. Rebuild the demo after changing anything under `gui/`:
 
 ```bash
 python scripts/build_pages.py
 ```
 
-The script reuses `educast.studio.public.public_html`, so the published page
+The script reuses `gui.public.public_html`, so the published page
 stays in step with the server's public mode, and rewrites the server's absolute
 `/assets/...` routes to paths relative to the project site. Because Pages serves
 files only, the composer has no generation API to submit to there, so the static
@@ -96,7 +96,7 @@ bundles. Keep it on localhost or behind appropriate access controls when handlin
 private lesson content. The separate local Studio exposes job controls and logs:
 
 ```bash
-python -m educast.studio --runs-dir runs --port 8080
+python -m gui --runs-dir runs --port 8080
 ```
 
 ## Source map

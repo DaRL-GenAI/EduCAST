@@ -13,7 +13,7 @@ import pytest
 from educast.config import Config
 from educast.schema import HarnessRequest, PreparedScene, SceneType
 from educast.reviewloop import workflow
-from educast.studio.server import _command_path, scan_runs, serve
+from gui.server import _command_path, scan_runs, serve
 
 
 def _write(path: Path, value) -> None:
@@ -175,7 +175,7 @@ class _Homepage(HTMLParser):
 
 
 def test_studio_homepage_preserves_navigation_and_build_controls() -> None:
-    html = Path("educast/assets/studio/index.html").read_text(encoding="utf-8")
+    html = Path("gui/index.html").read_text(encoding="utf-8")
     page = _Homepage(html)
     assert any(tag == "html" and attrs.get("lang") == "en" for tag, attrs in page.elements)
     ids = {attrs["id"] for _, attrs in page.elements if "id" in attrs}
@@ -192,7 +192,7 @@ def test_studio_homepage_preserves_navigation_and_build_controls() -> None:
 
 def test_home_page_leads_with_the_lesson_composer() -> None:
     """The brief, its controls, and its progress panel share the home page."""
-    page = _Homepage(Path("educast/assets/studio/index.html").read_text(encoding="utf-8"))
+    page = _Homepage(Path("gui/index.html").read_text(encoding="utf-8"))
     ids = {attrs["id"] for _, attrs in page.elements if "id" in attrs}
     # new-lesson.js drives the composer through these elements.
     assert {
