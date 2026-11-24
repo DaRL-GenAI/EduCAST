@@ -28,7 +28,7 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright" .venv/bin/python -m eduharness \
   --request-json examples/repro_request.json --run-dir runs/repro
 ```
 
-`requirements-observed.txt` records the important versions used in this audit; it is an observed configuration, not a full platform lock. Core API dependencies were freshly installed; the existing Manim/Playwright installation was reused and tested with real subprocesses. A fully clean installation of the entire rendering toolchain was not verified.
+`requirements-observed.txt` records the important versions used in this audit; it is an observed configuration, not a full platform lock. The first audit reused Manim/Playwright. A subsequent fresh virtualenv installation and new Chromium download are documented below; the operating system was not rebuilt.
 
 ## Resuming without regenerating the lesson
 
@@ -46,7 +46,7 @@ See `evidence/verification.json` for actual tested branches and limitations. Off
 
 A fresh, real API request solving x + 2 = 5 produced a native Manim video, narration and a multiple-choice question. Manim initially failed visual review (score 5, adherence 6); feedback patched the generated artifact, native rendering ran again, and a fresh visual review passed (9/9). The interactive scene passed (9/9). Strict stage 3 produced a two-scene player with unreviewed output disabled. Eight API calls cost an estimated $0.346. The exact successful request is in examples/repro_linear_request.json; model generation remains stochastic.
 
-Two more complex torque runs exhausted the three-round repair budget and were correctly blocked by the strict bundle gate. This release demonstrates a real repair loop on one simple case, not universal visual quality or reproduction of the original demo. Native Remotion and image generation were not validated in this run. The complete renderer environment was reused rather than installed from scratch.
+Two more complex torque runs exhausted the three-round repair budget and were correctly blocked by the strict bundle gate. This release demonstrates a real repair loop on one simple case, not universal visual quality or reproduction of the original demo. Native Remotion and image generation were not validated in this run. That linear-example run reused the renderer environment; the subsequent fresh-environment audit below used a different topic.
 
 On this write-restricted audit host, third-party Manim needed a task-local output sink instead of /dev/null, and Chromium used a local executable wrapper. These are host adaptations. The regular output file is not semantically identical to the null device. Missing dvisvgm and its shared libraries were downloaded from Ubuntu and checked against package SHA256 metadata for the formula regression test.
 
@@ -61,3 +61,12 @@ Resuming a run now retries cached review errors automatically. Use the latest `r
 First-scene title-card treatment is now limited to Remotion; a first Manim teaching scene receives the teaching-board review contract. Resumed repair also applies a requested tool change before preparing its next attempt.
 
 Text-containing swap transitions now fade out, replace the object in its parent, and fade in. Pure geometry retains ReplacementTransform. Regression cases cover Text, MathTex, grouped text and parent-child replacement. This prevents glyph-morph artifacts without changing review thresholds.
+
+
+## Fresh dependency installation and new-topic audit (2026-11-24)
+
+A new Python 3.10.20 venv with system site-packages disabled was populated from downloaded distributions, with Cairo/Pango Python extensions rebuilt. `pip check` passed; a newly downloaded Playwright Chromium launched successfully. `requirements-fresh-verified.txt` records all installed Python versions (an observed dependency snapshot, not an OS lock). On a Linux host with the native prerequisites above, use that file instead of `requirements-render.txt` to match these Python versions. Base Python, the compiler and LaTeX were reused, and FFmpeg/FFprobe binaries came from existing distributions. This was not a clean-OS or container rebuild. The audit host also required task-local native libraries and executable wrappers.
+
+`examples/repro_area_request.json` tests a new topic: a 4-by-3 area grid and a 5-by-2 multiple-choice check. Real GPT-5 generation, narration, native Manim rendering and three visual-review/repair rounds executed. The video did not pass: remaining annotation collisions caused strict stage 3 to block the bundle. This is a failed quality reproduction, not a successful delivered lesson. No unreviewed-bundle override was used. Browser clicks verified that wrong choices keep Continue locked and a correct choice unlocks it, without page errors. The planner nevertheless requested a Check button that the auto-grading template does not provide; one later visual review misidentified the CHECK badge as that button. Screenshot review cannot establish interactive correctness.
+
+An interrupted run also exposed cached Manim recovery with no in-memory prior (`None.model_copy`). A minimal initialization fix is covered by a regression that fails on the original code and passes on the fix; 47 selected regression tests passed in the fresh environment. This correction does not resolve the independent visual-generation or planner/template issues. See `evidence/fresh-environment-verification.json` for scores, failure reasons and scope.

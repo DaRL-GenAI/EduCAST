@@ -1,0 +1,17 @@
+{
+  "request_id": "fresh_area_reproduction",
+  "topic": "Area of a rectangle",
+  "audience": "Grade 5 students",
+  "learning_goal": "Explain why a rectangle with 4 columns and 3 rows has area 12 square units.",
+  "source_text": "Create a small lesson with exactly one short Manim worked example and one interactive multiple-choice check. In the worked example show a rectangle tiled with 4 columns and 3 rows of unit squares, identify length 4 and width 3, and explain area = 4 × 3 = 12 square units. Then ask for the area of a rectangle of length 5 and width 2. Keep narration concise. No extra opener or closer scenes.",
+  "preferred_theme": "studio_light",
+  "language": "en",
+  "max_review_rounds": 3,
+  "enable_remotion": false,
+  "enable_manim": true,
+  "enable_image": true,
+  "enable_narration": true,
+  "voice": "alloy",
+  "allow_unreviewed_bundle": false,
+  "parallel": 1
+}

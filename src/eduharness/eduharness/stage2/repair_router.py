@@ -191,10 +191,11 @@ def _prepare_manim(
             path = work / "manim_spec.json"
             payload = {"construct_body": prior_body, "scene_class_name": prior_class}
             path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-            return prior.model_copy(update={
+            base = prior or PreparedScene(scene_id=scene.id, scene_type=scene.scene_type)
+            return base.model_copy(update={
                 "spec_path": str(path.relative_to(run_dir)),
                 "attempt": attempt,
-                "debug": {k: v for k, v in {**prior.debug, "repair_mode": "prior_reused"}.items() if k != "prepare_error"},
+                "debug": {k: v for k, v in {**base.debug, "repair_mode": "prior_reused"}.items() if k != "prepare_error"},
             })
     prior_body, class_name = _load_manim_prior(run_dir, prior)
     mode = "generated"
