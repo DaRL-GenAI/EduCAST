@@ -8,11 +8,11 @@ Qingyue Chen*, Aarshdeeep Singh Nandra*, Huaiyuan Yao, Varun Shourie, Rayan Kazi
 
 **AAAI-27 Demonstration Program**
 
-[🌐 Project Website / GUI](https://darl-genai.github.io/EduCAST/) · [🎬 Video Demo](https://darl-genai.github.io/EduCAST/video/) · [💻 Code](educast/)
+[🌐 Project Website / GUI](https://darl-genai.github.io/EduCAST/) · [💻 Code](educast/)
 
 </div>
 
-[![Watch the EduCAST demo](docs/static/images/demo-poster.jpg)](https://darl-genai.github.io/EduCAST/video/)
+https://github.com/user-attachments/assets/2458469f-d1ce-4295-8a68-eb0c531babb0
 
 ---
 
@@ -41,7 +41,9 @@ EduCAST generates narrated educational media from a topic, learner profile, and 
 - 🔁 **Closed-loop review** — deterministic guards and a VLM reviewer inspect rendered scenes; failed scenes receive targeted repairs and another review.
 - 🎧 **Playable lessons** — narration, captions, scene navigation, and interactive practice in one browser player.
 
-![EduCAST pipeline](docs/static/images/pipeline.png)
+<p align="center">
+  <img src="docs/static/images/pipeline.png" alt="EduCAST pipeline" width="680">
+</p>
 
 ---
 
@@ -111,7 +113,7 @@ Output directory: `runs/sample_algebra/`. Open the finished lesson with:
 python -m educast.serve runs/sample_algebra/bundle
 ```
 
-Then visit **http://127.0.0.1:8765/**. For a separate run directory:
+Then open `http://127.0.0.1:8765/` in your local browser. For a separate run directory:
 
 ```bash
 python -m educast --sample --run-dir runs/algebra-new
@@ -141,7 +143,7 @@ Important request fields:
 python -m gui.public --host 127.0.0.1 --port 8091
 ```
 
-Open **http://127.0.0.1:8091/** and enter your topic and API key.
+Open `http://127.0.0.1:8091/` in your local browser and enter your topic and API key.
 
 ### 4. Project Organization
 
@@ -189,7 +191,7 @@ Pinned dependencies and saved requests make the workflow repeatable. Generated c
 
 ## 🙏 Acknowledgements
 
-EduCAST builds on [Manim Community](https://www.manim.community/), [Remotion](https://www.remotion.dev/), and [Playwright](https://playwright.dev/python/). See also our [Instructional Agents](https://darl-genai.github.io/instructional_agents_homepage/) project. README organization follows [Code2Video](https://github.com/showlab/Code2Video/).
+EduCAST builds on [Manim Community](https://www.manim.community/), [Remotion](https://www.remotion.dev/), and [Playwright](https://playwright.dev/python/). See also our [Instructional Agents](https://darl-genai.github.io/instructional_agents_homepage/) project.
 
 ## 📌 Citation
 
