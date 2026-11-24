@@ -95,7 +95,7 @@ python -m playwright install chromium       # interactive previews + Remotion's 
 ```
 
 `pip install -r requirements/base.txt` alone is enough for the API-only stages
-(`1`, `2-prepare`, `2-review`). 
+(`1`, `2-prepare`, `2-review`).
 
 For a persistent toolchain, set `EDUHARNESS_STORE` to its directory, or use
 `EDUHARNESS_MANIM`, `EDUHARNESS_FFMPEG`, `EDUHARNESS_FFPROBE` and
