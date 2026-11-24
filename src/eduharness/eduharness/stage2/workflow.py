@@ -901,7 +901,7 @@ def _overlay_character_video(cfg: Config, scene_id: str, video: Path) -> None:
             "-map", "[outv]", "-map", "0:a?", "-c:v", "libx264", "-preset", "fast",
             "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "copy",
             "-t", f"{seconds:.3f}", "-shortest", str(temp),
-        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=900)
+        ], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=900)
         temp.replace(video)
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
         # The character is decoration; a scene without it still teaches.

@@ -490,7 +490,7 @@ def render_fallback_slide(
             "-c:v", "libx264", "-t", str(max(2.0, duration)),
             "-pix_fmt", "yuv420p", "-vf", f"scale={w}:{h}", "-movflags", "+faststart", str(out_mp4),
         ]
-        subprocess.check_call(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return out_mp4
 
     # The remaining Remotion fallback deliberately uses the same board helper
@@ -538,7 +538,7 @@ def render_fallback_slide(
         "-c:v", "libx264", "-t", str(max(2.0, duration)),
         "-pix_fmt", "yuv420p", "-vf", f"scale={w}:{h}", "-movflags", "+faststart", str(out_mp4),
     ]
-    subprocess.check_call(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return out_mp4
 
 

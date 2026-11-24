@@ -1,0 +1,5 @@
+# Observed versions; not a complete cross-platform lock.
+openai==3.58.0
+pydantic==2.14.4
+pillow==12.3.0
+manim==0.19.1

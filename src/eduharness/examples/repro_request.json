@@ -1,0 +1,14 @@
+{
+  "request_id": "real_api_repro",
+  "topic": "Torque and balanced levers",
+  "audience": "Grade 9 students",
+  "learning_goal": "Predict whether a lever balances using force times perpendicular distance.",
+  "source_text": "Torque equals force times perpendicular distance. A lever balances when clockwise and counterclockwise torques are equal. Use the smallest lesson: exactly one short Manim worked example with numeric torques, followed by one interactive multiple choice check. Keep narration to two short sentences per scene. No extra opener or closer scenes.",
+  "parallel": 1,
+  "max_review_rounds": 3,
+  "enable_remotion": false,
+  "enable_manim": true,
+  "enable_image": true,
+  "enable_narration": true,
+  "allow_unreviewed_bundle": false
+}

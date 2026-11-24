@@ -30,12 +30,18 @@ def _resolve_tool(name: str) -> str | None:
         candidates.append(override)
     for folder in os.environ.get("PATH", "").split(os.pathsep):
         candidate = Path(folder) / name
-        if candidate.is_file() and os.access(candidate, os.X_OK):
-            candidates.append(str(candidate))
+        try:
+            if candidate.is_file() and os.access(candidate, os.X_OK):
+                candidates.append(str(candidate))
+        except OSError:
+            continue
     for extra in ("/usr/bin", "/usr/local/bin", "/opt/homebrew/bin"):
         candidate = Path(extra) / name
-        if candidate.is_file():
-            candidates.append(str(candidate))
+        try:
+            if candidate.is_file():
+                candidates.append(str(candidate))
+        except OSError:
+            continue
     # setup_env.sh installs wrappers here; renderers can be started without
     # sourcing env.sh (for example from the Studio or a notebook kernel).
     here = Path(__file__).resolve()
@@ -47,8 +53,11 @@ def _resolve_tool(name: str) -> str | None:
         stores.append(here.parents[4] / "eduharness" / "eduharness")
     for store in stores:
         candidate = store / "bin" / name
-        if candidate.is_file() and os.access(candidate, os.X_OK):
-            candidates.append(str(candidate))
+        try:
+            if candidate.is_file() and os.access(candidate, os.X_OK):
+                candidates.append(str(candidate))
+        except OSError:
+            continue
     for candidate in candidates:
         try:
             ok = subprocess.run([candidate, "-version"], capture_output=True, timeout=20).returncode == 0
@@ -81,7 +90,7 @@ def probe_duration(path: Path) -> float | None:
                 "-of", "default=noprint_wrappers=1:nokey=1", str(path),
             ],
             text=True,
-            stderr=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
         ).strip()
         return float(value)
     except Exception:
@@ -131,8 +140,8 @@ def extract_video_frames(
                 "-frames:v", "1", "-q:v", "3", "-vf", f"scale='min({max_width},iw)':-2",
                 str(out),
             ],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             check=False,
         )
         if out.is_file():
@@ -194,7 +203,7 @@ def mux_narration(
         "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
         "-t", f"{total:.3f}", str(tmp),
     ]
-    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     tmp.replace(out)
     return probe_duration(out) or total
 
@@ -207,7 +216,7 @@ def ensure_web_playable(video: Path) -> None:
                 ffprobe_bin(), "-v", "error", "-select_streams", "v:0",
                 "-show_entries", "stream=codec_name,pix_fmt", "-of", "csv=p=0", str(video),
             ],
-            text=True, stderr=subprocess.DEVNULL,
+            text=True, stderr=subprocess.PIPE,
         ).strip()
     except Exception:
         return
@@ -219,7 +228,7 @@ def ensure_web_playable(video: Path) -> None:
             ffmpeg_bin(), "-y", "-i", str(video), "-c:v", "libx264", "-preset", "veryfast",
             "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an", str(tmp),
         ],
-        check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
     if tmp.is_file() and tmp.stat().st_size > 0:
         tmp.replace(video)

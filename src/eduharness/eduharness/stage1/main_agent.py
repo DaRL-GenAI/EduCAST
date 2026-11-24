@@ -209,7 +209,7 @@ def _sanitize(bp: LessonBlueprint, request: HarnessRequest) -> LessonBlueprint:
         if sc.id in seen:
             sc.id = f"{sc.id}_{i + 1}"
         seen.add(sc.id)
-    if bp.scenes:
+    if bp.scenes and request.enable_remotion:
         _shape_opener(bp.scenes[0])
     _cap_key_scenes(bp)
     return bp
