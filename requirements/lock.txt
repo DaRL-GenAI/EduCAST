@@ -22,7 +22,6 @@ httpcore2==2.14.0
 httpx==0.28.1
 httpx2==2.14.0
 idna==3.20
-iniconfig==2.3.1
 isosurfaces==0.1.2
 jiter==0.18.0
 manim==0.19.1
@@ -43,7 +42,6 @@ packaging==26.4
 pillow==12.3.0
 pkgconfig==1.6.0
 playwright==1.65.2
-pluggy==1.7.0
 propcache==0.5.4
 pycairo==1.29.2
 pydantic==2.14.4
@@ -53,7 +51,6 @@ pyglet==2.1.19
 pyglm==2.8.4
 Pygments==2.21.0
 pyproject-metadata==0.12.1
-pytest==9.2.0
 python-dotenv==1.2.4
 rich==15.0.0
 scipy==1.15.3

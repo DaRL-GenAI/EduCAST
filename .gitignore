@@ -39,3 +39,6 @@ educast/assets/remotion/.eduharness_*.lock
 .repro-check/
 evidence/
 .playwright/
+
+# Fontconfig cache metadata
+.uuid

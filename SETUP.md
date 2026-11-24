@@ -6,7 +6,7 @@ EduCAST turns teaching requests into narrated
 lessons with animations, illustrations, chapter navigation, and interactive practice.
 
 This repository contains the existing website, its Python backend, lesson-generation
-pipeline, Remotion template, fonts, character artwork, and tests. Generated course
+pipeline, Remotion template, fonts, and character artwork. Generated course
 bundles, local API credentials, execution logs, and development artifacts are excluded.
 
 ## Run the website
@@ -40,7 +40,7 @@ project page and `docs/demo/` a static copy of this showcase, published from the
 `main` branch. Rebuild the demo after changing anything under `gui/`:
 
 ```bash
-python scripts/build_pages.py
+python -m gui.build_pages
 ```
 
 The script reuses `gui.public.public_html`, so the published page
@@ -105,24 +105,22 @@ See the [code layout](README.md#code-layout). Fixed resources live in
 `educast/assets/`; agents and the review loop use those resources without changing
 the original planning, rendering or repair sequence.
 
-Full pipeline documentation: [docs/development/pipeline.md](docs/development/pipeline.md).
-
 Bundled font license notices are retained alongside their font files.
 
-## Minimal generation and review
+## Generation and review
 
 After installing the rendering dependencies above, set `OPENAI_API_KEY` in your
 shell or `.env`, then run from this directory:
 
 ```bash
-python -m educast --request-json examples/minimal_request.json --run-dir runs/minimal
-python -m educast.serve runs/minimal/bundle
+python -m educast --request-json request.json --run-dir runs/lesson
+python -m educast.serve runs/lesson/bundle
 ```
 
-The example generates a narrated Manim equation and an interactive question, with
-up to three review/repair rounds. Packaging requires every scene to pass review;
-`allow_unreviewed_bundle` remains false. Model output can fail this quality gate.
-A fallback renderer is not equivalent to successful native Manim rendering.
+Edit `request.json` to set the topic, learner profile, learning goal and enabled
+renderers. The pipeline plans the lesson, generates scenes, reviews and repairs
+them, then packages the approved lesson. Packaging requires every scene to pass
+review; `allow_unreviewed_bundle` remains false.
 
 Resume individual stages with the same request and run directory using
 `--stage 2-render`, `--stage 2-review`, or `--stage 3`. Use `--force` to repeat a
@@ -133,9 +131,5 @@ it does not install system libraries, LaTeX, Chromium, or Node.js. Mathematical
 rendering requires a LaTeX distribution and `dvisvgm` for full MathTex support.
 For example, Debian/Ubuntu packages include `texlive-latex-extra`,
 `texlive-fonts-recommended`, and `dvisvgm`.
-
-On restricted hosts where Node cannot open `/dev/null`, the optional adapter
-`scripts/node_stdio_pipe.cjs` can be enabled with
-`NODE_OPTIONS="--require=$PWD/scripts/node_stdio_pipe.cjs"`.
 
 Existing `EDUHARNESS_*` environment variable names in `.env.example` remain supported.

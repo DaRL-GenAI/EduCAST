@@ -19,7 +19,7 @@ and repairs only the ones that fail.
 ## Code layout
 
 ```text
-requirements/             Python dependencies: base, render, dev, lock
+requirements/             Python dependencies: base, render, lock
 educast/
   assets/                 Fixed fonts, interaction templates and Remotion
   agents/                 Planner, Manim, Remotion, image, interaction, narration
@@ -29,10 +29,8 @@ educast/
   providers/              API clients and usage accounting
   config.py, schema.py     Configuration and data contracts
 gui/                      GUI server, pages and artwork
-examples/                 Teaching requests
-scripts/                  Static-site build and optional Node compatibility adapter
-notebooks/                Colab examples
-docs/                     Published project page and development documentation
+request.json              Teaching request configuration
+docs/                     Published project page
 ```
 
 ## Run locally
@@ -49,14 +47,14 @@ python -m gui.public --host 127.0.0.1 --port 8091
 Open <http://127.0.0.1:8091/>. Generating lessons also requires the local rendering
 tools and an OpenAI API key; follow [SETUP.md](SETUP.md).
 
-After that setup, the minimal example runs the existing generation and review loop:
+After setup, edit `request.json` and run the generation and review loop:
 
 ```bash
-python -m educast --request-json examples/minimal_request.json --run-dir runs/minimal
-python -m educast.serve runs/minimal/bundle
+python -m educast --request-json request.json --run-dir runs/lesson
+python -m educast.serve runs/lesson/bundle
 ```
 
-GitHub Pages serves `docs/`. Rebuild it with `python scripts/build_pages.py`.
+GitHub Pages serves `docs/`. Rebuild it with `python -m gui.build_pages`.
 
 ## Related projects
 

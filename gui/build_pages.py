@@ -5,7 +5,7 @@ generation API: `gui.public.public_html` already strips the Studio
 desk, and this script rewrites the server's absolute `/assets/...` routes into
 paths relative to the published project site (https://<owner>.github.io/EduCAST/).
 
-    python scripts/build_pages.py          # from the repository root
+    python -m gui.build_pages          # from the repository root
 
 The composer is the home page, and on Pages it has no backend to submit to, so
 the static build swaps in a notice pointing at the local-server instructions.

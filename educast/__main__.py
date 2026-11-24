@@ -1,4 +1,4 @@
-"""CLI entry: python -m educast --request-json examples/sample_request.json"""
+"""CLI entry: python -m educast --request-json request.json"""
 
 from __future__ import annotations
 
