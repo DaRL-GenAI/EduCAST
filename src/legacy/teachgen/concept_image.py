@@ -59,9 +59,7 @@ except ImportError:
     sys.exit("Missing dependency. Run: pip install openai")
 
 
-# ----------------------------------------------------------------------
 # STEP 1 — expand a concept into a detailed English image prompt via GPT
-# ----------------------------------------------------------------------
 PROMPT_SYSTEM = textwrap.dedent("""\
     You are an expert visual-explainer and art director. Given a teaching
     concept, you write ONE detailed English prompt for a text-to-image model
@@ -109,9 +107,7 @@ def generate_prompt(client: OpenAI, concept: str, audience: str,
     return resp.choices[0].message.content.strip()
 
 
-# ----------------------------------------------------------------------
 # STEP 2 — render the image from the prompt via the image API
-# ----------------------------------------------------------------------
 def generate_image(client: OpenAI, prompt: str, image_model: str,
                    size: str, quality: str) -> bytes:
     """STEP 2: call the image API and return raw PNG bytes."""
@@ -132,9 +128,7 @@ def generate_image(client: OpenAI, prompt: str, image_model: str,
         return r.read()
 
 
-# ----------------------------------------------------------------------
 # Optional: pad/crop the 3:2 render to an exact 16:9 canvas
-# ----------------------------------------------------------------------
 def to_exact_169(png_bytes: bytes, target=(1280, 720)) -> bytes:
     """Letterbox/crop the image onto an exact 16:9 canvas (needs Pillow)."""
     from io import BytesIO
@@ -152,9 +146,7 @@ def to_exact_169(png_bytes: bytes, target=(1280, 720)) -> bytes:
     return out.getvalue()
 
 
-# ----------------------------------------------------------------------
 # CLI
-# ----------------------------------------------------------------------
 def main():
     ap = argparse.ArgumentParser(
         description="Two-step: GPT writes an English prompt, then renders a "

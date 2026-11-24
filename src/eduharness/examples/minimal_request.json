@@ -1,5 +1,5 @@
 {
-  "request_id": "final_linear_smoke",
+  "request_id": "minimal_linear",
   "topic": "Solve x + 2 = 5",
   "audience": "Grade 7 students",
   "learning_goal": "Subtract 2 from both sides to find x = 3.",

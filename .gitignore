@@ -35,5 +35,7 @@ src/eduharness/remotion_template/out/
 src/eduharness/remotion_template/public/scene-props.json
 src/eduharness/remotion_template/.eduharness_*.lock
 
-# legacy/ ships its two sample runs (see src/legacy/README.md)
-!src/legacy/runs/
+# Local verification artifacts
+.repro-check/
+evidence/
+.playwright/

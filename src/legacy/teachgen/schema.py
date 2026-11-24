@@ -87,9 +87,7 @@ class ReviewResult(BaseModel):
         return any(c.severity in ("blocker", "major") for c in self.critiques)
 
 
-# ---------------------------------------------------------------------------
 # Nested feedback loop — outer review + inner refinement contracts
-# ---------------------------------------------------------------------------
 
 class ContentIssue(BaseModel):
     """A plan-level problem: narration or visual_brief needs rewriting."""
