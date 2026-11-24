@@ -30,7 +30,6 @@ educast/
   config.py, schema.py     Configuration and data contracts
 gui/                      GUI server, pages and artwork
 examples/                 Teaching requests
-tests/                    Regression tests
 scripts/                  Static-site build and optional Node compatibility adapter
 notebooks/                Colab examples
 docs/                     Published project page and development documentation

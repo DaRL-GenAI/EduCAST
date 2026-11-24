@@ -107,16 +107,6 @@ the original planning, rendering or repair sequence.
 
 Full pipeline documentation: [docs/development/pipeline.md](docs/development/pipeline.md).
 
-## Tests
-
-```bash
-python -m pip install -r requirements/dev.txt
-python -m pytest -q tests
-```
-
-Browser tests additionally require Playwright and Chromium. Unit tests use
-simulated providers or subprocesses; they do not require a real API key.
-
 Bundled font license notices are retained alongside their font files.
 
 ## Minimal generation and review

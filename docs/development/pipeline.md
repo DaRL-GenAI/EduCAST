@@ -95,7 +95,7 @@ python -m playwright install chromium       # interactive previews + Remotion's 
 ```
 
 `pip install -r requirements/base.txt` alone is enough for the API-only stages
-(`1`, `2-prepare`, `2-review`). Dev/test: `pip install -r requirements/dev.txt`.
+(`1`, `2-prepare`, `2-review`). 
 
 For a persistent toolchain, set `EDUHARNESS_STORE` to its directory, or use
 `EDUHARNESS_MANIM`, `EDUHARNESS_FFMPEG`, `EDUHARNESS_FFPROBE` and
@@ -402,21 +402,4 @@ existing `media/<video-name>.poster.jpg` files. Frontend assets are in
 
 ## Layout
 
-```
-educast/
-  schema.py config.py pipeline.py
-  providers/          # OpenAI (structured outputs, retries) + usage ledger
-  stage1/             # Main Agent (planner)
-  stage2/             # workflow (prepare/render/review), reviewer, guards, narration,
-                      # adapters/ (image, manim, remotion, interactive), repair_apply/
-  stage3/             # bundler, player, interactive_runtime.js
-  templates/schemas/  # parameterized interactive specs + Pydantic validators
-educast/assets/remotion/    # pinned Remotion project: SceneBeat with 5 beats
-tests/                # offline tests (FakeProvider); browser test needs Playwright
-```
-
-## Tests
-
-```bash
-pytest -q
-```
+See the current [repository layout](../../README.md#code-layout).
