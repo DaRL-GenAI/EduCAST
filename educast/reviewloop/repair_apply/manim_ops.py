@@ -180,6 +180,21 @@ def apply_manim_ops(construct_body: str, ops: list[RepairOp]) -> ApplyResult:
             applied.append(f"replace:{target}")
         else:
             failed.append(f"{op.op}:{target}:unsupported-op")
+    # Reject newly introduced forward local references before rendering.
+    def forward_references(source):
+        import ast
+        nodes = list(ast.walk(ast.parse(source)))
+        stores = {}
+        for node in nodes:
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
+                stores[node.id] = min(stores.get(node.id, node.lineno), node.lineno)
+        return {n.id for n in nodes if isinstance(n, ast.Name)
+                and isinstance(n.ctx, ast.Load) and n.id in stores and n.lineno < stores[n.id]}
+
+    introduced = forward_references(body) - forward_references(construct_body)
+    if introduced:
+        failed.append("patch uses local variables before definition: " + ", ".join(sorted(introduced)))
+        body, applied = construct_body, []
     ok = bool(applied) and not failed
     return ApplyResult(
         ok=ok,
