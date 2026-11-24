@@ -800,7 +800,7 @@ class _EduGuardScene(Scene):
 
         def visit(m):
             if isinstance(m, _TEXT_TYPES):
-                if id(m) not in seen and self._visible(m):
+                if id(m) not in seen and any(self._visible(part) for part in m.family_members_with_points()):
                     seen.add(id(m))
                     found.append(m)
                 return
