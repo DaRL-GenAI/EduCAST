@@ -17,6 +17,56 @@ def _scene_namespace(body: str) -> dict:
     return namespace
 
 
+@pytest.mark.parametrize("kind", ["text", "math", "group", "child", "geometry"])
+def test_swap_keeps_text_states_separate_and_preserves_parent(tmp_path, monkeypatch, kind):
+    monkeypatch.chdir(tmp_path)
+    ns = _scene_namespace("self.wait(0.1)")
+    import manim
+    (tmp_path / "media").mkdir(exist_ok=True)
+
+    if kind == "geometry":
+        old, new = ns["Circle"](), ns["Square"]()
+    elif kind == "math":
+        old, new = ns["MathTex"]("x=1"), ns["MathTex"]("x=2")
+    else:
+        old, new = ns["Text"]("OLD"), ns["Text"]("NEW")
+    if kind == "group":
+        old, new = ns["VGroup"](old), ns["VGroup"](new)
+    parent = ns["VGroup"](old, ns["Dot"]().shift(ns["RIGHT"] * 3)) if kind == "child" else None
+    samples = []
+
+    class Probe(ns["Scene"]):
+        def construct(self):
+            self.add(parent if parent is not None else old)
+            render = self.renderer.render
+
+            def record(*args, **kwargs):
+                family = self.get_mobject_family_members()
+                def visible(mob):
+                    return any(p in family and max(float(p.get_fill_opacity()), float(p.get_stroke_opacity())) > .01
+                               for p in mob.get_family() if len(getattr(p, "points", [])))
+                samples.append((visible(old), visible(new)))
+                return render(*args, **kwargs)
+
+            self.renderer.render = record
+            ns["swap"](self, old, new, run_time=1)
+            self.wait(.2)
+            assert new in self.get_mobject_family_members()
+            assert old not in self.get_mobject_family_members()
+            if parent is not None:
+                assert new in parent.submobjects and old not in parent.submobjects
+                parent.shift(ns["UP"])
+                assert old not in self.get_mobject_family_members()
+
+    with manim.tempconfig({"write_to_movie": False, "save_last_frame": False,
+                           "disable_caching": True, "pixel_width": 320,
+                           "pixel_height": 180, "frame_rate": 10}):
+        Probe().render()
+    assert samples
+    if kind != "geometry":
+        assert not any(a and b for a, b in samples)
+
+
 def test_teaching_grid_fits_complete_groups_without_colliding_with_notes(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     namespace = _scene_namespace("self.wait(0.1)")

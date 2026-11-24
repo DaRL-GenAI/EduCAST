@@ -195,12 +195,14 @@ def stage2_review(
     cfg: Config,
     provider=None,
     blueprint: LessonBlueprint | None = None,
+    *,
+    force: bool = False,
 ) -> list[RenderedScene]:
     cfg.ensure_dirs()
     provider = provider or get_provider(cfg, UsageTracker(cfg.usage_path))
     blueprint = blueprint or _load_blueprint(cfg)
     current = workflow.load_rendered(cfg)
-    targets = {item.scene_id for item in current if not item.review_passed}
+    targets = {item.scene_id for item in current if force or not item.review_passed}
     result = workflow.review_all(cfg, provider, blueprint, current, only_scene_ids=targets)
     for item in result:
         if item.review_error:

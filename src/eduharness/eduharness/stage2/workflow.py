@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import re
 import shutil
@@ -485,7 +486,8 @@ def _prepare_one(
         image_prompt_model=cfg.models.image_prompt,
         audience=blueprint.audience,
         language=cfg.request.language,
-        opener=bool(blueprint.scenes) and scene.id == blueprint.scenes[0].id,
+        opener=(scene.scene_type == SceneType.REMOTION and bool(blueprint.scenes)
+                    and scene.id == blueprint.scenes[0].id),
     )
     prepared.narration_path = narration_path
     prepared.narration_seconds = narration_seconds
@@ -1115,7 +1117,8 @@ def _review_one(
             provider, blueprint.style, frames, scene=scene, guard=guard,
             artifact_excerpt=artifact, pass_score=cfg.review_pass_score,
             visual_seconds=result.visual_seconds, narration_seconds=result.narration_seconds,
-            opener=bool(blueprint.scenes) and scene.id == blueprint.scenes[0].id,
+            opener=(scene.scene_type == SceneType.REMOTION and bool(blueprint.scenes)
+                    and scene.id == blueprint.scenes[0].id),
         )
         if not repair.review_error:
             break
@@ -1153,9 +1156,15 @@ def preview_frames(
         if not video.is_file():
             return [], [GuardFinding(kind="missing_asset", severity="blocker",
                                      message=f"video missing: {rendered.src}")]
-        sample_count = cfg.frames_per_video + (2 if rendered.scene_type == SceneType.REMOTION else 0)
         duration = rendered.visual_seconds or media.probe_duration(video) or 0.0
+        # Five sparse frames can miss an entire reveal or state change. Increase
+        # temporal coverage with duration, bounded to keep vision costs modest.
+        sample_count = max(cfg.frames_per_video, min(16, math.ceil(duration / 2)))
+        if rendered.scene_type == SceneType.REMOTION:
+            sample_count += 2
         extra = rendered.guard.flagged_seconds()
+        if rendered.scene_type == SceneType.MANIM and duration > 0:
+            extra = [min(0.25, duration / 2), max(0.0, duration - 0.25), *extra]
         # Remotion has no runtime layout guard; include the first and last
         # composited frames so reveal/fade transitions are represented in QA.
         if rendered.scene_type == SceneType.REMOTION and duration > 0:
@@ -1220,6 +1229,11 @@ def run_repair_loop(cfg: Config, provider: Provider, blueprint: LessonBlueprint)
         current_prepared = {p.scene_id for p in prepared} - stale_prepared
         current_rendered = {r.scene_id for r in rendered} - stale_rendered
         known = current_prepared & current_rendered
+        # A reviewer outage is not a quality verdict. Retry its existing output
+        # before deciding repair targets, without spending a generation attempt.
+        review_errors = {r.scene_id for r in rendered if r.scene_id in known and r.review_error}
+        if review_errors:
+            rendered = review_all(cfg, provider, blueprint, rendered, only_scene_ids=review_errors)
         attempts = {p.scene_id: p.attempt for p in prepared}
         failed = [
             r for r in rendered
@@ -1234,6 +1248,7 @@ def run_repair_loop(cfg: Config, provider: Provider, blueprint: LessonBlueprint)
         )
         for scene_id in stale:
             repairs.pop(scene_id, None)
+        _apply_tool_changes(cfg, blueprint, repairs)
         if exhausted:
             print(f"  Stage 2 resume: budget exhausted for {sorted(exhausted)} (see debug/*_HITL.txt)", flush=True)
         if not targets:

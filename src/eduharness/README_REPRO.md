@@ -1,7 +1,7 @@
 # EduCAST minimal reproducibility release
 
 Baseline: DaRL-GenAI/EduCAST commit `539a045bfde7986d28d0bc932959d2615ce5abf0`, source subtree `src/eduharness`.
-The original source is preserved; production changes are limited to four Python files. See `source.patch` and `source-manifest.json` for exact provenance.
+The original baseline is preserved. The initial runtime fixes and the subsequent review-loop fixes are documented separately below. The delivery contains `review-loop.patch` relative to the prior minimal release, a SHA256 file inventory, and the exact runtime source manifest.
 
 ## Changes
 
@@ -9,11 +9,11 @@ The original source is preserved; production changes are limited to four Python 
 2. Skip inaccessible individual media-tool candidates instead of aborting PATH resolution.
 3. Consume discarded FFmpeg output through subprocess pipes, supporting hosts where `/dev/null` cannot be opened for writing. Remotion uses `run(check=True)`, which drains these pipes.
 
-No model prompts, review criteria, pass thresholds, repair budgets or strict bundle rules were relaxed. The sample is a small Manim lesson plus an interactive question; the planner remains model driven.
+The initial runtime fixes did not alter prompts or review criteria. The follow-up changes strengthen the review instructions and correct the first-scene review contract; pass thresholds, repair budgets and strict bundle rules remain unchanged. The sample is a small Manim lesson plus an interactive question; the planner remains model driven.
 
 ## Install and run on a normal Linux host
 
-Use Python 3.10 or later. Manim needs Cairo/Pango development libraries and a compiler if wheels are unavailable; install these using your system's approved method. FFmpeg and FFprobe must be executable. Keep all virtualenvs, downloads and browser caches in your own working directory.
+Use Python 3.10 or later. Manim needs Cairo/Pango development libraries and a compiler if wheels are unavailable; install these using your system's approved method. FFmpeg and FFprobe must be executable. Playwright also needs its matching Chromium build and the browser system shared libraries; downloading Chromium alone does not install those libraries. Native formula rendering additionally needs LaTeX and dvisvgm; a `manim-no-latex` result is a declared downgrade. Remotion, when enabled, additionally needs Node 18+, npm/npx and installation of the template dependencies using `npm ci`. Keep all virtualenvs, downloads and browser caches in your own working directory.
 
 ```bash
 python3 -m venv .venv
@@ -32,7 +32,7 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright" .venv/bin/python -m eduharness \
 
 ## Resuming without regenerating the lesson
 
-The CLI supports `--stage 2-render --force --no-repair`, `--stage 2-review`, and `--stage 3`. Use the same request and run directory for all stages. After a cached `review_error`, explicitly rerun `--stage 2-review`; do not assume a full pipeline invocation retries cached review errors.
+The CLI supports `--stage 2-render --force --no-repair`, `--stage 2-review`, and `--stage 3`. Use the same request and run directory for all stages. Cached `review_error` results are retried on stage-2 resume. To re-audit already passed output, use `--stage 2-review --force`; without `--force`, passed scenes are skipped.
 
 Never enable `allow_unreviewed_bundle` to claim successful reproduction. Check `rendered_scenes.json`: `ffmpeg-slide-fallback` and `manim-safe-fallback` do not demonstrate native renderer success. Declare any `manim-no-latex` downgrade. A real initial PASS does not prove the repair path actually ran.
 
@@ -42,8 +42,22 @@ Never enable `allow_unreviewed_bundle` to claim successful reproduction. Check `
 
 See `evidence/verification.json` for actual tested branches and limitations. Offline FakeProvider checks are never counted as real API generation or real vision review.
 
-## Verified result
+## Verified result (2026-11-24)
 
-Real API generation produced native Manim video, narration, and a template-based interactive question. Actual visual reviews passed at 8.5 and 9.5; strict stage 3 produced the player and manifest with unreviewed output disabled. The source repair path fixed a renderer exception and regenerated after seven layout findings, ending with zero findings. Review was resumed explicitly after the host browser adaptation. Nine API calls were recorded (including two vision reviews); the usage estimate was $0.5181. Interactive clicking, image generation, and native Remotion were not validated.
+A fresh, real API request solving x + 2 = 5 produced a native Manim video, narration and a multiple-choice question. Manim initially failed visual review (score 5, adherence 6); feedback patched the generated artifact, native rendering ran again, and a fresh visual review passed (9/9). The interactive scene passed (9/9). Strict stage 3 produced a two-scene player with unreviewed output disabled. Eight API calls cost an estimated $0.346. The exact successful request is in examples/repro_linear_request.json; model generation remains stochastic.
 
-On this write-restricted audit host, third-party Manim also needed a task-local output sink instead of `/dev/null`. That regular file is not semantically identical to the null device and is a host-only adaptation, not a required source change.
+Two more complex torque runs exhausted the three-round repair budget and were correctly blocked by the strict bundle gate. This release demonstrates a real repair loop on one simple case, not universal visual quality or reproduction of the original demo. Native Remotion and image generation were not validated in this run. The complete renderer environment was reused rather than installed from scratch.
+
+On this write-restricted audit host, third-party Manim needed a task-local output sink instead of /dev/null, and Chromium used a local executable wrapper. These are host adaptations. The regular output file is not semantically identical to the null device. Missing dvisvgm and its shared libraries were downloaded from Ubuntu and checked against package SHA256 metadata for the formula regression test.
+
+## Review follow-up fixes
+
+The real API result above uses these follow-up changes. Offline regression tests also exercise reject -> feedback to generation -> render -> re-review, and recovery from a cached reviewer outage without regenerating or consuming a generation attempt.
+
+Video evidence scales with duration (roughly one sample per two seconds, up to 16 base samples by default), plus Manim boundary frames. Explicit higher frame settings, Remotion extras and layout-guard timestamps remain respected. This is still sampled visual review, not continuous video/audio inspection or automated interaction testing. The reviewer must check requested visual demonstrations and cannot infer click behavior from a screenshot. Pass thresholds and generation budgets are unchanged.
+
+Resuming a run now retries cached review errors automatically. Use the latest `rendered_scenes.json` as the verdict; old HITL text files can remain from an earlier outage. The final-linear-smoke player is the new verified example; earlier preview outputs are historical.
+
+First-scene title-card treatment is now limited to Remotion; a first Manim teaching scene receives the teaching-board review contract. Resumed repair also applies a requested tool change before preparing its next attempt.
+
+Text-containing swap transitions now fade out, replace the object in its parent, and fade in. Pure geometry retains ReplacementTransform. Regression cases cover Text, MathTex, grouped text and parent-child replacement. This prevents glyph-morph artifacts without changing review thresholds.

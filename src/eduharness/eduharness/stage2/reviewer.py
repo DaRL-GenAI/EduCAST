@@ -50,6 +50,9 @@ BLOCKING issues (the scene fails):
 - A KEY ELEMENT that is not visible at all (list it in missing_key_elements)
 - Interactive preview empty, broken, or without the promised controls
 - A formula/number that is wrong or contradicts the brief
+- A requested worked example or causal animation reduced to text alone, with
+  no visible diagram/state change demonstrating the requested relationship
+  across the supplied frames. Cite the missing demonstration and observed times.
 
 MINOR issues (nits; never fail a scene for these alone):
 - Palette/font drift, slightly cramped spacing, small alignment differences
@@ -83,6 +86,13 @@ An interactive screenshot shows the INITIAL state before the student acts:
 feedback text, explanations, "Correct!" banners and Continue buttons appear only
 after an answer, so never mark them missing — judge the prompt, the controls and
 the readability of what is shown.
+
+Judge teaching effectiveness separately from legibility: readable text and
+absence of collisions do not establish that an explanation is demonstrated.
+Check the ordered frames against the requested animation steps and narration;
+identify concrete absent or contradictory visual explanations. Do not invent
+motion or audio synchronization evidence between sampled frames. An initial
+interactive screenshot cannot establish that clicking or feedback works.
 
 Scores: score = overall readability + polish (0-10); brief_adherence = how much
 of the brief's intent is actually on screen (0-10). A scene with any blocking

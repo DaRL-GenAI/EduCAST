@@ -661,7 +661,17 @@ def reveal(scene, *mobs, lag=0.18, run_time=1.1):
 def swap(scene, old, new, run_time=0.8):
     """Replace one step with the next in the same spot; keeps the frame uncluttered."""
     new.move_to(old)
-    scene.play(ReplacementTransform(old, new), run_time=run_time)
+    if any(isinstance(part, _TEXT_TYPES)
+           for mob in (old, new) for part in mob.get_family()):
+        # Glyph morphs can produce unreadable intermediate formulas. Keep the
+        # old object in its parent until replace() preserves the group structure.
+        outgoing = FadeOut(old)
+        outgoing.remover = False
+        scene.play(outgoing, run_time=run_time / 2)
+        scene.replace(old, new)
+        scene.play(FadeIn(new), run_time=run_time / 2)
+    else:
+        scene.play(ReplacementTransform(old, new), run_time=run_time)
 
 
 def _label_of(mob):

@@ -1,293 +1,46 @@
 {
-  "baseline_commit": "539a045bfde7986d28d0bc932959d2615ce5abf0",
-  "status": "real_api_native_manim_interactive_tts_review_strict_bundle_passed",
-  "offline_tests": 133,
-  "scenes": [
-    {
-      "scene_id": "s1-worked-example",
-      "render_mode": "manim",
-      "review_passed": true,
-      "review_error": false,
-      "guard": {
-        "findings": [],
-        "checked_steps": 122,
-        "source": "manim-layout-guard"
-      }
-    },
-    {
-      "scene_id": "s2-check",
-      "render_mode": "trusted-template-runtime",
-      "review_passed": true,
-      "review_error": false,
-      "guard": {
-        "findings": [],
-        "checked_steps": 0,
-        "source": ""
-      }
-    }
-  ],
-  "real_reviews": [
-    {
-      "scene_id": "s1-worked-example",
-      "scene_type": "manim",
-      "passed": true,
-      "score": 8.5,
-      "brief_adherence": 8.0,
-      "severity": "minor",
-      "fix_action": "noop",
-      "blocking_issues": [],
-      "minor_issues": [
-        "Scene title text does not match the brief (shows “Worked Example: Will it Balance?” instead of “Worked Example: Balance by Equal Torques”).",
-        "Annotation stack is placed below the diagram rather than as a right-side adjoining column as requested in the brief (readable but off-spec).",
-        "Torque direction labels (CCW/CW) are a bit tight to the beam; add a little more vertical offset for clearer separation.",
-        "Place the annotation column to the right of the diagram (E1–F6) so it adjoins the drawing’s outside edge; keep a clear vertical lane and consistent margins."
-      ],
-      "missing_key_elements": [],
-      "issues": [
-        "Scene title text does not match the brief (shows “Worked Example: Will it Balance?” instead of “Worked Example: Balance by Equal Torques”).",
-        "Annotation stack is placed below the diagram rather than as a right-side adjoining column as requested in the brief (readable but off-spec).",
-        "Torque direction labels (CCW/CW) are a bit tight to the beam; add a little more vertical offset for clearer separation.",
-        "Place the annotation column to the right of the diagram (E1–F6) so it adjoins the drawing’s outside edge; keep a clear vertical lane and consistent margins."
-      ],
-      "ops": [
-        {
-          "target": "construct_body",
-          "op": "replace",
-          "before": "'Worked Example: Will it Balance?'",
-          "after": "'Worked Example: Balance by Equal Torques'",
-          "value": null,
-          "rationale": "Align the header with the brief’s required title treatment."
-        }
-      ],
-      "fallback_instructions": "Update the setup_layout call so the scene title reads “Worked Example: Balance by Equal Torques”. If the exact substring replacement fails, directly set the first argument of self.setup_layout to that title. Keep all other timing and visuals the same; optional: nudge the annotation stack to a right-side column adjoining the diagram with clear spacing.",
-      "review_error": false,
-      "frames": [
-        {
-          "path": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/frames/s1-worked-example_f0.jpg",
-          "seconds": 1.43,
-          "label": "uniform"
-        },
-        {
-          "path": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/frames/s1-worked-example_f1.jpg",
-          "seconds": 6.673,
-          "label": "uniform"
-        },
-        {
-          "path": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/frames/s1-worked-example_f2.jpg",
-          "seconds": 11.917,
-          "label": "uniform"
-        },
-        {
-          "path": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/frames/s1-worked-example_f3.jpg",
-          "seconds": 17.16,
-          "label": "uniform"
-        },
-        {
-          "path": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/frames/s1-worked-example_f4.jpg",
-          "seconds": 22.403,
-          "label": "uniform"
-        }
-      ],
-      "guard": {
-        "findings": [],
-        "checked_steps": 122,
-        "source": "manim-layout-guard"
-      }
-    },
-    {
-      "scene_id": "s2-check",
-      "scene_type": "interactive",
-      "passed": true,
-      "score": 9.5,
-      "brief_adherence": 9.0,
-      "severity": "minor",
-      "fix_action": "noop",
-      "blocking_issues": [],
-      "minor_issues": [
-        "Choices are arranged in a two-column grid rather than in a single stacked list as requested in the visual brief; readability is still good."
-      ],
-      "missing_key_elements": [],
-      "issues": [
-        "Choices are arranged in a two-column grid rather than in a single stacked list as requested in the visual brief; readability is still good."
-      ],
-      "ops": [],
-      "fallback_instructions": "Adjust the choices layout to a single vertical stack of four lettered options (A–D) with comfortable spacing between them, keeping the existing prompt text and the Hint control visible and unchanged.",
-      "review_error": false,
-      "frames": [
-        {
-          "path": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/frames/s2-check_interactive.png",
-          "seconds": 0.0,
-          "label": "screenshot"
-        }
-      ],
-      "guard": {
-        "findings": [],
-        "checked_steps": 0,
-        "source": ""
-      }
-    }
-  ],
-  "usage": {
-    "summary": {
-      "total_cost_usd": 0.5181,
-      "calls": 9,
-      "by_kind": {
-        "chat": {
-          "calls": 5,
-          "input_tokens": 21846,
-          "output_tokens": 40305,
-          "reasoning_tokens": 32448,
-          "cost_usd": 0.4304,
-          "seconds": 321.8576
-        },
-        "tts": {
-          "calls": 2,
-          "input_tokens": 0,
-          "output_tokens": 0,
-          "reasoning_tokens": 0,
-          "cost_usd": 0.0033,
-          "seconds": 7.5861
-        },
-        "vision": {
-          "calls": 2,
-          "input_tokens": 14059,
-          "output_tokens": 6693,
-          "reasoning_tokens": 6144,
-          "cost_usd": 0.0845,
-          "seconds": 86.6443
-        }
-      }
-    },
-    "events": [
-      {
-        "kind": "chat",
-        "model": "gpt-5",
-        "label": "chat_json:LessonBlueprint",
-        "input_tokens": 5167,
-        "output_tokens": 9179,
-        "reasoning_tokens": 7360,
-        "characters": 0,
-        "images": 0,
-        "seconds": 74.02658128738403,
-        "cost_usd": 0.09824875,
-        "at": 1795499300.3019707
-      },
-      {
-        "kind": "tts",
-        "model": "gpt-4o-mini-tts",
-        "label": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/work/s1-worked-example/narration.mp3",
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "reasoning_tokens": 0,
-        "characters": 179,
-        "images": 0,
-        "seconds": 5.521749496459961,
-        "cost_usd": 0.0021479999999999997,
-        "at": 1795499306.0799785
-      },
-      {
-        "kind": "chat",
-        "model": "gpt-5",
-        "label": "chat_json:_ManimBody",
-        "input_tokens": 4364,
-        "output_tokens": 12780,
-        "reasoning_tokens": 10752,
-        "characters": 0,
-        "images": 0,
-        "seconds": 109.93507814407349,
-        "cost_usd": 0.13325499999999998,
-        "at": 1795499416.279233
-      },
-      {
-        "kind": "tts",
-        "model": "gpt-4o-mini-tts",
-        "label": "/data/chenqingyue/project_qingyue/EduCAST-project-page/.repro-check/real-api-run-v2/work/s2-check/narration.mp3",
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "reasoning_tokens": 0,
-        "characters": 92,
-        "images": 0,
-        "seconds": 2.064384937286377,
-        "cost_usd": 0.001104,
-        "at": 1795499418.6963797
-      },
-      {
-        "kind": "chat",
-        "model": "gpt-5",
-        "label": "chat_json:_FillOut",
-        "input_tokens": 1027,
-        "output_tokens": 1059,
-        "reasoning_tokens": 896,
-        "characters": 0,
-        "images": 0,
-        "seconds": 8.504074811935425,
-        "cost_usd": 0.01187375,
-        "at": 1795499427.8033555
-      },
-      {
-        "kind": "chat",
-        "model": "gpt-5",
-        "label": "chat_json:_ManimBody",
-        "input_tokens": 4798,
-        "output_tokens": 6676,
-        "reasoning_tokens": 4800,
-        "characters": 0,
-        "images": 0,
-        "seconds": 47.256643533706665,
-        "cost_usd": 0.0727575,
-        "at": 1795499486.136031
-      },
-      {
-        "kind": "chat",
-        "model": "gpt-5",
-        "label": "chat_json:_ManimBody",
-        "input_tokens": 6490,
-        "output_tokens": 10611,
-        "reasoning_tokens": 8640,
-        "characters": 0,
-        "images": 0,
-        "seconds": 82.13525032997131,
-        "cost_usd": 0.1142225,
-        "at": 1795499632.8462224
-      },
-      {
-        "kind": "vision",
-        "model": "gpt-5",
-        "label": "vision_json:_ReviewOut",
-        "input_tokens": 10045,
-        "output_tokens": 4717,
-        "reasoning_tokens": 4352,
-        "characters": 0,
-        "images": 0,
-        "seconds": 66.35552978515625,
-        "cost_usd": 0.059726249999999995,
-        "at": 1795499871.776048
-      },
-      {
-        "kind": "vision",
-        "model": "gpt-5",
-        "label": "vision_json:_ReviewOut",
-        "input_tokens": 4014,
-        "output_tokens": 1976,
-        "reasoning_tokens": 1792,
-        "characters": 0,
-        "images": 0,
-        "seconds": 20.288804292678833,
-        "cost_usd": 0.0247775,
-        "at": 1795499897.3855674
-      }
+  "date": "2026-11-24",
+  "status": "one_simple_case_real_api_repair_and_strict_bundle_passed",
+  "regression_tests": 148,
+  "regression_scope": "10 selected generation/review/runtime test modules; not every repository test",
+  "real_run": "final-linear-smoke",
+  "manim_review": {
+    "initial": [
+      5,
+      6
+    ],
+    "after_patch_and_native_rerender": [
+      9,
+      9
     ]
   },
-  "repairs_observed": [
-    "traceback-driven code repair",
-    "layout guard-driven regeneration (7 findings to 0)"
+  "interactive_review": [
+    9,
+    9
   ],
-  "review_resume": "Initial process interrupted; explicit source CLI stage 2-review after host browser adaptation, then strict stage 3. No verdict overrides.",
+  "strict_bundle_passed_scenes": 2,
+  "api_calls": 8,
+  "estimated_cost_usd": 0.346,
+  "browser_click_test": {
+    "http_player_loaded": true,
+    "video_has_source": true,
+    "next_opens_question": true,
+    "wrong_answer_does_not_complete": true,
+    "correct_answer_unlocks_continue": true,
+    "continue_completes_lesson": true,
+    "page_errors": []
+  },
+  "failed_runs": [
+    "native-repair: torque, budget exhausted, strict bundle blocked",
+    "normal-fresh: torque, budget exhausted, strict bundle blocked"
+  ],
   "limitations": [
-    "Fresh core API dependencies; reused Manim/Playwright render environment, not a full clean render installation.",
-    "Native Remotion and image generation not tested.",
-    "Interactive screenshot reviewed; automated click behavior not tested.",
-    "Host-only Python null sink, Node stdio and Chromium process adaptations were used; filesystem write guard retained.",
-    "Minor visual review findings remain."
-  ]
+    "One simple successful request does not establish demo-equivalent or general visual quality.",
+    "Reused renderer environment; full clean renderer installation not verified.",
+    "Native Remotion and image generation not verified in this run.",
+    "VLM reviews sampled frames, not continuous motion/audio quality.",
+    "Host-only null sink/Chromium/Node wrappers required by this write-restricted host.",
+    "Model-generated lessons are stochastic; exact pixels are not guaranteed."
+  ],
+  "github_push": false
 }

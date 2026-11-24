@@ -25,7 +25,7 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument(
         "--force",
         action="store_true",
-        help="With 2-prepare/2-render: redo every scene (after a prompt or style change)",
+        help="With 2-prepare/2-render/2-review: redo every scene (including passed reviews)",
     )
     p.add_argument(
         "--no-repair",
@@ -58,7 +58,7 @@ def main(argv: list[str] | None = None) -> None:
     elif args.stage == "2-render":
         stage2_render(cfg, force=args.force, repair_crashes=not args.no_repair)
     elif args.stage == "2-review":
-        stage2_review(cfg)
+        stage2_review(cfg, force=args.force)
     elif args.stage == "3":
         stage3(cfg)
 
