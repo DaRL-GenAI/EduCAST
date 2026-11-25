@@ -141,6 +141,16 @@ Allowed targets by scene_type:
   do not shrink all text or move the fixed lecture column. For stale labels,
   replace/update the annotation or remove it with its previous state; reserve
   clear space throughout the movement, not just at the final position.
+  The fixed lower-right character has a reserved exclusion zone. Move loose
+  formula/text groups ONLY with placement ops or self.place_in_area / self.place_at_grid;
+  those helpers already avoid the character. Never add coordinate-based lanes,
+  set_x/set_y/move_to(coordinates), or positioning updaters that override their
+  safe placement. If prior repair code already does this, remove that override
+  and retain its existing safe grid area before choosing a different one. Grid
+  letters A-F are ROWS top-to-bottom; numbers 1-6 are COLUMNS left-to-right.
+  Keep formula stacks in rows left free by the diagram, never inside its occupied
+  rows. Keep copied/replacement states in the same safe region throughout
+  animation. Do not move or hide the character.
   Two anchors name opposite corners of a region;
   keep a label within one grid unit of the object it belongs to, and never send
   two objects to overlapping regions in the same verdict.
