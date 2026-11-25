@@ -168,21 +168,23 @@ Generated lessons and API records are saved under `runs/`, which is excluded fro
 
 ## 🔍 Outputs and Review
 
-Each completed run saves:
+Run artifacts (the bundle and final summary appear only after successful packaging):
 
 | Path within the run directory | Contents |
 | --- | --- |
 | `blueprint/lesson_blueprint.json` | Generated lesson plan |
-| `media/` | Rendered videos and narration |
+| `media/` | Rendered scene videos |
+| `work/<scene>/narration.mp3` | Generated narration |
 | `rendered_scenes.json` | Scene results and review status |
 | `debug/` | Reviewer feedback and repair records |
 | `bundle/index.html` | Finished lesson player |
 | `result.json`, `usage.json` | Run summary and API usage |
 
-To resume the review/repair stage from a saved run:
+To resume review/repair, then package the approved scenes, use the same request and run directory:
 
 ```bash
 python -m educast --sample --run-dir runs/sample_algebra --stage 2
+python -m educast --sample --run-dir runs/sample_algebra --stage 3
 ```
 
 Pinned dependencies and saved requests make the workflow repeatable. Generated content and review scores can vary across API calls; a failed quality gate is reported rather than silently packaged.

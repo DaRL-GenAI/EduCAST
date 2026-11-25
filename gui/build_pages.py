@@ -26,7 +26,7 @@ STUDIO = ROOT / 'gui'
 # Publish the GUI at the project root and retain its assets under /demo/.
 SITE = ROOT / 'docs'
 DOCS = SITE / 'demo'
-REPO = 'https://github.com/DaRL-GenAI/EduCAST/tree/main#run-locally'
+REPO = 'https://github.com/DaRL-GenAI/EduCAST/tree/main#-quick-start'
 
 # Files the server exposes under /assets/ but keeps beside index.html.
 ROOT_ASSETS = ('app.css', 'landing.js')

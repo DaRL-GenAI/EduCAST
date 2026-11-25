@@ -18,10 +18,10 @@ Run all commands from the repository root:
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements/base.txt
-python -m gui.public --host 127.0.0.1 --port 8091
+python -m gui.public
 ```
 
-Open `http://127.0.0.1:8091/`. The lesson brief is the home page: a composer
+Open the local address printed in the terminal. The lesson brief is the home page: a composer
 takes the topic, audience, language, and visual style, with the learning goal,
 source material, and creative tools behind "Make it your own". Submitting it
 reveals the build progress panel in place.
@@ -96,12 +96,12 @@ bundles. Keep it on localhost or behind appropriate access controls when handlin
 private lesson content. The separate local Studio exposes job controls and logs:
 
 ```bash
-python -m gui --runs-dir runs --port 8080
+python -m gui --runs-dir runs
 ```
 
 ## Source map
 
-See the [code layout](README.md#code-layout). Fixed resources live in
+See the [code layout](README.md#4-project-organization). Fixed resources live in
 `educast/assets/`; agents and the review loop use those resources without changing
 the original planning, rendering or repair sequence.
 
