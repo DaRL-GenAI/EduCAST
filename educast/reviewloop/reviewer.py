@@ -1,6 +1,6 @@
 """Independent VLM reviewer.
 
-One structured vision call per scene. The verdict is grounded twice:
+One vision verdict, followed by local patch planning for failed scenes. Grounded in:
 1. `key_elements` from the blueprint — each must be visibly present.
 2. Deterministic guard findings (Manim layout guard, DOM overflow, blank
    frames) are passed in as evidence and, when they are blockers, they fail
@@ -45,6 +45,14 @@ BLOCKING issues (the scene fails):
   their object or in a compact adjoining annotation column
 - Old/duplicate labels left visible after a state changes, or labels that collide
   during motion even if the initial and final frames are clean
+- Unintended shape/shape occlusion or a background stroke visibly splitting a
+  foreground object. Check diagram objects and repeated items as well as text.
+  A line visible above and below an opaque object is not evidence of a line
+  inside it; require an actual visible interior mark, not inferred continuity.
+  For each alleged stroke-through-fill defect, explicitly distinguish the
+  object interior from its border and the exposed rod above/below it. A rod
+  interrupted by a blank square is correct occlusion, including hollow-looking
+  outlined squares; do not fail that object or propose shifting it.
 - Foreground/background contrast too low to read
 - Blank, corrupted, or unrelated content; a "placeholder" scene
 - A KEY ELEMENT that is not visible at all (list it in missing_key_elements)
@@ -106,6 +114,9 @@ When the scene fails, propose the smallest repair:
   append_constraint), before (exact unique substring of PRIOR ARTIFACT for
   replace), after/value.
 - fallback_instructions: concrete prose instructions for the executor.
+- Correct the causal property in the artifact, including animated overrides
+  and copied states. Reordering objects cannot hide a background stroke through
+  a translucent fill. Inspect repeated objects for the same visible defect.
 
 Also return `layout_issues` for spatial problems (overlap, occlusion, off-screen,
 bad grid placement) and `temporal_issues` for defects during a transition or left
@@ -152,6 +163,11 @@ class _ReviewOut(BaseModel):
     temporal_issues: list[str] = Field(default_factory=list, max_length=8)
     fix_action: str = "re_render"
     ops: list[RepairOp] = Field(default_factory=list)
+    fallback_instructions: str = ""
+
+
+class _PatchOut(BaseModel):
+    ops: list[RepairOp] = Field(default_factory=list, max_length=5)
     fallback_instructions: str = ""
 
 
@@ -309,8 +325,6 @@ FRAMES ATTACHED ({len(frames)}):
             "whole objects; use construct_body edits for colliding child annotations "
             "or stale labels inside a group):\n" + position_table(artifact_excerpt) + "\n"
         )
-    if artifact_excerpt.strip():
-        prompt += f"\nPRIOR ARTIFACT (for grounding patch ops):\n{artifact_excerpt.strip()}\n"
     prompt += (
         "\nReturn the structured verdict. List every KEY ELEMENT in exactly one of "
         "present_key_elements / missing_key_elements using its original wording. "
@@ -325,15 +339,45 @@ FRAMES ATTACHED ({len(frames)}):
                 prompt,
                 [str(f.path) for f in frames],
                 _ReviewOut,
-                system=SYSTEM,
+                system=SYSTEM + "\nJudge the rendered frames independently of source code. "
+                "Return ops=[]; a separate executor will translate your observations into edits.",
                 max_tokens=3000,
             )
-            return _to_repair(out, scene, guard, pass_score)
+            repair = _to_repair(out, scene, guard, pass_score)
+            break
         except Exception as exc:
             last_error = exc
-    return _review_error(
-        scene.id, scene.scene_type, f"Reviewer unavailable or invalid: {last_error}"
-    )
+    else:
+        return _review_error(
+            scene.id, scene.scene_type, f"Reviewer unavailable or invalid: {last_error}"
+        )
+    if repair.needs_repair() and artifact_excerpt.strip():
+        try:
+            patch = provider.vision_json(
+                f"SCENE TYPE: {scene.scene_type.value}\n"
+                f"FIXED VISUAL VERDICT:\n{repair.model_dump_json(indent=2)}\n"
+                f"PRIOR ARTIFACT:\n{artifact_excerpt.strip()}\n"
+                "Translate every blocking observation into minimal exact edits. "
+                "Group related edits to cover repeated objects and animated overrides. "
+                "If an unwanted background stroke shows through a translucent fill, "
+                "repair the fill opacity in constructors and animated states first; "
+                "do not shift objects to conceal that transparency defect. "
+                "Update dependent labels/formulas in the animation that changes their "
+                "objects, rather than only changing a later swap. Preserve the lesson. "
+                "Do not regrade the video or invent additional visual findings.",
+                [str(f.path) for f in frames],
+                _PatchOut, system=SYSTEM, max_tokens=3000,
+            )
+            repair.ops = patch.ops
+            if repair.fix_action != "change_tool":
+                repair.fix_action = "patch_artifact" if patch.ops else "re_render"
+            repair.fallback_instructions = patch.fallback_instructions
+        except Exception:
+            # Keep the failed verdict; the existing executor can use its feedback.
+            repair.ops = []
+            if repair.fix_action != "change_tool":
+                repair.fix_action = "re_render"
+    return repair
 
 
 def _to_repair(

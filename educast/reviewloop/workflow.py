@@ -704,7 +704,7 @@ def _retry_on_guard_blockers(
     result: RenderedScene,
     provider: Provider | None,
 ) -> RenderedScene:
-    """One regeneration when the layout guard measured a hard defect.
+    """One local repair when the layout guard measured a hard defect.
 
     The guard's findings are measurements, not opinions, so acting on them needs
     no visual review — and a cut-off or overlapping label is exactly the thing a
@@ -726,7 +726,7 @@ def _retry_on_guard_blockers(
     if not blockers or prepared.debug.get("guard_retry"):
         return result
     lines = [f"- {f.message}" for f in blockers]
-    _log(scene.id, f"layout guard blocked ({len(blockers)}); regenerating once")
+    _log(scene.id, f"layout guard blocked ({len(blockers)}); patching once")
     # The retry re-renders to the same media/<id>.mp4 the first attempt wrote, so
     # keep that file aside first. When the rewrite is rejected below we return the
     # first RenderedScene, and the video on disk has to be the render it actually
@@ -734,18 +734,28 @@ def _retry_on_guard_blockers(
     # belong to a frame nobody will ever see, and the restored spec marks the
     # scene current so no later pass re-renders it.
     kept = _keep_render_artifacts(cfg, scene, result)
+    before = None
     try:
         spec_path = cfg.run_dir / str(prepared.spec_path)
-        data = json.loads(spec_path.read_text(encoding="utf-8"))
-        fixed = manim_adapter.generate_construct(
-            provider, scene, blueprint.style,
-            prior_body=data["construct_body"],
-            guard_lines=[f.message for f in blockers],
-            narration_seconds=prepared.narration_seconds,
+        before = spec_path.read_text(encoding="utf-8")
+        data = json.loads(before)
+        from educast.reviewloop.repair_apply import apply_manim_ops
+
+        patch = provider.chat_json(
+            "Repair only these measured layout defects with exact local edits:\n"
+            + "\n".join(lines)
+            + "\nKeep implicated labels and leaders clear of moving objects throughout "
+            "their motion. Preserve all other geometry, fills, animation timing, "
+            "and earlier repairs. Do not rewrite the scene.\nPRIOR ARTIFACT:\n"
+            + data["construct_body"],
+            reviewer._PatchOut,
+            system="Return minimal construct_body replacement operations, at most five.",
+            max_tokens=3000,
         )
-        before = json.dumps(data, indent=2, ensure_ascii=False)
-        data["construct_body"] = fixed.construct_body
-        data["scene_class_name"] = fixed.scene_class_name
+        fixed = apply_manim_ops(data["construct_body"], patch.ops)
+        if not fixed.ok or not fixed.applied:
+            raise ValueError(f"Guard repair did not yield a valid local patch: {fixed.failed}")
+        data["construct_body"] = fixed.artifact
         spec_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
         prepared.debug["guard_retry"] = lines
         retried = _render_one(cfg, blueprint, scene, prepared, provider)
@@ -757,8 +767,10 @@ def _retry_on_guard_blockers(
         # rejected rewrite in the spec would leave the run describing code that
         # never produced the mp4 sitting next to it.
         spec_path.write_text(before, encoding="utf-8")
-        _log(scene.id, "regeneration did not clear the guard; keeping the first render")
+        _log(scene.id, "local repair did not clear the guard; keeping the first render")
     except Exception as exc:
+        if before is not None:
+            spec_path.write_text(before, encoding="utf-8")
         _log(scene.id, f"guard retry failed: {exc}")
     _restore_kept_artifacts(kept)
     return result
@@ -1163,7 +1175,7 @@ def preview_frames(
         duration = rendered.visual_seconds or media.probe_duration(video) or 0.0
         # Five sparse frames can miss an entire reveal or state change. Increase
         # temporal coverage with duration, bounded to keep vision costs modest.
-        sample_count = max(cfg.frames_per_video, min(16, math.ceil(duration / 2)))
+        sample_count = max(cfg.frames_per_video, min(16, math.ceil(duration / 0.75)))
         if rendered.scene_type == SceneType.REMOTION:
             sample_count += 2
         extra = rendered.guard.flagged_seconds()
