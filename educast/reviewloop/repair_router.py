@@ -63,22 +63,15 @@ def repairs_from_rendered(rendered: list, *, include_review_errors: bool = True)
 
 
 def _may_patch(prior: PreparedScene | None, repair: SceneRepair | None) -> bool:
-    """Patch only once per artifact: if the last round already patched it and the
-    scene still failed, the defect is structural and needs a full regeneration.
+    """Keep validated Manim patches local across review rounds.
 
-    Pure placement ops are the exception. Moving an object to different anchors
-    cannot break what the scene draws, and layout usually settles over two passes
-    (the second collision is often only visible once the first one is gone), so
-    those keep their patch route instead of forcing a rewrite of the whole scene.
+    Other artifacts retain their single-patch limit. Invalid Manim operations
+    still fall back to generation in `_prepare_manim`.
     """
     if repair is None or repair.fix_action != "patch_artifact" or not repair.ops:
         return False
     if prior is not None and prior.debug.get("repair_mode") in {"patched", "partial_patch", "generation_fallback"}:
-        placements_only = (
-            prior.scene_type == SceneType.MANIM
-            and all((op.target or "").strip() not in {"construct_body", "body"} for op in repair.ops)
-        )
-        return placements_only
+        return prior.scene_type == SceneType.MANIM
     return True
 
 
